@@ -12,6 +12,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // A self-contained server (.next/standalone) for the production container: node server.js.
+  output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
   async rewrites() {

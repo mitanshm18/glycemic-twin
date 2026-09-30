@@ -8,6 +8,8 @@ from pathlib import Path
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from twin_api.registry import ArtifactSearch
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -17,6 +19,9 @@ class Settings(BaseSettings):
     # postgresql+psycopg://user:password@host:5432/dbname  (required; never committed)
     database_url: str = Field(..., description="SQLAlchemy URL of the PostgreSQL database")
     repo_root: Path = REPO_ROOT
+    # Where serving finds registered model bundles by file name (containers, servers). Optional:
+    # without it serving uses the registered path, then repo_root/data/processed/m3/models.
+    models_dir: Path | None = None
     environment: str = "development"  # "development" | "test" | "production"
     session_ttl_minutes: int = 8 * 60
     cookie_name: str = "twin_session"
@@ -44,6 +49,10 @@ class Settings(BaseSettings):
             and self.google_client_secret.get_secret_value()
             and self.google_redirect_uri
         )
+
+    @property
+    def artifact_search(self) -> ArtifactSearch:
+        return ArtifactSearch(repo_root=self.repo_root, models_dir=self.models_dir)
 
     @property
     def config_dir(self) -> Path:

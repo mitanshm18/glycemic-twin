@@ -77,7 +77,9 @@ def ready(request: Request, response: Response, db: DB) -> dict[str, Any]:
         else:
             out["active_model"] = row.model_version
             try:
-                rt = runtime_for(row, request.app.state.configs, db)
+                rt = runtime_for(
+                    row, request.app.state.configs, db, request.app.state.settings.artifact_search
+                )
                 out["model_compatible"] = True
                 out["support_profile"] = rt.support is not None
                 if rt.support is None:
@@ -187,7 +189,9 @@ def list_models(db: DB, who: Admin) -> list[ModelVersion]:
 @router.post("/admin/models/{mid}/activate", response_model=ModelVersionOut, tags=["admin"])
 def activate_model(mid: int, request: Request, db: DB, who: Admin) -> ModelVersion:
     try:
-        row = activate(db, mid, request.app.state.configs)
+        row = activate(
+            db, mid, request.app.state.configs, request.app.state.settings.artifact_search
+        )
     except ModelContractError as err:
         audit(
             request,

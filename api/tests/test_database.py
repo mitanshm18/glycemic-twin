@@ -289,6 +289,40 @@ def test_support_profile_matches_the_bundle_training_data(
     assert "carbs_g" in sp["profile"]["features"] and "p_personal" not in sp["profile"]["features"]
 
 
+def test_registered_model_serves_from_another_machines_path(
+    tmp_path: Path, engine: Any, loaded: Any, bundle: Any, configs: Any
+) -> None:
+    """A registry entry made elsewhere (absolute path that does not exist here) still serves from
+    the configured models directory, and only while the file's SHA-256 matches the registry."""
+    from twin_api.db import make_sessionmaker
+    from twin_api.models import ModelVersion
+    from twin_api.registry import ArtifactSearch, runtime_for
+
+    mounted = tmp_path / "models"
+    mounted.mkdir()
+    name = Path(bundle["path"]).name
+    shutil.copy(bundle["path"], mounted / name)
+    with make_sessionmaker(engine)() as s:
+        row = s.get(ModelVersion, loaded["model_version_id"])
+        assert row is not None
+        fake = ModelVersion(
+            **{
+                c.name: getattr(row, c.name)
+                for c in ModelVersion.__table__.columns
+                if c.name not in ("id",)
+            }
+        )
+        fake.artifact_path = f"/Users/someone-else/repo/data/processed/m3/models/{name}"
+        search = ArtifactSearch(repo_root=tmp_path / "repo", models_dir=mounted)
+        runtime = runtime_for(fake, configs, s, search)
+        assert runtime.model is not None  # the registered bundle loaded from the mounted copy
+        with (mounted / name).open("ab") as f:
+            f.write(b"tampered")
+        with pytest.raises(ModelContractError, match="changed since it was registered"):
+            runtime_for(fake, configs, s, search)
+        s.rollback()
+
+
 def test_tampered_artifact_is_refused_at_serving_time(
     tmp_path: Path, engine: Any, loaded: Any, bundle: Any, configs: Any
 ) -> None:
