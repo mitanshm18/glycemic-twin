@@ -444,3 +444,22 @@ export interface Evaluation {
 export interface ApiErrorBody {
   error: { code: string; message: string; details?: unknown };
 }
+
+// ------------------------------------------------------------------ replay (historical, ADR-018)
+
+export interface Replay {
+  id: number;
+  patient_id: number;
+  start_at: Naive;
+  end_at: Naive;
+  cursor_at: Naive;
+  step_minutes: number;
+  last_state_id: string | null;
+}
+
+export interface ReplayStep {
+  replay: Replay;
+  /** the twin at the cursor before this step moved it (recorded data only, up to state.as_of) */
+  state: TwinState;
+  finished: boolean;
+}

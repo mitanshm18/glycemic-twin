@@ -160,4 +160,19 @@ describe("twin rail", () => {
     expect(onSelect).toHaveBeenCalledWith({ asOf: "2021-06-07T12:00:00", mealId: "m3" });
     await waitFor(() => expect(globalThis.fetch).toHaveBeenCalled());
   });
+
+  it("reads a between-meal moment (a replayed step) as itself, and steps to the meals either side", async () => {
+    cgmServer();
+    const onSelect = vi.fn();
+    withQuery(
+      <TwinRail patientId={7} meals={meals} outcomes={outcomes} dataFrom="2021-06-05T00:00:00" dataTo="2021-06-08T00:00:00" state={undefined} moment={{ asOf: "2021-06-06T15:30:00", mealId: null }} onSelect={onSelect} />,
+    );
+    const rail = screen.getByRole("slider", { name: /Twin moment/ });
+    expect(rail).toHaveAttribute("aria-valuetext", "Sun 6 Jun 15:30, between meals");
+    fireEvent.keyDown(rail, { key: "ArrowRight" });
+    expect(onSelect).toHaveBeenLastCalledWith({ asOf: "2021-06-07T12:00:00", mealId: "m3" });
+    fireEvent.keyDown(rail, { key: "ArrowLeft" });
+    expect(onSelect).toHaveBeenLastCalledWith({ asOf: "2021-06-06T12:00:00", mealId: "m2" });
+    await waitFor(() => expect(globalThis.fetch).toHaveBeenCalled());
+  });
 });

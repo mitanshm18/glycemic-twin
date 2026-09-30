@@ -1,5 +1,7 @@
 # Glycemic Digital Twin
 
+[![CI](https://github.com/mitanshm18/glycemic-twin/actions/workflows/ci.yml/badge.svg)](https://github.com/mitanshm18/glycemic-twin/actions/workflows/ci.yml)
+
 A personal digital twin for prediabetes and type 2 diabetes that predicts, at each logged meal, whether
 Dexcom glucose will exceed 180 mg/dL within the next 120 minutes. Built on real, open CGMacros v1.0.0
 data. Research proof of concept; not a medical device.
@@ -78,6 +80,35 @@ response, what-if, evolution, provenance), the clinical record and the model pag
 system themes. Real data only: every number comes from the API. See ADR-019 and
 `docs/learning/M6.md`.
 
+## Deployment (M7)
+
+Docker Compose + Caddy: one HTTPS origin in front of the Next.js app and the API, PostgreSQL behind
+them, a one-off init job that loads the processed data and registers the existing model.
+
+```bash
+deploy/package-data.sh                 # processed artifacts + model bundles -> deploy/data (+ SHA256SUMS)
+cd deploy && cp .env.example .env      # host name, database password, optional Google sign-in
+docker compose up -d --build
+docker compose exec api twin-api create-user alice --role clinician
+```
+
+See [docs/deployment.md](docs/deployment.md) and [docs/security.md](docs/security.md).
+
+## Continuous integration
+
+[.github/workflows/ci.yml](.github/workflows/ci.yml) runs on every pull request and every push to
+`main`, as three parallel jobs:
+
+- **Backend:** `uv sync --locked`, `ruff check`, `ruff format --check`, `mypy`, and `pytest` against
+  a throwaway PostgreSQL 16 service (migrations and schema included). The run fails if any test is
+  skipped, so the database tests cannot silently drop out.
+- **Frontend:** Node 22: `npm ci`, `lint`, `typecheck`, `test` (Vitest), `build`.
+- **Images:** builds the API and web production images for `linux/amd64` (the deployment target)
+  and smoke-tests them (non-root user, imports, `/login` served). Nothing is pushed.
+
+CI uses only synthetic fixtures: no CGMacros data, processed artifacts, model bundles or secrets.
+Checks on the real data (and the Playwright E2E suite) stay local, before a demo.
+
 ## Layout
 
 ```
@@ -86,6 +117,7 @@ packages/twin_core/   shared rules: configs, cleaning, native CGM grid, frozen l
 ml/                   offline pipeline (M1-M2); training and evaluation (M3)
 api/                  PostgreSQL schema + migrations, ingestion, model registry, FastAPI (M5)
 web/                  Next.js clinician workspace (M6)
+deploy/               Docker Compose stack, Caddyfile, data packaging (M7)
 data/configs/         cleaning, labels, features, model_features, training (all v1, fixed before training)
 data/raw/             the CGMacros download (not in Git)
 data/reference/       the Phase 0A exploratory audit, kept for reconciliation

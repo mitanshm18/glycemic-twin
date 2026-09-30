@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
@@ -105,11 +105,16 @@ def register_bundle(
     return row
 
 
-def activate(session: Session, model_version_id: int, configs: TwinConfigs) -> ModelVersion:
+def activate(
+    session: Session,
+    model_version_id: int,
+    configs: TwinConfigs,
+    search: ArtifactSearch | None = None,
+) -> ModelVersion:
     row = session.get(ModelVersion, model_version_id)
     if row is None:
         raise RegistryError(f"model version {model_version_id} does not exist")
-    runtime_for(row, configs, session)  # refuse to activate anything that cannot be served
+    runtime_for(row, configs, session, search)  # refuse to activate anything that cannot be served
     session.execute(update(ModelVersion).where(ModelVersion.is_active).values(is_active=False))
     session.flush()
     row.is_active = True
@@ -155,10 +160,47 @@ def store_support_profile(
     return row
 
 
-def runtime_for(row: ModelVersion, configs: TwinConfigs, session: Session) -> TwinRuntime:
-    path = Path(row.artifact_path)
-    if not path.exists():
-        raise ModelContractError(f"model artifact missing: {path}")
+DEFAULT_MODELS_DIR = Path("data/processed/m3/models")
+
+
+@dataclass(frozen=True)
+class ArtifactSearch:
+    """Where serving looks for a registered model file (the registry stores where it was built).
+
+    The stored ``artifact_path`` is the path on the machine that registered the bundle, so it is
+    only a hint on any other machine (a container, a server). Serving looks, in order, in:
+    ``models_dir`` if one is configured (TWIN_MODELS_DIR), the stored path (resolved against
+    ``repo_root`` when relative), and ``repo_root/data/processed/m3/models``, each by the stored
+    file name. Whichever file is found must still match the registered SHA-256 and identity.
+    """
+
+    repo_root: Path
+    models_dir: Path | None = None
+
+    def candidates(self, stored: str) -> list[Path]:
+        p = Path(stored)
+        found: list[Path] = []
+        if self.models_dir is not None:
+            found.append(self.models_dir / p.name)
+        found.append(p if p.is_absolute() else self.repo_root / p)
+        found.append(self.repo_root / DEFAULT_MODELS_DIR / p.name)
+        return list(dict.fromkeys(found))  # keep order, drop duplicates
+
+
+def locate_artifact(stored: str, search: ArtifactSearch | None) -> Path:
+    """The model file to load for a registry entry. Integrity is checked by the caller (SHA-256)."""
+    tried = search.candidates(stored) if search is not None else [Path(stored)]
+    for path in tried:
+        if path.is_file():
+            return path
+    where = ", ".join(str(p.parent) for p in tried)
+    raise ModelContractError(f"model artifact missing: {Path(stored).name} (looked in {where})")
+
+
+def runtime_for(
+    row: ModelVersion, configs: TwinConfigs, session: Session, search: ArtifactSearch | None = None
+) -> TwinRuntime:
+    path = locate_artifact(row.artifact_path, search)
     if file_sha256(path) != row.artifact_sha256:
         raise ModelContractError("model artifact changed since it was registered")
     bundle = load_checked_bundle(path, configs)

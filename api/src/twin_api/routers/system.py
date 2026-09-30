@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Annotated, Any
@@ -34,6 +35,7 @@ from twin_api.schemas import (
 from twin_api.service import TwinService, resolve_as_of
 
 router = APIRouter()
+log = logging.getLogger("twin_api")
 DB = Annotated[Session, Depends(get_db)]
 Anyone = Annotated[Principal, Depends(any_user)]
 Admin = Annotated[Principal, Depends(admin_only)]
@@ -77,14 +79,23 @@ def ready(request: Request, response: Response, db: DB) -> dict[str, Any]:
         else:
             out["active_model"] = row.model_version
             try:
-                rt = runtime_for(row, request.app.state.configs, db)
+                rt = runtime_for(
+                    row, request.app.state.configs, db, request.app.state.settings.artifact_search
+                )
                 out["model_compatible"] = True
                 out["support_profile"] = rt.support is not None
                 if rt.support is None:
                     problems.append("no training-support profile: what-if disabled")
             except ModelContractError as err:
-                problems.append(f"active model incompatible: {err}")
+                # unauthenticated endpoint: in production no file paths or hashes leave the server
+                log.error("readiness: active model cannot be served: %s", err)
+                problems.append(
+                    "active model cannot be served"
+                    if request.app.state.settings.production
+                    else f"active model incompatible: {err}"
+                )
     except Exception as err:  # noqa: BLE001 - readiness must report, not crash
+        log.error("readiness: database check failed: %s", type(err).__name__)
         problems.append(f"database error: {type(err).__name__}")
     out["ready"] = out["database"] and out["migrations_at_head"] and out["model_compatible"]
     out["problems"] = problems
@@ -187,7 +198,9 @@ def list_models(db: DB, who: Admin) -> list[ModelVersion]:
 @router.post("/admin/models/{mid}/activate", response_model=ModelVersionOut, tags=["admin"])
 def activate_model(mid: int, request: Request, db: DB, who: Admin) -> ModelVersion:
     try:
-        row = activate(db, mid, request.app.state.configs)
+        row = activate(
+            db, mid, request.app.state.configs, request.app.state.settings.artifact_search
+        )
     except ModelContractError as err:
         audit(
             request,
