@@ -1,0 +1,145 @@
+# Glycemic Twin production-style stack:  Caddy -> Next.js | FastAPI -> PostgreSQL
+#
+#   cd deploy && cp .env.example .env    # fill in; never commit .env
+#   docker compose up -d --build         # init runs once, then api, web and caddy start
+#
+# Only Caddy publishes ports. The API and PostgreSQL are reachable from inside the stack only.
+# See docs/deployment.md.
+name: glycemic-twin
+
+x-api-env: &api-env
+  TWIN_ENVIRONMENT: production
+  TWIN_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:?set POSTGRES_USER}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:?set POSTGRES_DB}
+  TWIN_COOKIE_SECURE: "true"
+  TWIN_COOKIE_NAME: ${TWIN_COOKIE_NAME:-twin_session}
+  # the public host, plus the names health checks and Caddy use inside the stack
+  TWIN_TRUSTED_HOSTS: ${TWIN_PUBLIC_HOST:?set TWIN_PUBLIC_HOST},api,localhost,127.0.0.1
+  # only Caddy's fixed address may set X-Forwarded-For / -Proto
+  TWIN_FORWARDED_ALLOW_IPS: 172.30.10.10
+  TWIN_LOG_LEVEL: ${TWIN_LOG_LEVEL:-INFO}
+  TWIN_GOOGLE_CLIENT_ID: ${TWIN_GOOGLE_CLIENT_ID:-}
+  TWIN_GOOGLE_CLIENT_SECRET: ${TWIN_GOOGLE_CLIENT_SECRET:-}
+  TWIN_GOOGLE_REDIRECT_URI: ${TWIN_GOOGLE_REDIRECT_URI:-}
+  TWIN_GOOGLE_HOSTED_DOMAIN: ${TWIN_GOOGLE_HOSTED_DOMAIN:-}
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+    max-file: "5"
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?set POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:?set POSTGRES_DB}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    logging: *logging
+
+  # One-off setup, safe to repeat: migrate -> ingest the processed CGMacros artifacts ->
+  # training-support profile -> register + activate the existing M3 XGBoost bundle (SHA-256
+  # checked). Never retrains. Re-running changes nothing when everything is already in place.
+  init:
+    image: glycemic-twin-api:${TWIN_IMAGE_TAG:-local}
+    build:
+      context: ..
+      dockerfile: api/Dockerfile
+    environment: *api-env
+    command:
+      - sh
+      - -ec
+      - |
+        # the packaged artifacts arrive intact (deploy/package-data.sh writes SHA256SUMS)
+        if [ -f /app/data/processed/SHA256SUMS ]; then
+          (cd /app/data/processed && sha256sum --check --quiet SHA256SUMS)
+        fi
+        twin-api migrate
+        twin-api ingest
+        twin-api support-profile
+        twin-api register-m3 --activate xgboost
+    volumes:
+      - ${TWIN_DATA_DIR:-./data}:/app/data/processed:ro
+      - support:/app/data/processed/m5
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [backend]
+    restart: "no"
+    logging: *logging
+
+  api:
+    image: glycemic-twin-api:${TWIN_IMAGE_TAG:-local}
+    restart: unless-stopped
+    environment: *api-env
+    volumes:
+      - ${TWIN_DATA_DIR:-./data}:/app/data/processed:ro
+      - support:/app/data/processed/m5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      init:
+        condition: service_completed_successfully
+    networks: [backend]
+    # healthcheck (GET /api/v1/ready) is defined in api/Dockerfile
+    logging: *logging
+
+  web:
+    image: glycemic-twin-web:${TWIN_IMAGE_TAG:-local}
+    build:
+      context: ../web
+      args:
+        TWIN_API_ORIGIN: http://api:8000
+        TWIN_COOKIE_NAME: ${TWIN_COOKIE_NAME:-twin_session}
+    restart: unless-stopped
+    networks: [frontend]
+    # healthcheck (GET /login) is defined in web/Dockerfile
+    logging: *logging
+
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    environment:
+      TWIN_PUBLIC_HOST: ${TWIN_PUBLIC_HOST:?set TWIN_PUBLIC_HOST}
+    ports:
+      - "${TWIN_HTTP_PORT:-80}:80"
+      - "${TWIN_HTTPS_PORT:-443}:443"
+      - "${TWIN_HTTPS_PORT:-443}:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    networks:
+      frontend: {}
+      backend:
+        ipv4_address: 172.30.10.10
+    logging: *logging
+
+networks:
+  # Caddy <-> web
+  frontend: {}
+  # Caddy <-> api <-> postgres (fixed subnet so the API can trust exactly Caddy's address)
+  backend:
+    ipam:
+      config:
+        - subnet: 172.30.10.0/24
+
+volumes:
+  pgdata: {}
+  support: {}
+  caddy_data: {}
+  caddy_config: {}

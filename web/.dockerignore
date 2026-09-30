@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+test-results
+playwright-report
+*.tsbuildinfo
+.env*
+playwright.local-*.config.ts
+Dockerfile
+.dockerignore
