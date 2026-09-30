@@ -85,7 +85,8 @@ test("sign-in: inline validation, password toggle, specific error for bad creden
   await page.getByRole("button", { name: "Show password" }).click();
   await expect(page.getByLabel("Password", { exact: true })).toHaveAttribute("type", "text");
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
-  await expect(page.getByRole("alert")).toContainText(/not recognised|locked/i);
+  // scoped to the form: Next's route announcer is also an (empty) alert
+  await expect(page.getByRole("region", { name: "Sign in" }).getByRole("alert")).toContainText(/not recognised|locked/i);
 });
 
 test("sign-in shows Google honestly: a server redirect when configured, a clear note when not", async ({ page }) => {
@@ -101,6 +102,40 @@ test("sign-in shows Google honestly: a server redirect when configured, a clear 
     await expect(page).toHaveURL(/auth_error=google_not_configured/);
     await expect(page.getByText(/isn’t set up on this server/)).toBeVisible();
   }
+});
+
+test("sign-in signal: explorable by pointer, silent to assistive tech, no overflow", async ({ page, isMobile }) => {
+  await page.goto("/login");
+  const signal = page.locator(".signal");
+  await expect(signal).toHaveAttribute("aria-hidden", "true");
+  // read once, as one sentence, although it reveals word by word
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName("How one person’s glucose responds to meals.");
+  await expectNoHorizontalScroll(page);
+  if (isMobile) {
+    await expect(page.locator(".signal__anchor")).toHaveCount(0); // a quiet strip on phones
+    return;
+  }
+  const meal = page.locator(".signal__anchor").first();
+  await expect(meal).toBeVisible(); // interactive once the opening sequence has drawn the signal
+  await meal.click();
+  await expect(page.locator(".signal__chip")).toContainText("Meal logged");
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".signal__chip")).toHaveCount(0);
+  // the form is never blocked by the opening sequence
+  await page.getByLabel("Username").fill("someone");
+  await expect(page.getByLabel("Username")).toHaveValue("someone");
+});
+
+test("sign-in under reduced motion: everything is simply there", async ({ browser, baseURL }) => {
+  const ctx = await browser.newContext({ reducedMotion: "reduce", baseURL });
+  const page = await ctx.newPage();
+  await page.goto("/login");
+  const names = await page.evaluate(() =>
+    [".login__word", ".login__lede", ".signal__trace", ".login__card"].map((sel) => getComputedStyle(document.querySelector(sel)!).animationName),
+  );
+  expect(names).toEqual(["none", "none", "none", "none"]);
+  await expect(page.locator(".login__caret")).toBeHidden();
+  await ctx.close();
 });
 
 // ------------------------------------------------------------------------------------ session

@@ -1,13 +1,15 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { Fragment, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent } from "react";
+import { SignalField } from "@/components/auth/SignalField";
 import { ThemeSwitcher } from "@/components/shell/ThemeSwitcher";
 import { Icon } from "@/components/ui/Icon";
 import { isApiError, NetworkError } from "@/lib/api/client";
 import { useLogin, useMe, useProviders } from "@/lib/api/queries";
 import { authErrorMessage, googleStartHref, type AuthMessage } from "@/lib/auth";
 import { cx } from "@/lib/cx";
+import { useMediaQuery } from "@/lib/interaction";
 import { safeNext } from "@/lib/nav";
 
 const FACTS = [
@@ -15,6 +17,8 @@ const FACTS = [
   { icon: "fingerprint" as const, text: "Every estimate is traceable to its model version, source data and moment." },
   { icon: "shield" as const, text: "Research prototype. Model-estimated associations, not medical advice." },
 ];
+
+const HEADLINE = "How one person’s glucose responds to meals.";
 
 const USERNAME = /^[A-Za-z0-9_.@-]{3,64}$/;
 
@@ -112,6 +116,7 @@ export function LoginScreen() {
   const ids = { user: useId(), pass: useId(), userErr: useId(), passErr: useId(), caps: useId(), server: useId() };
 
   const next = safeNext(params.get("next"));
+  const compact = useMediaQuery("(max-width: 1023px)");
 
   // Already signed in (e.g. the back button, a bookmarked /login): go straight on, no form flash.
   const signedIn = me.isSuccess;
@@ -186,15 +191,29 @@ export function LoginScreen() {
           <span id="login-product">Glycemic Twin</span>
         </div>
         <div className="login__pitch">
-          <h1 className="login__headline">How one person’s glucose responds to meals.</h1>
+          <h1 className="login__headline">
+            <span className="sr-only">{HEADLINE}</span>
+            {/* the headline reveals word by word; the words carry the order as a CSS index */}
+            <span aria-hidden="true">
+              {HEADLINE.split(" ").map((word, i) => (
+                <Fragment key={i}>
+                  <span className="login__word" style={{ "--i": i } as CSSProperties}>
+                    {word}
+                  </span>{" "}
+                </Fragment>
+              ))}
+              <span className="login__caret" />
+            </span>
+          </h1>
           <p className="login__lede">
             A per-person model for prediabetes and type 2 diabetes: the estimated chance that a logged meal takes glucose
             above 180&nbsp;mg/dL within two hours, what the estimate rests on, and how it learns from each meal.
           </p>
         </div>
+        <SignalField compact={compact} />
         <ul className="login__facts">
-          {FACTS.map((f) => (
-            <li key={f.text}>
+          {FACTS.map((f, i) => (
+            <li key={f.text} style={{ "--i": i } as CSSProperties}>
               <Icon name={f.icon} />
               <span>{f.text}</span>
             </li>
