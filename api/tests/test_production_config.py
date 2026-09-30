@@ -45,6 +45,7 @@ def test_a_safe_production_configuration_is_accepted() -> None:
         ({"trusted_hosts": None}, "TWIN_TRUSTED_HOSTS must list"),
         ({"trusted_hosts": " , "}, "TWIN_TRUSTED_HOSTS must list"),
         ({"trusted_hosts": "*"}, "must not contain '*'"),
+        ({"forwarded_allow_ips": "*"}, "TWIN_FORWARDED_ALLOW_IPS must name the proxy"),
         ({"google_client_id": "id.apps.googleusercontent.com"}, "partly configured"),
         (
             {

@@ -78,6 +78,20 @@ response, what-if, evolution, provenance), the clinical record and the model pag
 system themes. Real data only: every number comes from the API. See ADR-019 and
 `docs/learning/M6.md`.
 
+## Deployment (M7)
+
+Docker Compose + Caddy: one HTTPS origin in front of the Next.js app and the API, PostgreSQL behind
+them, a one-off init job that loads the processed data and registers the existing model.
+
+```bash
+deploy/package-data.sh                 # processed artifacts + model bundles -> deploy/data (+ SHA256SUMS)
+cd deploy && cp .env.example .env      # host name, database password, optional Google sign-in
+docker compose up -d --build
+docker compose exec api twin-api create-user alice --role clinician
+```
+
+See [docs/deployment.md](docs/deployment.md) and [docs/security.md](docs/security.md).
+
 ## Layout
 
 ```
@@ -86,6 +100,7 @@ packages/twin_core/   shared rules: configs, cleaning, native CGM grid, frozen l
 ml/                   offline pipeline (M1-M2); training and evaluation (M3)
 api/                  PostgreSQL schema + migrations, ingestion, model registry, FastAPI (M5)
 web/                  Next.js clinician workspace (M6)
+deploy/               Docker Compose stack, Caddyfile, data packaging (M7)
 data/configs/         cleaning, labels, features, model_features, training (all v1, fixed before training)
 data/raw/             the CGMacros download (not in Git)
 data/reference/       the Phase 0A exploratory audit, kept for reconciliation

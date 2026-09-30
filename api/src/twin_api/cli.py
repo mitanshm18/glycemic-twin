@@ -246,6 +246,9 @@ def cmd_serve(args: argparse.Namespace) -> int:
         reload=args.reload,
         log_config=None,  # keep the format installed above (uvicorn lines become JSON too)
         access_log=False,  # RequestLog writes one line per request, without query strings
+        # client address and scheme from X-Forwarded-* only when the reverse proxy sent them
+        proxy_headers=True,
+        forwarded_allow_ips=s.forwarded_allow_ips,
     )
     return 0
 

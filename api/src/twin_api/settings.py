@@ -39,6 +39,10 @@ class Settings(BaseSettings):
     # "twin.example.org,api,localhost"). Required in production; requests for any other Host
     # header get 400. Unset outside production means "any host" (local development).
     trusted_hosts: str | None = None
+    # Proxy addresses whose X-Forwarded-For / -Proto the server believes (TWIN_FORWARDED_ALLOW_IPS,
+    # comma-separated IPs or CIDRs). Only the reverse proxy, never "*": from anyone else the
+    # headers are ignored and the connection's own address is used (audit log IPs).
+    forwarded_allow_ips: str = "127.0.0.1"
     session_ttl_minutes: int = Field(default=8 * 60, ge=5, le=24 * 60)
     cookie_name: str = Field(default="twin_session", pattern=r"^[A-Za-z0-9_-]+$")
     cookie_secure: bool = True  # set TWIN_COOKIE_SECURE=false only for local http development
@@ -84,6 +88,8 @@ class Settings(BaseSettings):
             problems.append("TWIN_TRUSTED_HOSTS must list the public host name(s)")
         elif "*" in self.trusted_host_list:
             problems.append("TWIN_TRUSTED_HOSTS must not contain '*'")
+        if "*" in self.forwarded_allow_ips:
+            problems.append("TWIN_FORWARDED_ALLOW_IPS must name the proxy, not '*'")
         google = [self.google_client_id, self.google_client_secret, self.google_redirect_uri]
         if any(google) and not self.google_enabled:
             problems.append(

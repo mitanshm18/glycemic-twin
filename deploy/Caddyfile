@@ -1,0 +1,37 @@
+# Glycemic Twin: one HTTPS origin in front of the web app and the API.
+#   /api/v1/*  -> FastAPI (api:8000)
+#   anything else -> Next.js (web:3000)
+# One origin keeps the session cookie first-party and needs no CORS. With a real domain in
+# TWIN_PUBLIC_HOST, Caddy obtains and renews the certificate itself (ports 80 and 443 must reach
+# this host); with "localhost" it uses its own local certificate authority.
+{
+	admin off
+}
+
+{$TWIN_PUBLIC_HOST} {
+	encode zstd gzip
+
+	header {
+		# HTTPS only from now on (this origin never serves plain HTTP content)
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+
+	handle /api/v1/* {
+		reverse_proxy api:8000 {
+			# hold a request briefly while the API restarts instead of answering 502
+			lb_try_duration 15s
+			# A fresh id per request, never the client's: the API logs it and returns it.
+			header_up X-Request-ID {http.request.uuid}
+			# X-Forwarded-For/-Proto/-Host are set by Caddy from the real connection; values a
+			# client sends are not trusted (no trusted_proxies here). The API believes them only
+			# from this container's address (TWIN_FORWARDED_ALLOW_IPS).
+		}
+	}
+
+	handle {
+		reverse_proxy web:3000 {
+			lb_try_duration 15s
+		}
+	}
+}
