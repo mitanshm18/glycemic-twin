@@ -1,5 +1,7 @@
 # Glycemic Digital Twin
 
+[![CI](https://github.com/mitanshm18/glycemic-twin/actions/workflows/ci.yml/badge.svg)](https://github.com/mitanshm18/glycemic-twin/actions/workflows/ci.yml)
+
 A personal digital twin for prediabetes and type 2 diabetes that predicts, at each logged meal, whether
 Dexcom glucose will exceed 180 mg/dL within the next 120 minutes. Built on real, open CGMacros v1.0.0
 data. Research proof of concept; not a medical device.
@@ -91,6 +93,21 @@ docker compose exec api twin-api create-user alice --role clinician
 ```
 
 See [docs/deployment.md](docs/deployment.md) and [docs/security.md](docs/security.md).
+
+## Continuous integration
+
+[.github/workflows/ci.yml](.github/workflows/ci.yml) runs on every pull request and every push to
+`main`, as three parallel jobs:
+
+- **Backend:** `uv sync --locked`, `ruff check`, `ruff format --check`, `mypy`, and `pytest` against
+  a throwaway PostgreSQL 16 service (migrations and schema included). The run fails if any test is
+  skipped, so the database tests cannot silently drop out.
+- **Frontend:** Node 22: `npm ci`, `lint`, `typecheck`, `test` (Vitest), `build`.
+- **Images:** builds the API and web production images for `linux/amd64` (the deployment target)
+  and smoke-tests them (non-root user, imports, `/login` served). Nothing is pushed.
+
+CI uses only synthetic fixtures: no CGMacros data, processed artifacts, model bundles or secrets.
+Checks on the real data (and the Playwright E2E suite) stay local, before a demo.
 
 ## Layout
 
