@@ -1,0 +1,66 @@
+# Training and evaluation config v1 (M3, ADR-016). Fixed before any real-data training.
+# Model INPUT columns never come from this file: every model and baseline takes its columns from
+# model_features.v1.yaml (ADR-015). Baselines name a subset of the primary contract columns, and the
+# loader refuses any name that is not in the contract.
+version: 1
+model_contract: model_features.v1.yaml
+seed: 20261001
+
+# Outer folds: the pinned participant folds (data/manifests/folds.v1.csv, the dataset's `fold`).
+# Inner folds: participant-level, stratified by glycemic group, drawn only from the outer-training
+# participants (seed = seed + outer fold).
+inner_folds: 4
+
+# Rows used to FIT models: eligible meals of every glycemic group in the training participants.
+# Rows used to EVALUATE: the primary population is labels.v1 target_groups (prediabetes + T2D);
+# healthy participants are reported separately.
+min_meals_per_person_prior: 3
+
+# Hyper-parameters are chosen on inner out-of-fold predictions of target-group meals.
+selection_metric: average_precision
+calibration: platt              # logistic recalibration of the raw score, fitted on inner OOF only
+threshold_rule: f1_max          # decision threshold chosen on inner OOF calibrated probabilities
+
+primary_model: xgboost          # pre-registered primary model (full_personal feature set)
+ablation_models: [logistic, xgboost]
+
+models:
+  logistic:
+    grid:
+      C: [0.01, 0.1, 1.0, 10.0]
+    fixed:
+      max_iter: 5000
+  xgboost:
+    grid:
+      max_depth: [2, 3]
+      min_child_weight: [5, 20]
+    fixed:
+      n_estimators: 300
+      learning_rate: 0.05
+      subsample: 0.8
+      colsample_bytree: 0.8
+      reg_lambda: 1.0
+      tree_method: hist
+      n_jobs: 1
+    # +1: risk can only rise with the feature; -1: only fall. Applied to columns present in the set.
+    monotone: {g_last: 1, carbs_g: 1, fiber_g: -1}
+
+baselines:
+  B1_rule_glucose_carbs:        # score = g_last + a * carbs_g; a chosen on inner OOF
+    kind: rule
+    columns: [g_last, carbs_g]
+    a_grid: [0.5, 1.0, 1.5, 2.0, 3.0]
+  B2_hba1c_only:
+    kind: logistic
+    columns: [hba1c_pct]
+  B3_personal_rate:             # the person's own shrunk past positive rate (fold prior)
+    kind: score
+    columns: [p_personal]
+  B4_glucose_carbs_lr:
+    kind: logistic
+    columns: [g_last, carbs_g]
+
+evaluation:
+  bootstrap_resamples: 1000
+  ci: 0.95
+  calibration_bins: 10

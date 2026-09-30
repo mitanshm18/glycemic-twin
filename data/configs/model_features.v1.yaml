@@ -1,0 +1,36 @@
+# Model feature contract v1 (ADR-015). Fixed before any model is trained.
+# The ONLY definition of which columns a trained model receives, in which order. Used identically by
+# offline training, cross-validation, out-of-fold prediction and (from M5) API serving.
+# A change is model_features.v2.yaml with its own ADR; v1 is never edited in place.
+version: 1
+
+# Pinned upstream configs. Loading fails if either file no longer matches its hash.
+features_config: features.v1.yaml
+features_sha256: efe1cbfdcfff70497ff20de57824d441f5f7805715ededf331e037acb7d23b35
+labels_config: labels.v1.yaml
+labels_sha256: 6088a0ad14b19ffc3b7b4254dac09bb1664c19b17577fbe15fb3adbe01e8a9de
+
+# Base features: every feature in these features.v1 groups, in features.v1 order.
+base_groups: [glucose, meal, context, wearable, clinical]
+
+# In the M2 dataset but NOT passed to any model: raw past-only counts kept for audit and for the
+# consistency test. personal_weight and p_personal carry the same information in scale-free form.
+not_model_inputs: [n_closed_meals, n_closed_positive]
+
+# Personal features, appended after the base features in this order. Computed by
+# twin_core.personalization.personal_features with a PopulationPrior fitted ONLY on the training
+# participants of the same model fit (every outer fold, every inner tuning fold, the final model).
+personal:
+  features: [p_personal, rise_offset_mgdl, personal_weight]
+  prior_fit_rows: training participants' frozen-usable meals
+  history_rows: all of the person's meals; only windows closed at t0 count
+
+# Named feature sets. Every model and ablation is trained on exactly one of these.
+primary_feature_set: full_personal
+feature_sets:
+  glucose_only: [glucose]
+  glucose_meal: [glucose, meal]
+  glucose_wearable: [glucose, wearable]
+  glucose_clinical: [glucose, clinical]
+  full_multimodal: [glucose, meal, context, wearable, clinical]
+  full_personal: [glucose, meal, context, wearable, clinical, personal]

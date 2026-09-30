@@ -1,0 +1,76 @@
+# Cleaning configuration v1 for CGMacros v1.0.0.
+# Fixed before any model is trained. Any change creates cleaning.v2.yaml; results under both are kept.
+# Every threshold states its source and type:
+#   hard       - the value cannot be real (from the data dictionary or physics)
+#   structural - format or consistency
+#   judgment   - a threshold we chose; its effect is counted in the audit report
+version: 1
+
+cgm:
+  # hard: sensor reporting range per the CGMacros data dictionary (40-400 mg/dL, both sensors)
+  valid_range_mgdl: [40, 400]
+  native_grid:
+    # structural: Dexcom G6 records every 5 min, Libre Pro every 15 min (data dictionary / PhysioNet page)
+    dexcom_period_min: 5
+    libre_period_min: 15
+    # judgment: a minute phase is the native lattice only if >= 99% of its values are whole numbers
+    # (devices log integers; interpolated values are mostly fractional - Phase 0A audit: 52-65% non-integer)
+    min_integer_share: 0.99
+    # judgment: a second phase this integer-rich makes the lattice ambiguous -> not accepted
+    max_other_phase_integer_share: 0.90
+    # judgment: minimum values in a segment before a phase decision is attempted (2 h of minute rows)
+    min_points: 120
+    # judgment: a gap in readings longer than this starts a new segment, whose phase may differ
+    # (a new G6 sensor needs a 2 h warm-up, so a sensor change always leaves a gap)
+    segment_gap_min: 30
+    # structural: tolerance when checking that minute values lie on the line between native readings
+    linearity_tolerance_mgdl: 0.05
+    # judgment: share of native-to-native intervals that must be linear to call interpolation linear
+    min_linear_share: 0.99
+
+wearable:
+  # judgment: plausible adult heart rate; dictionary's observed range is 30-176 bpm
+  hr_valid_range_bpm: [30, 220]
+  # structural: dictionary says METs are stored multiplied by 10
+  mets_scale_divisor: 10
+  # hard (after scaling): dictionary range 10-176 stored -> 1.0-17.6 METs
+  mets_valid_range: [1.0, 17.6]
+  # hard: calories burned in a minute cannot be negative
+  activity_kcal_min: 0
+
+meals:
+  # structural: normalized meal types; the dictionary lists breakfast/lunch/dinner, the data also has snacks
+  known_types: [breakfast, lunch, dinner, snack]
+  # structural: "snack", "snacks", "snack 1", ... -> snack (case-insensitive, trimmed)
+  snack_pattern: "^snacks?(\\s*\\d+)?$"
+  # hard: the dictionary defines Amount Consumed as a 0-100 % estimate (Phase 0A saw values up to 900)
+  amount_consumed_valid_pct: [0, 100]
+  # hard: dietary fiber is part of total carbohydrate in US Nutrition Facts labeling,
+  # which MyFitnessPal-style logs follow, so fiber cannot exceed carbs
+  fiber_must_not_exceed_carbs: true
+  # standard Atwater general factors, kcal per gram
+  atwater_kcal_per_g: {carbs: 4, protein: 4, fat: 9}
+  # judgment: Atwater energy / logged calories outside this band -> "inconsistent"
+  energy_ratio_valid: [0.5, 2.0]
+  # judgment: calories and every macro exactly 0 -> "empty" (a log with no content cannot be scored)
+  flag_empty_meals: true
+  # Validity precedence per meal: missing > invalid > empty > inconsistent > valid
+
+clinical:
+  # hard: documented error codes in the data dictionary / seen once each in the Phase 0A audit
+  sentinels:
+    ldl_mgdl: 800
+    vldl_mgdl: 400
+    chol_hdl_ratio: 400
+  # structural: dictionary says mmol/mol but the values (4.6-8.5) are percent
+  hba1c_unit: percent
+  # derived groups, thresholds as stated on the CGMacros PhysioNet page (HbA1c %)
+  glycemic_groups:
+    prediabetes_min: 5.7
+    t2d_min_exclusive: 6.4
+
+timeseries:
+  # structural: consecutive rows further apart than this are recorded as a gap (never filled)
+  gap_flag_min: 5
+  # structural: rows sharing a timestamp - identical ones collapse; conflicting sensor values are nulled
+  duplicate_policy: null_conflicting

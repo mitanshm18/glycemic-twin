@@ -1,0 +1,26 @@
+# Raw CGMacros data: large and licensed (CC BY-NC-SA 4.0). Never committed.
+data/raw/*
+!data/raw/README.md
+# Processed layers are rebuilt by `make m1`.
+data/processed/*
+!data/processed/.gitkeep
+
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.env
+.DS_Store
+
+# Local secrets never enter Git (.env.example is the committed template)
+.env.*
+!.env.example
+
+# Raw CGMacros download (licensed participant data) and local transfer archives. Never committed.
+/CGMacros*/
+/.m6-transfer/
+*.tar.gz
+*.tgz

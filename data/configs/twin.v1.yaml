@@ -1,0 +1,41 @@
+# Digital Twin engine config v1 (M4, ADR-017). Changes are twin.v2.yaml with a new ADR.
+# Nothing here changes labels.v1, features.v1 or the model contract: the twin reuses them unchanged.
+version: 1
+state_schema: twin-state/1
+
+# Lifecycle. n = the person's frozen-usable meals whose 120-minute window closed before as_of;
+# w = personal_weight = n_rise / (n_rise + k), k from the PopulationPrior stored in the model bundle.
+lifecycle:
+  personalized_min_weight: 0.5        # PERSONALIZED needs w >= 0.5: own data outweighs the prior
+  personalized_min_closed_meals: 3    # ... and at least 3 closed usable meals
+
+# Data freshness at as_of (a stale input is reported, never silently used as current).
+freshness:
+  cgm_stale_after_min: 15             # same as the g_last look-back and the pre-meal rule
+  wearable_stale_after_min: 30        # same as the hr_30 window
+
+recent_meals_listed: 5                # closed meal outcomes shown in the state, newest first
+
+what_if:
+  # A scenario input must stay inside the training data's central range for that feature.
+  support_quantiles: [0.01, 0.99]
+  # Largest change a single scenario may apply (absolute units of the feature).
+  max_abs_delta:
+    carbs_g: 100
+    fiber_g: 30
+    protein_g: 60
+    fat_g: 60
+    active_min_3h: 120
+  # Calories follow macro changes (Atwater, as in cleaning.v1); fiber is part of logged carbs.
+  kcal_per_g:
+    carbs_g: 4
+    protein_g: 4
+    fat_g: 9
+    fiber_g: 0
+  # Scenario keys containing any of these words are refused outright.
+  blocked_terms: [insulin, medication, medicine, metformin, drug, dose, dosage, diagnosis,
+                  treatment, prescription, glp, sulfonylurea, therapy]
+
+uncertainty:
+  # "high" if any of these holds, "moderate" if one soft condition holds, else "low".
+  near_threshold_band: 0.10           # |p - threshold| < band -> outcome close to the decision line

@@ -1,0 +1,210 @@
+{
+  "config": {
+    "features_sha256": "efe1cbfdcfff70497ff20de57824d441f5f7805715ededf331e037acb7d23b35",
+    "features_version": 1,
+    "labels_sha256": "6088a0ad14b19ffc3b7b4254dac09bb1664c19b17577fbe15fb3adbe01e8a9de",
+    "labels_version": 1
+  },
+  "eligible_meals": 1196,
+  "eligible_target_meals": 785,
+  "eligible_target_positives": 377,
+  "feature_availability_eligible_target": {
+    "active_min_3h": 0.8268,
+    "activity_kcal_60": 0.9975,
+    "age_years": 1.0,
+    "bmi": 1.0,
+    "calories_kcal": 1.0,
+    "carbs_g": 1.0,
+    "carbs_prev_3h": 1.0,
+    "fasting_glucose_mgdl": 1.0,
+    "fasting_insulin_uu_ml": 1.0,
+    "fat_g": 1.0,
+    "fiber_g": 1.0,
+    "g_age_min": 1.0,
+    "g_last": 1.0,
+    "g_overnight_baseline": 0.9287,
+    "g_vs_baseline": 0.9287,
+    "hba1c_pct": 1.0,
+    "hdl_mgdl": 1.0,
+    "homa_ir": 1.0,
+    "hour_cos": 1.0,
+    "hour_sin": 1.0,
+    "hr_30": 0.9567,
+    "hr_age_min": 0.9949,
+    "hr_delta": 0.8752,
+    "hr_resting": 0.9121,
+    "invalid_meal_prev_3h": 1.0,
+    "max_180": 0.9885,
+    "meal_breakfast": 1.0,
+    "meal_dinner": 1.0,
+    "meal_lunch": 1.0,
+    "meal_snack": 1.0,
+    "mean_180": 0.9885,
+    "mets_60": 0.8268,
+    "mets_available": 1.0,
+    "min_180": 0.9885,
+    "mins_since_meal": 1.0,
+    "n_closed_meals": 1.0,
+    "n_closed_positive": 1.0,
+    "protein_g": 1.0,
+    "sd_60": 0.9975,
+    "sex_female": 1.0,
+    "slope_15": 0.9975,
+    "slope_30": 0.9975,
+    "tir_24h": 0.9325,
+    "triglycerides_mgdl": 1.0
+  },
+  "features": 42,
+  "folds": {
+    "by_fold": [
+      {
+        "eligible_target_meals": 175,
+        "fold": 0,
+        "groups": {
+          "T2D": 3,
+          "healthy": 3,
+          "prediabetes": 3
+        },
+        "participants": 9,
+        "positive_rate": 0.6057,
+        "positives": 106,
+        "target_participants": 6
+      },
+      {
+        "eligible_target_meals": 131,
+        "fold": 1,
+        "groups": {
+          "T2D": 3,
+          "healthy": 3,
+          "prediabetes": 3
+        },
+        "participants": 9,
+        "positive_rate": 0.4885,
+        "positives": 64,
+        "target_participants": 6
+      },
+      {
+        "eligible_target_meals": 150,
+        "fold": 2,
+        "groups": {
+          "T2D": 3,
+          "healthy": 3,
+          "prediabetes": 3
+        },
+        "participants": 9,
+        "positive_rate": 0.6133,
+        "positives": 92,
+        "target_participants": 6
+      },
+      {
+        "eligible_target_meals": 192,
+        "fold": 3,
+        "groups": {
+          "T2D": 3,
+          "healthy": 2,
+          "prediabetes": 4
+        },
+        "participants": 9,
+        "positive_rate": 0.3385,
+        "positives": 65,
+        "target_participants": 7
+      },
+      {
+        "eligible_target_meals": 137,
+        "fold": 4,
+        "groups": {
+          "T2D": 2,
+          "healthy": 3,
+          "prediabetes": 3
+        },
+        "participants": 8,
+        "positive_rate": 0.365,
+        "positives": 50,
+        "target_participants": 5
+      }
+    ],
+    "n_folds": 5,
+    "seed": 20261001,
+    "status": "pinned"
+  },
+  "issues": [],
+  "leakage_checks": [
+    {
+      "check": "L1 feature names",
+      "detail": "ok",
+      "passed": true
+    },
+    {
+      "check": "L2 latest source <= meal start",
+      "detail": "0 meals read data after their start",
+      "passed": true
+    },
+    {
+      "check": "L3 features from history cut at t0 are identical",
+      "detail": "100 meals re-checked; mismatches []",
+      "passed": true
+    },
+    {
+      "check": "L4 folds are participant-disjoint",
+      "detail": "ok",
+      "passed": true
+    },
+    {
+      "check": "L5 no meal inside a usable meal's window",
+      "detail": "0 violations",
+      "passed": true
+    },
+    {
+      "check": "L6 single-feature AUROC within [0.05, 0.95] (review)",
+      "detail": "ok",
+      "passed": true
+    }
+  ],
+  "meals": 1663,
+  "single_feature_auroc_eligible_target": {
+    "active_min_3h": 0.4349,
+    "activity_kcal_60": 0.4721,
+    "age_years": 0.5547,
+    "bmi": 0.4574,
+    "calories_kcal": 0.5543,
+    "carbs_g": 0.597,
+    "carbs_prev_3h": 0.4802,
+    "fasting_glucose_mgdl": 0.6792,
+    "fasting_insulin_uu_ml": 0.4466,
+    "fat_g": 0.5035,
+    "fiber_g": 0.3819,
+    "g_age_min": 0.481,
+    "g_last": 0.7276,
+    "g_overnight_baseline": 0.6788,
+    "g_vs_baseline": 0.5852,
+    "hba1c_pct": 0.6929,
+    "hdl_mgdl": 0.4337,
+    "homa_ir": 0.5182,
+    "hour_cos": 0.5534,
+    "hour_sin": 0.586,
+    "hr_30": 0.4943,
+    "hr_age_min": 0.5004,
+    "hr_delta": 0.4646,
+    "hr_resting": 0.5112,
+    "invalid_meal_prev_3h": 0.4967,
+    "max_180": 0.5776,
+    "meal_breakfast": 0.6178,
+    "meal_dinner": 0.5165,
+    "meal_lunch": 0.4012,
+    "meal_snack": 0.4644,
+    "mean_180": 0.6532,
+    "mets_60": 0.4584,
+    "mets_available": 0.4817,
+    "min_180": 0.7265,
+    "mins_since_meal": 0.6415,
+    "n_closed_meals": 0.4934,
+    "n_closed_positive": 0.6372,
+    "protein_g": 0.4683,
+    "sd_60": 0.4434,
+    "sex_female": 0.4607,
+    "slope_15": 0.5057,
+    "slope_30": 0.5179,
+    "tir_24h": 0.2978,
+    "triglycerides_mgdl": 0.5381
+  }
+}

@@ -1,0 +1,183 @@
+/*
+  Design tokens (ADR-019). Components use ONLY these semantic names, never raw colors.
+  Light is the default; dark applies when <html data-theme="dark"> is set by the theme script
+  (explicit choice, or "system" resolved from prefers-color-scheme) before first paint.
+
+  Color model: OKLCH, so lightness steps are perceptually even and the same hue reads as the same
+  "meaning" in both themes. Dark mode is a separate, deliberately lower-contrast palette on a
+  blue-graphite canvas (not black), with semantic colors re-tuned for dark surfaces.
+*/
+
+:root {
+  color-scheme: light;
+
+  /* surfaces: canvas < subtle < surface (raised) */
+  --canvas: oklch(0.982 0.003 250);
+  --surface: oklch(1 0 0);
+  --surface-subtle: oklch(0.966 0.004 250);
+  --surface-sunken: oklch(0.948 0.005 250);
+  --surface-inverse: oklch(0.24 0.012 255);
+
+  /* borders */
+  --border: oklch(0.912 0.005 250);
+  --border-strong: oklch(0.842 0.008 250);
+  --border-focus: oklch(0.55 0.15 256);
+
+  /* text */
+  --text: oklch(0.225 0.012 255);
+  --text-secondary: oklch(0.43 0.012 255);
+  --text-muted: oklch(0.515 0.011 255); /* >= 4.8:1 on every light surface and tint (AA) */
+  --text-inverse: oklch(0.97 0.004 250);
+
+  /* interactive accent (links, focus, selection): ink blue */
+  --accent: oklch(0.5 0.14 256);
+  --accent-hover: oklch(0.44 0.14 256);
+  --accent-soft: oklch(0.95 0.025 256);
+  --accent-text: oklch(0.45 0.14 256);
+
+  /* semantics. -fg for text/icons on canvas, -soft for quiet fills, -line for chart strokes */
+  --success-fg: oklch(0.47 0.11 155);
+  --success-soft: oklch(0.955 0.03 155);
+  --success-line: oklch(0.6 0.12 155);
+  --warning-fg: oklch(0.5 0.11 70);
+  --warning-soft: oklch(0.965 0.04 85);
+  --warning-line: oklch(0.72 0.14 75);
+  --risk-fg: oklch(0.52 0.17 27);
+  --risk-soft: oklch(0.958 0.025 27);
+  --risk-line: oklch(0.6 0.19 27);
+
+  /* observed (measured) vs model-estimated: different color AND different stroke pattern */
+  --observed: oklch(0.3 0.02 255);
+  --model: oklch(0.52 0.16 290);
+  --model-soft: oklch(0.955 0.025 290);
+
+  /* charts */
+  --chart-grid: oklch(0.93 0.004 250);
+  --chart-axis: oklch(0.53 0.01 255); /* axis labels are small text: AA on chart surfaces */
+  --chart-band: oklch(0.955 0.02 155 / 0.55); /* 70-180 mg/dL target range */
+  --chart-window: oklch(0.52 0.16 290 / 0.07); /* prediction window */
+  --chart-crosshair: oklch(0.45 0.012 255 / 0.5);
+  --chart-series-2: oklch(0.6 0.12 220);
+  --chart-series-3: oklch(0.65 0.13 60);
+
+  /* elevation: borders carry structure; shadows only for floating layers */
+  --shadow-float: 0 1px 2px oklch(0.2 0.02 255 / 0.06), 0 8px 24px -6px oklch(0.2 0.02 255 / 0.14);
+  --shadow-overlay: 0 24px 64px -12px oklch(0.2 0.02 255 / 0.28);
+  --scrim: oklch(0.2 0.02 255 / 0.36);
+
+  /* type */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --text-2xs: 0.6875rem; /* 11 */
+  --text-xs: 0.75rem; /* 12 */
+  --text-sm: 0.8125rem; /* 13 */
+  --text-base: 0.875rem; /* 14: default UI text */
+  --text-md: 1rem; /* 16 */
+  --text-lg: 1.25rem; /* 20 */
+  --text-xl: 1.625rem; /* 26 */
+  --text-display: 3.25rem; /* 52: the one hero number */
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* space (4px grid) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.25rem;
+  --s-6: 1.5rem;
+  --s-8: 2rem;
+  --s-10: 2.5rem;
+  --s-12: 3rem;
+  --s-16: 4rem;
+
+  /* radius: restrained */
+  --r-xs: 3px;
+  --r-sm: 5px;
+  --r-md: 7px;
+  --r-lg: 10px;
+  --r-full: 999px;
+
+  /* controls */
+  --control-sm: 1.75rem; /* 28 */
+  --control-md: 2rem; /* 32 */
+  --control-lg: 2.5rem; /* 40 */
+  --icon-sm: 14px;
+  --icon-md: 16px;
+  --icon-lg: 20px;
+
+  /* motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --dur-micro: 120ms;
+  --dur-standard: 200ms;
+  --dur-emphasis: 360ms;
+  --dur-reveal: 1400ms;
+
+  /* layout */
+  --sidebar-w: 14.5rem;
+  --content-max: 76rem;
+  --topbar-h: 3.25rem;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: oklch(0.172 0.01 256);
+  --surface: oklch(0.207 0.011 256);
+  --surface-subtle: oklch(0.194 0.011 256);
+  --surface-sunken: oklch(0.155 0.009 256);
+  --surface-inverse: oklch(0.93 0.005 250);
+
+  --border: oklch(0.285 0.012 256);
+  --border-strong: oklch(0.36 0.014 256);
+  --border-focus: oklch(0.72 0.13 256);
+
+  --text: oklch(0.945 0.005 250);
+  --text-secondary: oklch(0.79 0.011 255);
+  --text-muted: oklch(0.68 0.012 255); /* >= 4.7:1 on every dark surface and tint (AA) */
+  --text-inverse: oklch(0.2 0.012 255);
+
+  --accent: oklch(0.72 0.12 256);
+  --accent-hover: oklch(0.78 0.11 256);
+  --accent-soft: oklch(0.29 0.045 256);
+  --accent-text: oklch(0.78 0.11 256);
+
+  --success-fg: oklch(0.78 0.13 155);
+  --success-soft: oklch(0.28 0.045 155);
+  --success-line: oklch(0.72 0.14 155);
+  --warning-fg: oklch(0.84 0.12 82);
+  --warning-soft: oklch(0.3 0.05 75);
+  --warning-line: oklch(0.8 0.13 78);
+  --risk-fg: oklch(0.76 0.14 25);
+  --risk-soft: oklch(0.3 0.06 25);
+  --risk-line: oklch(0.7 0.17 25);
+
+  --observed: oklch(0.9 0.01 250);
+  --model: oklch(0.76 0.12 290);
+  --model-soft: oklch(0.29 0.05 290);
+
+  --chart-grid: oklch(0.26 0.011 256);
+  --chart-axis: oklch(0.65 0.012 255);
+  --chart-band: oklch(0.36 0.05 155 / 0.32);
+  --chart-window: oklch(0.76 0.12 290 / 0.09);
+  --chart-crosshair: oklch(0.8 0.01 255 / 0.45);
+  --chart-series-2: oklch(0.74 0.11 220);
+  --chart-series-3: oklch(0.8 0.12 70);
+
+  --shadow-float: 0 1px 2px oklch(0 0 0 / 0.4), 0 10px 28px -8px oklch(0 0 0 / 0.55);
+  --shadow-overlay: 0 24px 64px -12px oklch(0 0 0 / 0.7);
+  --scrim: oklch(0.1 0.01 256 / 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-micro: 0ms;
+    --dur-standard: 0ms;
+    --dur-emphasis: 0ms;
+    --dur-reveal: 0ms;
+  }
+}

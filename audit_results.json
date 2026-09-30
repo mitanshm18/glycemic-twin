@@ -1,0 +1,1867 @@
+{
+  "source": "/Users/mitanshm_18/Downloads/CGMacros",
+  "supplementary_files": [
+    "bio.csv",
+    "gut_health_test.csv",
+    "microbes.csv"
+  ],
+  "participant_file_count": 44,
+  "participant_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    38,
+    39,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "ids_missing_in_1_to_max": [
+    1,
+    24,
+    25,
+    37,
+    40
+  ],
+  "participant_columns_union": [
+    "Amount Consumed",
+    "Calories",
+    "Calories (Activity)",
+    "Carbs",
+    "Dexcom GL",
+    "Fat",
+    "Fiber",
+    "HR",
+    "Image path",
+    "Intensity",
+    "Libre GL",
+    "METs",
+    "Meal Type",
+    "Protein",
+    "RecordIndex",
+    "Steps",
+    "Sugar",
+    "Timestamp",
+    "Unnamed: 0"
+  ],
+  "participant_column_presence": {
+    "Amount Consumed": 42,
+    "Calories": 44,
+    "Calories (Activity)": 43,
+    "Carbs": 44,
+    "Dexcom GL": 44,
+    "Fat": 44,
+    "Fiber": 44,
+    "HR": 44,
+    "Image path": 44,
+    "Intensity": 11,
+    "Libre GL": 44,
+    "METs": 33,
+    "Meal Type": 44,
+    "Protein": 44,
+    "RecordIndex": 1,
+    "Steps": 1,
+    "Sugar": 1,
+    "Timestamp": 44,
+    "Unnamed: 0": 8
+  },
+  "bio": {
+    "rows": 45,
+    "columns": [
+      "subject",
+      "Age",
+      "Gender",
+      "BMI",
+      "Body weight ",
+      "Height ",
+      "Self-identify ",
+      "A1c PDL (Lab)",
+      "Fasting GLU - PDL (Lab)",
+      "Insulin ",
+      "Triglycerides",
+      "Cholesterol",
+      "HDL",
+      "Non HDL ",
+      "LDL (Cal)",
+      "VLDL (Cal)",
+      "Cho/HDL Ratio",
+      "Collection time PDL (Lab)",
+      "#1 Contour Fingerstick GLU",
+      "Time (t)",
+      " #2 Contour Fingerstick GLU",
+      "Time (t).1",
+      "#3 Contour Fingerstick GLU",
+      "Time (t).2"
+    ],
+    "null_counts": {
+      "subject": 0,
+      "Age": 0,
+      "Gender": 0,
+      "BMI": 0,
+      "Body weight ": 0,
+      "Height ": 0,
+      "Self-identify ": 0,
+      "A1c PDL (Lab)": 0,
+      "Fasting GLU - PDL (Lab)": 0,
+      "Insulin ": 0,
+      "Triglycerides": 0,
+      "Cholesterol": 0,
+      "HDL": 0,
+      "Non HDL ": 0,
+      "LDL (Cal)": 0,
+      "VLDL (Cal)": 0,
+      "Cho/HDL Ratio": 0,
+      "Collection time PDL (Lab)": 0,
+      "#1 Contour Fingerstick GLU": 0,
+      "Time (t)": 0,
+      " #2 Contour Fingerstick GLU": 0,
+      "Time (t).1": 0,
+      "#3 Contour Fingerstick GLU": 0,
+      "Time (t).2": 0
+    },
+    "medication_like_columns": [],
+    "id_column": "subject",
+    "a1c_column": "A1c PDL (Lab)",
+    "sentinel_error_counts": {
+      "LDL (Cal)": 1,
+      "VLDL (Cal)": 1,
+      "Cho/HDL Ratio": 1
+    },
+    "a1c_min_max": [
+      4.6,
+      8.5
+    ],
+    "time_like_columns": [
+      "Collection time PDL (Lab)",
+      "Time (t)",
+      "Time (t).1",
+      "Time (t).2"
+    ]
+  },
+  "supplementary_shapes": {
+    "gut_health_test.csv": [
+      47,
+      23
+    ],
+    "bio.csv": [
+      45,
+      24
+    ],
+    "microbes.csv": [
+      45,
+      1980
+    ]
+  },
+  "medication_like_columns_anywhere": {
+    "participant_files": [],
+    "gut_health_test.csv": [],
+    "bio.csv": [],
+    "microbes.csv": []
+  },
+  "per_participant": [
+    {
+      "pid": 2,
+      "group": "healthy",
+      "a1c": 5.5,
+      "rows": 17025,
+      "span_days": 11.82,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999412628487518,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.19665198237885462,
+        "Libre GL": 0.0,
+        "HR": 0.16088105726872245,
+        "METs": 0.14079295154185023,
+        "Calories (Activity)": 0.14079295154185023
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5862396724427872,
+      "libre_noninteger_share": 0.7693392070484582,
+      "meal_rows": 37,
+      "image_rows": 75,
+      "image_rows_without_meal_type": 40
+    },
+    {
+      "pid": 3,
+      "group": "T2D",
+      "a1c": 6.5,
+      "rows": 14565,
+      "span_days": 10.12,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.998901476141435,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.020940611053896326,
+        "Libre GL": 0.0,
+        "HR": 0.005973223480947477,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5467040673211782,
+      "libre_noninteger_share": 0.7695159629248197,
+      "meal_rows": 35,
+      "image_rows": 64,
+      "image_rows_without_meal_type": 29
+    },
+    {
+      "pid": 4,
+      "group": "healthy",
+      "a1c": 5.5,
+      "rows": 14275,
+      "span_days": 9.91,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999299474605955,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.0,
+        "Libre GL": 0.015411558669001752,
+        "HR": 0.0028021015761821367,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5982486865148862,
+      "libre_noninteger_share": 0.7710423336890786,
+      "meal_rows": 62,
+      "image_rows": 115,
+      "image_rows_without_meal_type": 54
+    },
+    {
+      "pid": 5,
+      "group": "T2D",
+      "a1c": 6.6,
+      "rows": 14460,
+      "span_days": 10.04,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999308437067773,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.012793914246196404,
+        "Libre GL": 0.0,
+        "HR": 0.012240663900414938,
+        "METs": 0.0015214384508990318,
+        "Calories (Activity)": 0.0015214384508990318
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6055341506129597,
+      "libre_noninteger_share": 0.7770401106500692,
+      "meal_rows": 46,
+      "image_rows": 92,
+      "image_rows_without_meal_type": 47
+    },
+    {
+      "pid": 6,
+      "group": "healthy",
+      "a1c": 5.2,
+      "rows": 14460,
+      "span_days": 10.04,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999308437067773,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.012793914246196404,
+        "Libre GL": 0.0,
+        "HR": 0.008298755186721992,
+        "METs": 0.0017289073305670815,
+        "Calories (Activity)": 0.0017289073305670815
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5332399299474606,
+      "libre_noninteger_share": 0.766390041493776,
+      "meal_rows": 38,
+      "image_rows": 74,
+      "image_rows_without_meal_type": 36
+    },
+    {
+      "pid": 7,
+      "group": "prediabetes",
+      "a1c": 5.9,
+      "rows": 5655,
+      "span_days": 7.23,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.8459770114942529,
+      "row_gaps_over_5min": 390,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.002652519893899204,
+        "Libre GL": 0.0,
+        "HR": 0.002652519893899204,
+        "METs": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5225177304964539,
+      "libre_noninteger_share": 0.5184792219274977,
+      "meal_rows": 17,
+      "image_rows": 27,
+      "image_rows_without_meal_type": 11
+    },
+    {
+      "pid": 8,
+      "group": "prediabetes",
+      "a1c": 5.8,
+      "rows": 14760,
+      "span_days": 10.25,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999322493224932,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.036585365853658534,
+        "Libre GL": 0.0,
+        "HR": 0.022018970189701895,
+        "METs": 0.01788617886178862,
+        "Calories (Activity)": 0.01788617886178862
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6157524613220816,
+      "libre_noninteger_share": 0.7733062330623306,
+      "meal_rows": 30,
+      "image_rows": 60,
+      "image_rows_without_meal_type": 30
+    },
+    {
+      "pid": 9,
+      "group": "prediabetes",
+      "a1c": 5.7,
+      "rows": 14370,
+      "span_days": 9.98,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999304105775922,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.010020876826722338,
+        "Libre GL": 0.0,
+        "HR": 0.014822546972860125,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5969351890903979,
+      "libre_noninteger_share": 0.7937369519832985,
+      "meal_rows": 41,
+      "image_rows": 79,
+      "image_rows_without_meal_type": 38
+    },
+    {
+      "pid": 10,
+      "group": "prediabetes",
+      "a1c": 5.7,
+      "rows": 16155,
+      "span_days": 11.22,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999380996595482,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.11637264004952028,
+        "Libre GL": 0.0,
+        "HR": 0.06289074589910244,
+        "METs": 0.05403899721448468,
+        "Calories (Activity)": 0.05403899721448468
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6021716287215412,
+      "libre_noninteger_share": 0.7712782420303311,
+      "meal_rows": 45,
+      "image_rows": 78,
+      "image_rows_without_meal_type": 34
+    },
+    {
+      "pid": 11,
+      "group": "prediabetes",
+      "a1c": 5.7,
+      "rows": 14805,
+      "span_days": 10.28,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999324552516042,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.03579871664978048,
+        "Libre GL": 0.0,
+        "HR": 0.01006416751097602,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6066549912434326,
+      "libre_noninteger_share": 0.7813576494427559,
+      "meal_rows": 39,
+      "image_rows": 79,
+      "image_rows_without_meal_type": 44
+    },
+    {
+      "pid": 12,
+      "group": "T2D",
+      "a1c": 7.1,
+      "rows": 14655,
+      "span_days": 10.19,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9989082224496759,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.026270897304674173,
+        "Libre GL": 0.0,
+        "HR": 0.08570453770044353,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6144358794674142,
+      "libre_noninteger_share": 0.7747526441487547,
+      "meal_rows": 33,
+      "image_rows": 62,
+      "image_rows_without_meal_type": 30
+    },
+    {
+      "pid": 13,
+      "group": "prediabetes",
+      "a1c": 6.2,
+      "rows": 15840,
+      "span_days": 11.0,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999368686868687,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.09880050505050506,
+        "Libre GL": 0.0,
+        "HR": 0.04059343434343434,
+        "METs": 0.03295454545454545,
+        "Calories (Activity)": 0.03295454545454545
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5954465849387041,
+      "libre_noninteger_share": 0.7726010101010101,
+      "meal_rows": 39,
+      "image_rows": 77,
+      "image_rows_without_meal_type": 39
+    },
+    {
+      "pid": 14,
+      "group": "T2D",
+      "a1c": 7.1,
+      "rows": 17250,
+      "span_days": 11.98,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999420289855072,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.17246376811594202,
+        "Libre GL": 0.0,
+        "HR": 0.1216231884057971,
+        "METs": 0.11310144927536232,
+        "Calories (Activity)": 0.11310144927536232
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6038528896672505,
+      "libre_noninteger_share": 0.784463768115942,
+      "meal_rows": 40,
+      "image_rows": 88,
+      "image_rows_without_meal_type": 48
+    },
+    {
+      "pid": 15,
+      "group": "healthy",
+      "a1c": 5.4,
+      "rows": 16875,
+      "span_days": 11.97,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9910518518518519,
+      "row_gaps_over_5min": 30,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.15792592592592591,
+        "Libre GL": 0.0,
+        "HR": 0.11762962962962963,
+        "METs": 0.10500740740740741,
+        "Calories (Activity)": 0.10500740740740741
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5890218156228009,
+      "libre_noninteger_share": 0.45226666666666665,
+      "meal_rows": 52,
+      "image_rows": 99,
+      "image_rows_without_meal_type": 48
+    },
+    {
+      "pid": 16,
+      "group": "prediabetes",
+      "a1c": 5.8,
+      "rows": 16290,
+      "span_days": 11.31,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.999938612645795,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.12369551872314304,
+        "Libre GL": 0.0,
+        "HR": 0.06513198281154083,
+        "METs": 0.06151012891344383,
+        "Calories (Activity)": 0.06151012891344383
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6161821366024518,
+      "libre_noninteger_share": 0.7831798649478208,
+      "meal_rows": 28,
+      "image_rows": 71,
+      "image_rows_without_meal_type": 52
+    },
+    {
+      "pid": 17,
+      "group": "healthy",
+      "a1c": 5.0,
+      "rows": 16185,
+      "span_days": 11.24,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999382143960457,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.12017299969107198,
+        "Libre GL": 0.0,
+        "HR": 0.1869632375656472,
+        "METs": 0.0541241890639481,
+        "Calories (Activity)": 0.0541241890639481
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6014044943820225,
+      "libre_noninteger_share": 0.7809700339820822,
+      "meal_rows": 48,
+      "image_rows": 108,
+      "image_rows_without_meal_type": 60
+    },
+    {
+      "pid": 18,
+      "group": "healthy",
+      "a1c": 5.4,
+      "rows": 14085,
+      "span_days": 19.15,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9988640397586085,
+      "row_gaps_over_5min": 15,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.010720624778132765,
+        "Libre GL": 0.0,
+        "HR": 0.007028753993610224,
+        "METs": 0.0009939652112176073,
+        "Calories (Activity)": 0.0009939652112176073
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6143964403617052,
+      "libre_noninteger_share": 0.756833510827121,
+      "meal_rows": 39,
+      "image_rows": 71,
+      "image_rows_without_meal_type": 32
+    },
+    {
+      "pid": 19,
+      "group": "healthy",
+      "a1c": 5.6,
+      "rows": 14430,
+      "span_days": 10.03,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9988911988911989,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.01178101178101178,
+        "Libre GL": 0.0,
+        "HR": 0.020304920304920305,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5798036465638149,
+      "libre_noninteger_share": 0.7891891891891892,
+      "meal_rows": 48,
+      "image_rows": 74,
+      "image_rows_without_meal_type": 27
+    },
+    {
+      "pid": 20,
+      "group": "prediabetes",
+      "a1c": 6.4,
+      "rows": 16260,
+      "span_days": 11.29,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999384993849938,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.12207872078720787,
+        "Libre GL": 0.0,
+        "HR": 0.11722017220172201,
+        "METs": 0.05387453874538745,
+        "Calories (Activity)": 0.05387453874538745
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.612539404553415,
+      "libre_noninteger_share": 0.7970479704797048,
+      "meal_rows": 41,
+      "image_rows": 92,
+      "image_rows_without_meal_type": 51
+    },
+    {
+      "pid": 21,
+      "group": "healthy",
+      "a1c": 5.3,
+      "rows": 16125,
+      "span_days": 11.2,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.999937984496124,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.11472868217054263,
+        "Libre GL": 0.0,
+        "HR": 0.06257364341085271,
+        "METs": 0.04818604651162791,
+        "Calories (Activity)": 0.04818604651162791
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5856392294220666,
+      "libre_noninteger_share": 0.7759379844961241,
+      "meal_rows": 39,
+      "image_rows": 75,
+      "image_rows_without_meal_type": 36
+    },
+    {
+      "pid": 22,
+      "group": "prediabetes",
+      "a1c": 5.9,
+      "rows": 17625,
+      "span_days": 12.24,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999432624113476,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.1900709219858156,
+        "Libre GL": 0.0,
+        "HR": 0.1766241134751773,
+        "METs": 0.1290212765957447,
+        "Calories (Activity)": 0.1290212765957447
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6122591943957969,
+      "libre_noninteger_share": 0.7921702127659574,
+      "meal_rows": 42,
+      "image_rows": 97,
+      "image_rows_without_meal_type": 57
+    },
+    {
+      "pid": 23,
+      "group": "prediabetes",
+      "a1c": 6.2,
+      "rows": 16185,
+      "span_days": 11.24,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999382143960457,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.11862835959221502,
+        "Libre GL": 0.0,
+        "HR": 0.06506024096385542,
+        "METs": 0.0532591906085882,
+        "Calories (Activity)": 0.0532591906085882
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6286715737819839,
+      "libre_noninteger_share": 0.7817114612295335,
+      "meal_rows": 42,
+      "image_rows": 81,
+      "image_rows_without_meal_type": 39
+    },
+    {
+      "pid": 26,
+      "group": "prediabetes",
+      "a1c": 5.9,
+      "rows": 16320,
+      "span_days": 11.33,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.999938725490196,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.15294117647058825,
+        "Libre GL": 0.0,
+        "HR": 0.06795343137254901,
+        "Calories (Activity)": 0.059803921568627454
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6313657407407407,
+      "libre_noninteger_share": 0.7775735294117647,
+      "meal_rows": 36,
+      "image_rows": 59,
+      "image_rows_without_meal_type": 26
+    },
+    {
+      "pid": 27,
+      "group": "healthy",
+      "a1c": 4.7,
+      "rows": 14535,
+      "span_days": 10.09,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999312005503956,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.022359821121431027,
+        "Libre GL": 0.0,
+        "HR": 0.0034399724802201583,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6049261083743842,
+      "libre_noninteger_share": 0.7654626762985897,
+      "meal_rows": 36,
+      "image_rows": 73,
+      "image_rows_without_meal_type": 38
+    },
+    {
+      "pid": 28,
+      "group": "T2D",
+      "a1c": 7.0,
+      "rows": 18735,
+      "span_days": 13.01,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999466239658393,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.2404590338937817,
+        "Libre GL": 0.0,
+        "HR": 0.23730984787830264,
+        "METs": 0.18035761942887643,
+        "Calories (Activity)": 0.18035761942887643
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6063246661981728,
+      "libre_noninteger_share": 0.7772618094475581,
+      "meal_rows": 34,
+      "image_rows": 53,
+      "image_rows_without_meal_type": 21
+    },
+    {
+      "pid": 29,
+      "group": "prediabetes",
+      "a1c": 6.1,
+      "rows": 17730,
+      "span_days": 12.31,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999435984207558,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.19486745628877608,
+        "Libre GL": 0.0,
+        "HR": 0.14991539763113368,
+        "METs": 0.1344049633389735,
+        "Calories (Activity)": 0.1344049633389735
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5878809106830123,
+      "libre_noninteger_share": 0.7749576988155669,
+      "meal_rows": 30,
+      "image_rows": 57,
+      "image_rows_without_meal_type": 27
+    },
+    {
+      "pid": 30,
+      "group": "T2D",
+      "a1c": 7.6,
+      "rows": 15465,
+      "span_days": 10.74,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999353378596831,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.08115098609763984,
+        "Libre GL": 0.0,
+        "HR": 0.2,
+        "METs": 0.10552861299709021,
+        "Calories (Activity)": 0.10552861299709021
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6232230823363828,
+      "libre_noninteger_share": 0.7959909473003557,
+      "meal_rows": 28,
+      "image_rows": 42,
+      "image_rows_without_meal_type": 14
+    },
+    {
+      "pid": 31,
+      "group": "healthy",
+      "a1c": 5.1,
+      "rows": 13725,
+      "span_days": 9.53,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999271402550091,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.0037887067395264117,
+        "Libre GL": 0.0,
+        "HR": 0.01377049180327869,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6172017845388722,
+      "libre_noninteger_share": 0.7801821493624772,
+      "meal_rows": 54,
+      "image_rows": 67,
+      "image_rows_without_meal_type": 21
+    },
+    {
+      "pid": 32,
+      "group": "healthy",
+      "a1c": 5.3,
+      "rows": 13785,
+      "span_days": 9.57,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999274573812115,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.009357997823721436,
+        "Libre GL": 0.0,
+        "HR": 0.5241929633659775,
+        "Calories (Activity)": 0.04635473340587595
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6228031634446397,
+      "libre_noninteger_share": 0.6923467537178092,
+      "meal_rows": 20,
+      "image_rows": 35,
+      "image_rows_without_meal_type": 15
+    },
+    {
+      "pid": 33,
+      "group": "healthy",
+      "a1c": 5.6,
+      "rows": 15840,
+      "span_days": 11.01,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.998989898989899,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.10258838383838384,
+        "Libre GL": 0.0,
+        "HR": 0.31470959595959597,
+        "Calories (Activity)": 0.21875
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6386211748153359,
+      "libre_noninteger_share": 0.7935606060606061,
+      "meal_rows": 33,
+      "image_rows": 56,
+      "image_rows_without_meal_type": 27
+    },
+    {
+      "pid": 34,
+      "group": "healthy",
+      "a1c": 4.6,
+      "rows": 14700,
+      "span_days": 10.21,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999319727891156,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.02891156462585034,
+        "Libre GL": 0.0,
+        "HR": 0.4591156462585034,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6237478108581436,
+      "libre_noninteger_share": 0.7760544217687075,
+      "meal_rows": 49,
+      "image_rows": 98,
+      "image_rows_without_meal_type": 49
+    },
+    {
+      "pid": 35,
+      "group": "T2D",
+      "a1c": 8.5,
+      "rows": 14400,
+      "span_days": 10.0,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999305555555555,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.009027777777777777,
+        "Libre GL": 0.0,
+        "HR": 0.1629861111111111,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6315346881569727,
+      "libre_noninteger_share": 0.7929166666666667,
+      "meal_rows": 27,
+      "image_rows": 52,
+      "image_rows_without_meal_type": 25
+    },
+    {
+      "pid": 36,
+      "group": "T2D",
+      "a1c": 6.9,
+      "rows": 17115,
+      "span_days": 11.88,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999415717207129,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.16593631317557697,
+        "Libre GL": 0.0,
+        "HR": 0.15845749342681859,
+        "METs": 0.10943616710487876,
+        "Calories (Activity)": 0.10943616710487876
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6285113835376532,
+      "libre_noninteger_share": 0.7825883727724219,
+      "meal_rows": 30,
+      "image_rows": 59,
+      "image_rows_without_meal_type": 29
+    },
+    {
+      "pid": 38,
+      "group": "T2D",
+      "a1c": 7.2,
+      "rows": 14505,
+      "span_days": 10.07,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999310582557739,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.016201309893140295,
+        "Libre GL": 0.0,
+        "HR": 0.010961737331954498,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.620322354590049,
+      "libre_noninteger_share": 0.7811099620820406,
+      "meal_rows": 40,
+      "image_rows": 58,
+      "image_rows_without_meal_type": 19
+    },
+    {
+      "pid": 39,
+      "group": "T2D",
+      "a1c": 8.3,
+      "rows": 17205,
+      "span_days": 11.95,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999418773612322,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.17029933158965416,
+        "Libre GL": 0.0,
+        "HR": 0.16663760534728278,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6299124343257443,
+      "libre_noninteger_share": 0.795350188898576,
+      "meal_rows": 34,
+      "image_rows": 66,
+      "image_rows_without_meal_type": 32
+    },
+    {
+      "pid": 41,
+      "group": "prediabetes",
+      "a1c": 6.3,
+      "rows": 14310,
+      "span_days": 9.94,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999301187980433,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.004821802935010482,
+        "Libre GL": 0.0,
+        "HR": 0.31180992313067785,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6179341338389158,
+      "libre_noninteger_share": 0.790775681341719,
+      "meal_rows": 48,
+      "image_rows": 100,
+      "image_rows_without_meal_type": 52
+    },
+    {
+      "pid": 42,
+      "group": "T2D",
+      "a1c": 7.1,
+      "rows": 14520,
+      "span_days": 10.08,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.999931129476584,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.0168732782369146,
+        "Libre GL": 0.0,
+        "HR": 0.08849862258953169,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6343957968476357,
+      "libre_noninteger_share": 0.7914600550964187,
+      "meal_rows": 22,
+      "image_rows": 36,
+      "image_rows_without_meal_type": 18
+    },
+    {
+      "pid": 43,
+      "group": "prediabetes",
+      "a1c": 6.0,
+      "rows": 14520,
+      "span_days": 10.09,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9988980716253444,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.01790633608815427,
+        "Libre GL": 0.0,
+        "HR": 0.035330578512396696,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.600210378681627,
+      "libre_noninteger_share": 0.7807162534435261,
+      "meal_rows": 64,
+      "image_rows": 121,
+      "image_rows_without_meal_type": 59
+    },
+    {
+      "pid": 44,
+      "group": "prediabetes",
+      "a1c": 6.0,
+      "rows": 14535,
+      "span_days": 10.09,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999312005503956,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.021327829377364983,
+        "Libre GL": 0.0,
+        "HR": 0.1588579291365669,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.5896660808435852,
+      "libre_noninteger_share": 0.7675266597867217,
+      "meal_rows": 43,
+      "image_rows": 86,
+      "image_rows_without_meal_type": 44
+    },
+    {
+      "pid": 45,
+      "group": "prediabetes",
+      "a1c": 6.1,
+      "rows": 15570,
+      "span_days": 10.81,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999357739242132,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.12209377007064869,
+        "Libre GL": 0.0,
+        "HR": 0.062491971740526654,
+        "METs": 0.0596660244059088,
+        "Calories (Activity)": 0.0596660244059088
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6405735606116029,
+      "libre_noninteger_share": 0.8154142581888246,
+      "meal_rows": 32,
+      "image_rows": 47,
+      "image_rows_without_meal_type": 21
+    },
+    {
+      "pid": 46,
+      "group": "T2D",
+      "a1c": 7.4,
+      "rows": 14655,
+      "span_days": 10.2,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.997884680996247,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.027976799727055614,
+        "Libre GL": 0.0,
+        "HR": 0.0704878880928011,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6219726219726219,
+      "libre_noninteger_share": 0.7829409757761856,
+      "meal_rows": 29,
+      "image_rows": 50,
+      "image_rows_without_meal_type": 25
+    },
+    {
+      "pid": 47,
+      "group": "T2D",
+      "a1c": 6.9,
+      "rows": 15690,
+      "span_days": 10.9,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999362651370299,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.09337157425111536,
+        "Libre GL": 0.0,
+        "HR": 0.08221797323135756,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6473110720562391,
+      "libre_noninteger_share": 0.7915869980879541,
+      "meal_rows": 29,
+      "image_rows": 40,
+      "image_rows_without_meal_type": 11
+    },
+    {
+      "pid": 48,
+      "group": "healthy",
+      "a1c": 4.8,
+      "rows": 17340,
+      "span_days": 12.05,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9990772779700116,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.1776239907727797,
+        "Libre GL": 0.0,
+        "HR": 0.1726066897347174,
+        "METs": 0.0,
+        "Calories (Activity)": 0.0
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.603015427769986,
+      "libre_noninteger_share": 0.7549019607843137,
+      "meal_rows": 36,
+      "image_rows": 76,
+      "image_rows_without_meal_type": 40
+    },
+    {
+      "pid": 49,
+      "group": "T2D",
+      "a1c": 7.2,
+      "rows": 15315,
+      "span_days": 10.63,
+      "row_step_minutes_median": 1.0,
+      "row_step_share_1min": 0.9999347045380346,
+      "row_gaps_over_5min": 0,
+      "unparseable_timestamps": 0,
+      "missing_share": {
+        "Dexcom GL": 0.06790728044400914,
+        "Libre GL": 0.0,
+        "HR": 0.08756121449559255,
+        "METs": 0.0005223636957231473,
+        "Calories (Activity)": 0.0005223636957231473
+      },
+      "dexcom_native_interval_min": 1.0,
+      "libre_native_interval_min": 1.0,
+      "dexcom_noninteger_share": 0.6231873905429072,
+      "libre_noninteger_share": 0.7845902709761672,
+      "meal_rows": 28,
+      "image_rows": 47,
+      "image_rows_without_meal_type": 19
+    }
+  ],
+  "meals": {
+    "meal_rows_total": 1663,
+    "by_meal_type": {
+      "dinner": 418,
+      "snack": 300,
+      "lunch": 272,
+      "breakfast": 266,
+      "Breakfast": 160,
+      "Lunch": 153,
+      "Dinner": 60,
+      "Snacks": 29,
+      "Snack": 4,
+      "snack 1": 1
+    },
+    "amount_consumed_non_null": 1599,
+    "amount_consumed_lt_100": 391,
+    "amount_consumed_distribution": {
+      "count": 1599.0,
+      "mean": 97.81,
+      "std": 92.89,
+      "min": 0.0,
+      "25%": 100.0,
+      "50%": 100.0,
+      "75%": 100.0,
+      "max": 900.0
+    },
+    "macro_null_counts": {
+      "carbs": 0,
+      "protein": 0,
+      "fat": 0,
+      "fiber": 0,
+      "calories": 0
+    },
+    "carbs_fractional_share_partial_meals": 0.0,
+    "carbs_fractional_share_full_meals": 0.0018570102135561746,
+    "breakfast_distinct_macro_profiles": 6,
+    "breakfast_count": 426,
+    "macro_ranges": {
+      "carbs": [
+        0.0,
+        761.0
+      ],
+      "protein": [
+        0.0,
+        148.0
+      ],
+      "fat": [
+        0.0,
+        508.0
+      ],
+      "fiber": [
+        0.0,
+        2830.0
+      ]
+    },
+    "exclusions": {
+      "overlapping_next_meal_within_horizon": 244,
+      "coverage_below_min": 52,
+      "no_pre_meal_reading": 19
+    },
+    "usable_meals": 1368,
+    "usable_meals_with_pre_meal_reading": 1368,
+    "positives": 580,
+    "positive_rate": 0.424,
+    "positives_already_above_threshold_pre_meal": 90,
+    "by_participant": [
+      {
+        "pid": 2,
+        "group": "healthy",
+        "usable": 27,
+        "positives": 12
+      },
+      {
+        "pid": 3,
+        "group": "T2D",
+        "usable": 32,
+        "positives": 14
+      },
+      {
+        "pid": 4,
+        "group": "healthy",
+        "usable": 38,
+        "positives": 2
+      },
+      {
+        "pid": 5,
+        "group": "T2D",
+        "usable": 34,
+        "positives": 16
+      },
+      {
+        "pid": 6,
+        "group": "healthy",
+        "usable": 33,
+        "positives": 4
+      },
+      {
+        "pid": 7,
+        "group": "prediabetes",
+        "usable": 1,
+        "positives": 0
+      },
+      {
+        "pid": 8,
+        "group": "prediabetes",
+        "usable": 28,
+        "positives": 10
+      },
+      {
+        "pid": 9,
+        "group": "prediabetes",
+        "usable": 36,
+        "positives": 6
+      },
+      {
+        "pid": 10,
+        "group": "prediabetes",
+        "usable": 37,
+        "positives": 8
+      },
+      {
+        "pid": 11,
+        "group": "prediabetes",
+        "usable": 36,
+        "positives": 13
+      },
+      {
+        "pid": 12,
+        "group": "T2D",
+        "usable": 32,
+        "positives": 16
+      },
+      {
+        "pid": 13,
+        "group": "prediabetes",
+        "usable": 35,
+        "positives": 6
+      },
+      {
+        "pid": 14,
+        "group": "T2D",
+        "usable": 34,
+        "positives": 17
+      },
+      {
+        "pid": 15,
+        "group": "healthy",
+        "usable": 33,
+        "positives": 2
+      },
+      {
+        "pid": 16,
+        "group": "prediabetes",
+        "usable": 27,
+        "positives": 4
+      },
+      {
+        "pid": 17,
+        "group": "healthy",
+        "usable": 34,
+        "positives": 4
+      },
+      {
+        "pid": 18,
+        "group": "healthy",
+        "usable": 33,
+        "positives": 19
+      },
+      {
+        "pid": 19,
+        "group": "healthy",
+        "usable": 34,
+        "positives": 11
+      },
+      {
+        "pid": 20,
+        "group": "prediabetes",
+        "usable": 35,
+        "positives": 29
+      },
+      {
+        "pid": 21,
+        "group": "healthy",
+        "usable": 32,
+        "positives": 7
+      },
+      {
+        "pid": 22,
+        "group": "prediabetes",
+        "usable": 36,
+        "positives": 3
+      },
+      {
+        "pid": 23,
+        "group": "prediabetes",
+        "usable": 39,
+        "positives": 29
+      },
+      {
+        "pid": 26,
+        "group": "prediabetes",
+        "usable": 28,
+        "positives": 14
+      },
+      {
+        "pid": 27,
+        "group": "healthy",
+        "usable": 31,
+        "positives": 6
+      },
+      {
+        "pid": 28,
+        "group": "T2D",
+        "usable": 31,
+        "positives": 19
+      },
+      {
+        "pid": 29,
+        "group": "prediabetes",
+        "usable": 29,
+        "positives": 8
+      },
+      {
+        "pid": 30,
+        "group": "T2D",
+        "usable": 27,
+        "positives": 22
+      },
+      {
+        "pid": 31,
+        "group": "healthy",
+        "usable": 30,
+        "positives": 2
+      },
+      {
+        "pid": 32,
+        "group": "healthy",
+        "usable": 20,
+        "positives": 1
+      },
+      {
+        "pid": 33,
+        "group": "healthy",
+        "usable": 32,
+        "positives": 21
+      },
+      {
+        "pid": 34,
+        "group": "healthy",
+        "usable": 35,
+        "positives": 0
+      },
+      {
+        "pid": 35,
+        "group": "T2D",
+        "usable": 27,
+        "positives": 25
+      },
+      {
+        "pid": 36,
+        "group": "T2D",
+        "usable": 29,
+        "positives": 17
+      },
+      {
+        "pid": 38,
+        "group": "T2D",
+        "usable": 33,
+        "positives": 17
+      },
+      {
+        "pid": 39,
+        "group": "T2D",
+        "usable": 31,
+        "positives": 30
+      },
+      {
+        "pid": 41,
+        "group": "prediabetes",
+        "usable": 41,
+        "positives": 35
+      },
+      {
+        "pid": 42,
+        "group": "T2D",
+        "usable": 21,
+        "positives": 12
+      },
+      {
+        "pid": 43,
+        "group": "prediabetes",
+        "usable": 40,
+        "positives": 9
+      },
+      {
+        "pid": 44,
+        "group": "prediabetes",
+        "usable": 34,
+        "positives": 12
+      },
+      {
+        "pid": 45,
+        "group": "prediabetes",
+        "usable": 29,
+        "positives": 18
+      },
+      {
+        "pid": 46,
+        "group": "T2D",
+        "usable": 26,
+        "positives": 19
+      },
+      {
+        "pid": 47,
+        "group": "T2D",
+        "usable": 28,
+        "positives": 27
+      },
+      {
+        "pid": 48,
+        "group": "healthy",
+        "usable": 33,
+        "positives": 8
+      },
+      {
+        "pid": 49,
+        "group": "T2D",
+        "usable": 27,
+        "positives": 26
+      }
+    ],
+    "by_group": {
+      "T2D": {
+        "usable": 412,
+        "positives": 277,
+        "participants": 14,
+        "participants_with_any_positive": 14
+      },
+      "healthy": {
+        "usable": 445,
+        "positives": 99,
+        "participants": 14,
+        "participants_with_any_positive": 13
+      },
+      "prediabetes": {
+        "usable": 511,
+        "positives": 204,
+        "participants": 16,
+        "participants_with_any_positive": 15
+      }
+    },
+    "participants_with_zero_positives": 2,
+    "sensitivity_grid": [
+      {
+        "horizon_min": 60,
+        "threshold": 140,
+        "usable": 1457,
+        "positives": 986,
+        "rate": 0.6767,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 60,
+        "threshold": 160,
+        "usable": 1457,
+        "positives": 705,
+        "rate": 0.4839,
+        "participants_with_positive": 43
+      },
+      {
+        "horizon_min": 60,
+        "threshold": 180,
+        "usable": 1457,
+        "positives": 476,
+        "rate": 0.3267,
+        "participants_with_positive": 39
+      },
+      {
+        "horizon_min": 60,
+        "threshold": 200,
+        "usable": 1457,
+        "positives": 313,
+        "rate": 0.2148,
+        "participants_with_positive": 32
+      },
+      {
+        "horizon_min": 60,
+        "threshold": "rise>=30",
+        "usable": 1457,
+        "positives": 823,
+        "rate": 0.5649,
+        "participants_with_positive": 43
+      },
+      {
+        "horizon_min": 60,
+        "threshold": "rise>=50",
+        "usable": 1457,
+        "positives": 511,
+        "rate": 0.3507,
+        "participants_with_positive": 41
+      },
+      {
+        "horizon_min": 60,
+        "threshold": "rise>=70",
+        "usable": 1457,
+        "positives": 289,
+        "rate": 0.1984,
+        "participants_with_positive": 39
+      },
+      {
+        "horizon_min": 90,
+        "threshold": 140,
+        "usable": 1418,
+        "positives": 1039,
+        "rate": 0.7327,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 90,
+        "threshold": 160,
+        "usable": 1418,
+        "positives": 771,
+        "rate": 0.5437,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 90,
+        "threshold": 180,
+        "usable": 1418,
+        "positives": 551,
+        "rate": 0.3886,
+        "participants_with_positive": 41
+      },
+      {
+        "horizon_min": 90,
+        "threshold": 200,
+        "usable": 1418,
+        "positives": 380,
+        "rate": 0.268,
+        "participants_with_positive": 35
+      },
+      {
+        "horizon_min": 90,
+        "threshold": "rise>=30",
+        "usable": 1418,
+        "positives": 904,
+        "rate": 0.6375,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 90,
+        "threshold": "rise>=50",
+        "usable": 1418,
+        "positives": 598,
+        "rate": 0.4217,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 90,
+        "threshold": "rise>=70",
+        "usable": 1418,
+        "positives": 382,
+        "rate": 0.2694,
+        "participants_with_positive": 42
+      },
+      {
+        "horizon_min": 120,
+        "threshold": 140,
+        "usable": 1368,
+        "positives": 1064,
+        "rate": 0.7778,
+        "participants_with_positive": 43
+      },
+      {
+        "horizon_min": 120,
+        "threshold": 160,
+        "usable": 1368,
+        "positives": 805,
+        "rate": 0.5885,
+        "participants_with_positive": 42
+      },
+      {
+        "horizon_min": 120,
+        "threshold": 180,
+        "usable": 1368,
+        "positives": 580,
+        "rate": 0.424,
+        "participants_with_positive": 42
+      },
+      {
+        "horizon_min": 120,
+        "threshold": 200,
+        "usable": 1368,
+        "positives": 402,
+        "rate": 0.2939,
+        "participants_with_positive": 36
+      },
+      {
+        "horizon_min": 120,
+        "threshold": "rise>=30",
+        "usable": 1368,
+        "positives": 949,
+        "rate": 0.6937,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 120,
+        "threshold": "rise>=50",
+        "usable": 1368,
+        "positives": 649,
+        "rate": 0.4744,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 120,
+        "threshold": "rise>=70",
+        "usable": 1368,
+        "positives": 408,
+        "rate": 0.2982,
+        "participants_with_positive": 42
+      },
+      {
+        "horizon_min": 180,
+        "threshold": 140,
+        "usable": 1279,
+        "positives": 1033,
+        "rate": 0.8077,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 180,
+        "threshold": 160,
+        "usable": 1279,
+        "positives": 802,
+        "rate": 0.6271,
+        "participants_with_positive": 43
+      },
+      {
+        "horizon_min": 180,
+        "threshold": 180,
+        "usable": 1279,
+        "positives": 582,
+        "rate": 0.455,
+        "participants_with_positive": 42
+      },
+      {
+        "horizon_min": 180,
+        "threshold": 200,
+        "usable": 1279,
+        "positives": 410,
+        "rate": 0.3206,
+        "participants_with_positive": 37
+      },
+      {
+        "horizon_min": 180,
+        "threshold": "rise>=30",
+        "usable": 1279,
+        "positives": 948,
+        "rate": 0.7412,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 180,
+        "threshold": "rise>=50",
+        "usable": 1279,
+        "positives": 662,
+        "rate": 0.5176,
+        "participants_with_positive": 44
+      },
+      {
+        "horizon_min": 180,
+        "threshold": "rise>=70",
+        "usable": 1279,
+        "positives": 416,
+        "rate": 0.3253,
+        "participants_with_positive": 42
+      }
+    ],
+    "post_meal_mets_present_share_mean": 1.0
+  }
+}

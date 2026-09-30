@@ -1,0 +1,1203 @@
+{
+  "$defs": {
+    "ClinicalField": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "observed",
+            "derived"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "provenance",
+        "source"
+      ],
+      "title": "ClinicalField",
+      "type": "object"
+    },
+    "ClosedMeal": {
+      "additionalProperties": false,
+      "properties": {
+        "frozen_usable": {
+          "title": "Frozen Usable",
+          "type": "boolean"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Label"
+        },
+        "meal_id": {
+          "title": "Meal Id",
+          "type": "string"
+        },
+        "rise_native_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rise Native Mgdl"
+        },
+        "started_at": {
+          "title": "Started At",
+          "type": "string"
+        },
+        "window_closed_at": {
+          "title": "Window Closed At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "meal_id",
+        "started_at",
+        "window_closed_at",
+        "frozen_usable",
+        "label",
+        "rise_native_mgdl"
+      ],
+      "title": "ClosedMeal",
+      "type": "object"
+    },
+    "CurrentMeal": {
+      "additionalProperties": false,
+      "properties": {
+        "applicable": {
+          "title": "Applicable",
+          "type": "boolean"
+        },
+        "calories_kcal": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calories Kcal"
+        },
+        "carbs_g": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Carbs G"
+        },
+        "fat_g": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Fat G"
+        },
+        "fiber_g": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Fiber G"
+        },
+        "macros_valid": {
+          "title": "Macros Valid",
+          "type": "boolean"
+        },
+        "meal_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Meal Id"
+        },
+        "meal_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Meal Type"
+        },
+        "minutes_since_start": {
+          "title": "Minutes Since Start",
+          "type": "number"
+        },
+        "not_applicable_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Not Applicable Reasons",
+          "type": "array"
+        },
+        "origin": {
+          "enum": [
+            "logged",
+            "proposed"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "prediction_window_closes_at": {
+          "title": "Prediction Window Closes At",
+          "type": "string"
+        },
+        "protein_g": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Protein G"
+        },
+        "started_at": {
+          "title": "Started At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "meal_id",
+        "origin",
+        "started_at",
+        "prediction_window_closes_at",
+        "minutes_since_start",
+        "meal_type",
+        "carbs_g",
+        "protein_g",
+        "fat_g",
+        "fiber_g",
+        "calories_kcal",
+        "macros_valid",
+        "applicable",
+        "not_applicable_reasons"
+      ],
+      "title": "CurrentMeal",
+      "type": "object"
+    },
+    "CurrentPhysiology": {
+      "additionalProperties": false,
+      "properties": {
+        "active_min_3h": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Active Min 3H"
+        },
+        "activity_kcal_60": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Activity Kcal 60"
+        },
+        "glucose_age_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glucose Age Min"
+        },
+        "glucose_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glucose Mgdl"
+        },
+        "glucose_vs_baseline_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glucose Vs Baseline Mgdl"
+        },
+        "hr_30_bpm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Hr 30 Bpm"
+        },
+        "hr_delta_bpm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Hr Delta Bpm"
+        },
+        "mets_60": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mets 60"
+        },
+        "sd_60_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Sd 60 Mgdl"
+        },
+        "slope_15_mgdl_per_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Slope 15 Mgdl Per Min"
+        },
+        "slope_30_mgdl_per_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Slope 30 Mgdl Per Min"
+        }
+      },
+      "required": [
+        "glucose_mgdl",
+        "glucose_age_min",
+        "slope_15_mgdl_per_min",
+        "slope_30_mgdl_per_min",
+        "sd_60_mgdl",
+        "glucose_vs_baseline_mgdl",
+        "hr_30_bpm",
+        "hr_delta_bpm",
+        "mets_60",
+        "active_min_3h",
+        "activity_kcal_60"
+      ],
+      "title": "CurrentPhysiology",
+      "type": "object"
+    },
+    "Freshness": {
+      "additionalProperties": false,
+      "properties": {
+        "cgm_age_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cgm Age Min"
+        },
+        "cgm_stale": {
+          "title": "Cgm Stale",
+          "type": "boolean"
+        },
+        "last_cgm_native_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Cgm Native At"
+        },
+        "last_meal_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Meal At"
+        },
+        "last_wearable_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Wearable At"
+        },
+        "wearable_age_min": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wearable Age Min"
+        },
+        "wearable_stale": {
+          "title": "Wearable Stale",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "last_cgm_native_at",
+        "cgm_age_min",
+        "cgm_stale",
+        "last_wearable_at",
+        "wearable_age_min",
+        "wearable_stale",
+        "last_meal_at"
+      ],
+      "title": "Freshness",
+      "type": "object"
+    },
+    "Lifecycle": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_usable_meals": {
+          "title": "Closed Usable Meals",
+          "type": "integer"
+        },
+        "next_phase_requires": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Next Phase Requires"
+        },
+        "personal_weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Personal Weight"
+        },
+        "phase": {
+          "$ref": "#/$defs/Phase"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phase",
+        "reason",
+        "closed_usable_meals",
+        "personal_weight",
+        "next_phase_requires"
+      ],
+      "title": "Lifecycle",
+      "type": "object"
+    },
+    "ModelIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "contract_version": {
+          "title": "Contract Version",
+          "type": "integer"
+        },
+        "created_utc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Created Utc"
+        },
+        "dataset_content_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Content Sha256"
+        },
+        "dataset_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Label"
+        },
+        "feature_set": {
+          "title": "Feature Set",
+          "type": "string"
+        },
+        "features_sha256": {
+          "title": "Features Sha256",
+          "type": "string"
+        },
+        "labels_sha256": {
+          "title": "Labels Sha256",
+          "type": "string"
+        },
+        "model_name": {
+          "title": "Model Name",
+          "type": "string"
+        },
+        "model_version": {
+          "title": "Model Version",
+          "type": "string"
+        },
+        "n_columns": {
+          "title": "N Columns",
+          "type": "integer"
+        },
+        "params": {
+          "additionalProperties": true,
+          "title": "Params",
+          "type": "object"
+        },
+        "threshold": {
+          "title": "Threshold",
+          "type": "number"
+        },
+        "training_config_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Training Config Sha256"
+        }
+      },
+      "required": [
+        "model_version",
+        "model_name",
+        "feature_set",
+        "n_columns",
+        "contract_version",
+        "contract_sha256",
+        "features_sha256",
+        "labels_sha256",
+        "training_config_sha256",
+        "dataset_content_sha256",
+        "dataset_label",
+        "created_utc",
+        "threshold",
+        "params"
+      ],
+      "title": "ModelIdentity",
+      "type": "object"
+    },
+    "PersonalBaselines": {
+      "additionalProperties": false,
+      "properties": {
+        "overnight_glucose_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Overnight Glucose Mgdl"
+        },
+        "resting_hr_bpm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resting Hr Bpm"
+        },
+        "time_in_range_24h": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Time In Range 24H"
+        }
+      },
+      "required": [
+        "overnight_glucose_mgdl",
+        "resting_hr_bpm",
+        "time_in_range_24h"
+      ],
+      "title": "PersonalBaselines",
+      "type": "object"
+    },
+    "PersonalResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "closed_positive_meals": {
+          "title": "Closed Positive Meals",
+          "type": "integer"
+        },
+        "closed_usable_meals": {
+          "title": "Closed Usable Meals",
+          "type": "integer"
+        },
+        "p_personal": {
+          "title": "P Personal",
+          "type": "number"
+        },
+        "personal_weight": {
+          "title": "Personal Weight",
+          "type": "number"
+        },
+        "population_rate": {
+          "title": "Population Rate",
+          "type": "number"
+        },
+        "prior_fitted_on_meals": {
+          "title": "Prior Fitted On Meals",
+          "type": "integer"
+        },
+        "prior_fitted_on_people": {
+          "title": "Prior Fitted On People",
+          "type": "integer"
+        },
+        "rise_offset_mgdl": {
+          "title": "Rise Offset Mgdl",
+          "type": "number"
+        }
+      },
+      "required": [
+        "closed_usable_meals",
+        "closed_positive_meals",
+        "population_rate",
+        "p_personal",
+        "rise_offset_mgdl",
+        "personal_weight",
+        "prior_fitted_on_people",
+        "prior_fitted_on_meals"
+      ],
+      "title": "PersonalResponse",
+      "type": "object"
+    },
+    "Phase": {
+      "enum": [
+        "COLD_START",
+        "WARMING",
+        "PERSONALIZED"
+      ],
+      "title": "Phase",
+      "type": "string"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "cgm_native_readings_used": {
+          "title": "Cgm Native Readings Used",
+          "type": "integer"
+        },
+        "closed_meal_ids_used": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Closed Meal Ids Used",
+          "type": "array"
+        },
+        "config_sha256": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Config Sha256",
+          "type": "object"
+        },
+        "current_meal_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Current Meal Id"
+        },
+        "engine_version": {
+          "title": "Engine Version",
+          "type": "string"
+        },
+        "max_source_ts": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Source Ts"
+        },
+        "meals_logged_used": {
+          "title": "Meals Logged Used",
+          "type": "integer"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelIdentity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record_sha256": {
+          "title": "Record Sha256",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "wearable_minutes_used": {
+          "title": "Wearable Minutes Used",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source",
+        "record_sha256",
+        "cgm_native_readings_used",
+        "wearable_minutes_used",
+        "meals_logged_used",
+        "closed_meal_ids_used",
+        "current_meal_id",
+        "max_source_ts",
+        "config_sha256",
+        "engine_version",
+        "model"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "RecentHistory": {
+      "additionalProperties": false,
+      "properties": {
+        "carbs_prev_3h_g": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Carbs Prev 3H G"
+        },
+        "glucose_max_180_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glucose Max 180 Mgdl"
+        },
+        "glucose_mean_180_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glucose Mean 180 Mgdl"
+        },
+        "glucose_min_180_mgdl": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glucose Min 180 Mgdl"
+        },
+        "meals_logged_24h": {
+          "title": "Meals Logged 24H",
+          "type": "integer"
+        },
+        "meals_logged_total": {
+          "title": "Meals Logged Total",
+          "type": "integer"
+        },
+        "mins_since_previous_meal": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Mins Since Previous Meal"
+        },
+        "recent_closed_meals": {
+          "items": {
+            "$ref": "#/$defs/ClosedMeal"
+          },
+          "title": "Recent Closed Meals",
+          "type": "array"
+        }
+      },
+      "required": [
+        "glucose_mean_180_mgdl",
+        "glucose_min_180_mgdl",
+        "glucose_max_180_mgdl",
+        "carbs_prev_3h_g",
+        "mins_since_previous_meal",
+        "meals_logged_24h",
+        "meals_logged_total",
+        "recent_closed_meals"
+      ],
+      "title": "RecentHistory",
+      "type": "object"
+    },
+    "RiskEstimate": {
+      "additionalProperties": false,
+      "properties": {
+        "above_threshold": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Above Threshold"
+        },
+        "features_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Features At"
+        },
+        "model_inputs": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Model Inputs"
+        },
+        "probability": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Probability"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reason"
+        },
+        "status": {
+          "enum": [
+            "scored",
+            "not_applicable",
+            "unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Threshold"
+        },
+        "uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "reason",
+        "probability",
+        "threshold",
+        "above_threshold",
+        "features_at",
+        "model_inputs",
+        "uncertainty"
+      ],
+      "title": "RiskEstimate",
+      "type": "object"
+    },
+    "StaticClinical": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/ClinicalField"
+          },
+          "title": "Fields",
+          "type": "array"
+        },
+        "glycemic_group": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Glycemic Group"
+        }
+      },
+      "required": [
+        "glycemic_group",
+        "fields"
+      ],
+      "title": "StaticClinical",
+      "type": "object"
+    },
+    "Uncertainty": {
+      "additionalProperties": false,
+      "properties": {
+        "distance_to_threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Distance To Threshold"
+        },
+        "level": {
+          "enum": [
+            "low",
+            "moderate",
+            "high"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "missing_inputs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Inputs",
+          "type": "array"
+        },
+        "note": {
+          "default": "Qualitative reliability flags, not a confidence interval; the probability itself is calibrated on held-out participants (M3).",
+          "title": "Note",
+          "type": "string"
+        },
+        "out_of_support_inputs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Out Of Support Inputs",
+          "type": "array"
+        },
+        "outcome_entropy_bits": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome Entropy Bits"
+        },
+        "personal_weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Personal Weight"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "support_checked": {
+          "title": "Support Checked",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "level",
+        "reasons",
+        "outcome_entropy_bits",
+        "distance_to_threshold",
+        "personal_weight",
+        "missing_inputs",
+        "out_of_support_inputs",
+        "support_checked"
+      ],
+      "title": "Uncertainty",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "title": "As Of",
+      "type": "string"
+    },
+    "current_meal": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CurrentMeal"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "current_physiology": {
+      "$ref": "#/$defs/CurrentPhysiology"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "type": "string"
+    },
+    "freshness": {
+      "$ref": "#/$defs/Freshness"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/Lifecycle"
+    },
+    "patient_id": {
+      "title": "Patient Id",
+      "type": "integer"
+    },
+    "personal_baselines": {
+      "$ref": "#/$defs/PersonalBaselines"
+    },
+    "personal_response": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PersonalResponse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "recent_history": {
+      "$ref": "#/$defs/RecentHistory"
+    },
+    "risk": {
+      "$ref": "#/$defs/RiskEstimate"
+    },
+    "schema_version": {
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "state_id": {
+      "title": "State Id",
+      "type": "string"
+    },
+    "static_clinical": {
+      "$ref": "#/$defs/StaticClinical"
+    }
+  },
+  "required": [
+    "schema_version",
+    "state_id",
+    "patient_id",
+    "as_of",
+    "lifecycle",
+    "static_clinical",
+    "personal_baselines",
+    "current_physiology",
+    "recent_history",
+    "current_meal",
+    "personal_response",
+    "risk",
+    "freshness",
+    "provenance",
+    "disclaimer"
+  ],
+  "title": "TwinState",
+  "type": "object"
+}
