@@ -132,7 +132,7 @@ def _register(paths: list[Path], activate_name: str | None) -> int:
             if activate_name and (
                 r.model_type.value == activate_name or r.model_version == activate_name
             ):
-                activate(db, r.id, configs)
+                activate(db, r.id, configs, s.artifact_search)
         for r in rows:
             print(
                 json.dumps(
@@ -150,7 +150,7 @@ def _register(paths: list[Path], activate_name: str | None) -> int:
 
 def cmd_register_m3(args: argparse.Namespace) -> int:
     s = _settings()
-    folder = s.repo_root / "data/processed/m3/models"
+    folder = s.models_dir or s.repo_root / "data/processed/m3/models"
     paths = sorted(folder.glob("*__full_personal.joblib"))
     if not paths:
         print(f"no bundles in {folder}; run `make m3` first", file=sys.stderr)
@@ -175,7 +175,7 @@ def _register_activate(path: Path) -> int:
         except ModelContractError as err:
             print(f"REFUSED {path}: {err}", file=sys.stderr)
             return 1
-        activate(db, row.id, configs)
+        activate(db, row.id, configs, s.artifact_search)
         print(json.dumps({"id": row.id, "model_version": row.model_version, "active": True}))
     return 0
 

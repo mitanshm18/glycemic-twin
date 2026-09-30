@@ -32,7 +32,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.engine = engine
     app.state.sessionmaker = make_sessionmaker(engine)
     app.state.configs = configs
-    app.state.twin_service = TwinService(configs, RuntimeHolder(configs), settings.source_label)
+    app.state.twin_service = TwinService(
+        configs, RuntimeHolder(configs, settings.artifact_search), settings.source_label
+    )
     errors.install(app)
     app.include_router(system.router, prefix=API_PREFIX)
     app.include_router(patients.router, prefix=API_PREFIX)

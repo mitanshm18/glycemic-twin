@@ -268,11 +268,11 @@ def google_callback(
         return _fail(request, err.code, next_path=target)
 
     # 4. provisioned identity -> active user (never created here)
-    link, reason = _resolve(db, ident)
+    link, unlinked = _resolve(db, ident)
     if link is None:
         db.rollback()
         return _fail(
-            request, reason or "google_not_provisioned", next_path=target, email=ident.email
+            request, unlinked or "google_not_provisioned", next_path=target, email=ident.email
         )
     user = db.get(User, link.user_id)
     if (
