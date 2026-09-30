@@ -8,7 +8,6 @@ import { ANCHORS, pointAt, toPath, tracePoints, WINDOW_U, xOf, yOf, type Frame, 
 import { useBox } from "@/lib/useSize";
 
 const DRAWN_AT = 1250; // ms: when the entrance has finished and the signal becomes interactive
-const PULSE_MS = 1500;
 const NEAR_PX = 80; // the pointer affects the trace only when this close to it
 
 const CHIP_W = 232; // px: the chip's max width (14.5rem)
@@ -43,32 +42,17 @@ export function SignalField({ compact = false }: { compact?: boolean }) {
   const [ready, setReady] = useState(false);
   const [active, setActive] = useState<SignalAnchor["id"] | null>(null);
   const [ptr, setPtr] = useState<Pointer | null>(null);
-  const [pulse, setPulse] = useState<number | null>(null);
   const [explored, setExplored] = useState(false);
 
-  // entrance -> interactive, then a single pulse along the trace (skipped under reduced motion)
+  // the signal becomes explorable once it has drawn in (at once under reduced motion)
   useEffect(() => {
     if (reduced) {
       setReady(true);
       return;
     }
-    let raf = 0;
-    const t = window.setTimeout(() => {
-      setReady(true);
-      if (compact) return;
-      const began = performance.now();
-      const tick = (now: number) => {
-        const k = Math.min(1, (now - began) / PULSE_MS);
-        setPulse(k < 1 ? k : null);
-        if (k < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    }, DRAWN_AT);
-    return () => {
-      window.clearTimeout(t);
-      cancelAnimationFrame(raf);
-    };
-  }, [reduced, compact]);
+    const t = window.setTimeout(() => setReady(true), DRAWN_AT);
+    return () => window.clearTimeout(t);
+  }, [reduced]);
 
   // pointer proximity: the strength eases toward 1 near the trace and back to 0 away from it
   const target = useRef<{ x: number; y: number; want: number }>({ x: 0, y: 0, want: 0 });
@@ -120,7 +104,6 @@ export function SignalField({ compact = false }: { compact?: boolean }) {
   const w0 = xOf(meal.u, f);
   const w1 = xOf(meal.u + WINDOW_U, f);
   const cursor = ptr ? pointAt(ptr.x, f, ptr) : null;
-  const pulseAt = pulse === null ? null : pointAt(pulse * f.width, f, ptr);
   const shown = ANCHORS.find((a) => a.id === active) ?? null;
   const chipAt = shown ? pointAt(xOf(shown.u, f), f, ptr) : null;
 
@@ -182,10 +165,6 @@ export function SignalField({ compact = false }: { compact?: boolean }) {
             <line x1={cursor[0]} x2={cursor[0]} y1={f.top} y2={plotBottom} />
             <circle cx={cursor[0]} cy={cursor[1]} r={3.5} />
           </g>
-        )}
-
-        {pulseAt && (
-          <circle className="signal__pulse" cx={pulseAt[0]} cy={pulseAt[1]} r={3} style={{ opacity: Math.sin(Math.PI * (pulse ?? 0)) }} />
         )}
 
         {interactive &&

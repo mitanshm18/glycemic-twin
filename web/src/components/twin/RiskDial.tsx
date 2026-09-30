@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { useAnimatedNumber } from "@/lib/motion";
+import { MOTION, useAnimatedNumber } from "@/lib/motion";
 import { cx } from "@/lib/cx";
 import type { Tone } from "@/lib/risk";
 
@@ -31,7 +31,7 @@ function onTrack(v: number, c: number, r: number) {
  * once. Exploring it (hover / focus) shows what it means; activating it leads to "Why this risk?".
  */
 export function RiskDial({ probability, threshold, tone, size = 168, label, details, onActivate }: Props) {
-  const shown = useAnimatedNumber(probability === null ? null : probability * 100, 900, 150);
+  const shown = useAnimatedNumber(probability === null ? null : probability * 100, MOTION.morph, 150);
   const detailsId = useId();
   const stroke = Math.max(6, Math.round(size / 18));
   const r = (size - stroke) / 2;

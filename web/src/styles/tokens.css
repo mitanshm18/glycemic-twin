@@ -116,6 +116,11 @@
   --dur-standard: 200ms;
   --dur-emphasis: 360ms;
   --dur-reveal: 1400ms;
+  /* M6.5 interaction language: one clock for the whole product */
+  --dur-morph: 900ms; /* a data value moving to its new value (dials, what-if, first chart draw) */
+  --dur-linger: 1800ms; /* a trace of what just happened fading out (ghost value, led-to driver) */
+  --delay-tip: 200ms; /* hover explanations wait this long, so passing pointers do not flash them */
+  --delay-settle: 600ms; /* consequences (delta, labels, support) arrive once a morph has mostly landed */
 
   /* layout */
   --sidebar-w: 14.5rem;
@@ -179,5 +184,8 @@
     --dur-standard: 0ms;
     --dur-emphasis: 0ms;
     --dur-reveal: 0ms;
+    --dur-morph: 0ms;
+    --dur-linger: 0ms;
+    --delay-settle: 0ms;
   }
 }

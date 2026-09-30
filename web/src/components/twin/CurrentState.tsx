@@ -11,6 +11,7 @@ import { fmtNum, fmtPct, fmtPp, modelLabel } from "@/lib/format";
 import { useAnimatedNumber } from "@/lib/motion";
 import {
   OUTCOME,
+  PHASE_HELP,
   PHASE_LABEL,
   PHASE_TONE,
   UNCERTAINTY_LABEL,
@@ -106,7 +107,8 @@ export function CurrentState({ state }: { state: TwinState }) {
       (best, c) => (!best || Math.abs(c.contribution) > Math.abs(best.contribution) ? c : best),
       null,
     );
-    goToSection("why");
+    // the strongest driver takes focus itself (WhyRisk); the section only scrolls and marks arrival
+    goToSection("why", { focus: top ? false : undefined });
     if (top) focus.pulseDriver(top.feature);
   };
   const gap = risk.probability !== null && risk.threshold !== null ? risk.probability - risk.threshold : null;
@@ -240,7 +242,8 @@ export function CurrentState({ state }: { state: TwinState }) {
               id={ctxId}
               onClose={closeCtx}
               onShowTimeline={(t) => {
-                goToSection("timeline");
+                // the chart takes focus with the reading pinned on it
+                goToSection("timeline", { focus: false });
                 focus.pinReading(t);
               }}
             />
@@ -251,7 +254,9 @@ export function CurrentState({ state }: { state: TwinState }) {
           <div className={cx(flash("phase"), evidence?.kind === "personal" && "is-evidence")}>
             <dt>Twin lifecycle</dt>
             <dd>
-              <Tag tone={PHASE_TONE[lifecycle.phase]}>{PHASE_LABEL[lifecycle.phase]}</Tag>
+              <Tip text={PHASE_HELP[lifecycle.phase]} focusable label={`${PHASE_LABEL[lifecycle.phase]}: what this phase means`}>
+                <Tag tone={PHASE_TONE[lifecycle.phase]}>{PHASE_LABEL[lifecycle.phase]}</Tag>
+              </Tip>
               <span className="hero__note">
                 {lifecycle.closed_usable_meals} closed meal{lifecycle.closed_usable_meals === 1 ? "" : "s"} learned
               </span>

@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import type { Evidence } from "./evidence";
+import { MOTION } from "./motion";
 import type { Millis } from "./time";
 
 /**
@@ -54,10 +55,24 @@ export function useTwinFocus(): TwinFocus {
   return useContext(Ctx) ?? NOOP;
 }
 
-/** Scroll a workspace section into view, gently unless motion is reduced. */
-export function goToSection(id: string) {
+/**
+ * Go to a workspace section as a CONNECT move: scroll to it (gently unless motion is reduced), mark
+ * it as the destination for a moment, and hand keyboard focus to `focus` (a selector inside it) or
+ * to its heading, so the next Tab continues from where the clinician arrived.
+ */
+export function goToSection(id: string, opts: { focus?: string | false } = {}) {
   const el = document.getElementById(id);
   if (!el) return;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  el.classList.remove("is-arrived");
+  void el.offsetWidth; // restart the cue when arriving at the same section twice
+  el.classList.add("is-arrived");
+  window.setTimeout(() => el.classList.remove("is-arrived"), MOTION.linger);
+  if (opts.focus === false) return;
+  const target = (opts.focus ? el.querySelector<HTMLElement>(opts.focus) : null) ?? el.querySelector<HTMLElement>(".section__title");
+  if (target) {
+    if (!target.hasAttribute("tabindex") && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(target.tagName) && target.tagName !== "svg") target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }
 }

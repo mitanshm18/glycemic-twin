@@ -719,7 +719,7 @@
   display: block;
   opacity: 1;
   transform: translate(-50%, 0);
-  transition-delay: 250ms;
+  transition-delay: var(--delay-tip);
 }
 @starting-style {
   .tip:hover .tip__bubble,

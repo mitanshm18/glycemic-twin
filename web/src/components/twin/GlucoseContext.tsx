@@ -76,6 +76,7 @@ export function GlucoseContext({ state, id, onShowTimeline, onClose }: { state: 
               {pts.map((p) => (
                 <circle key={p.t} className="gctx__pt" cx={x(p.t)} cy={y(p.v)} r={1.6} />
               ))}
+              {last && <circle className="gctx__latest" cx={x(last.t)} cy={y(last.v)} r={6} />}
               {read && (
                 <g className="gctx__read" style={{ transform: `translate(${x(read.t)}px, ${y(read.v)}px)` }}>
                   <circle r={3.5} />
@@ -97,6 +98,7 @@ export function GlucoseContext({ state, id, onShowTimeline, onClose }: { state: 
             </svg>
             {read && (
               <span className="gctx__readout mono" aria-hidden="true">
+                {read === last ? "latest · " : ""}
                 {fmtClock(read.t)} · {Math.round(read.v)} mg/dL
               </span>
             )}

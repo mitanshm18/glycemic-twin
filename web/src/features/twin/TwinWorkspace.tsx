@@ -22,7 +22,7 @@ import { useCgm, useMealOutcomes, useMeals, usePatient, useStateDiff, useTwinSta
 import type { Meal, MealOutcome, PatientDetail, TwinState } from "@/lib/api/types";
 import { cx } from "@/lib/cx";
 import { fmtPct, readableChange } from "@/lib/format";
-import { prefersReducedMotion } from "@/lib/motion";
+import { MOTION, prefersReducedMotion } from "@/lib/motion";
 import { rememberMoment } from "@/lib/patientContext";
 import { GROUP_LABEL, HORIZON_MIN, PHASE_LABEL, PHASE_TONE } from "@/lib/risk";
 import { fmtClock, fmtDate, fmtDay, HOUR, MINUTE, parseNaive, toNaiveIso } from "@/lib/time";
@@ -173,7 +173,7 @@ function SectionNav() {
 
 /* ------------------------------------------------------------------ timeline + reveal */
 
-const REVEAL_MS = 2000; // a data reveal: slower than UI motion, still brief
+const REVEAL_MS = MOTION.dataReveal;
 
 function TimelineSection({ patient, state, meals, outcomes, onMeal }: { patient: PatientDetail; state: TwinState; meals: Meal[]; outcomes: MealOutcome[]; onMeal: (id: string) => void }) {
   const focus = useTwinFocus();

@@ -211,6 +211,7 @@ export function useExplanation(stateId: string | null, enabled: boolean) {
     queryFn: () => get<Explanation>(`/twin-states/${stateId}/explanation`),
     enabled: Boolean(stateId) && enabled,
     staleTime: FOREVER,
+    placeholderData: keepPreviousData,
   });
 }
 

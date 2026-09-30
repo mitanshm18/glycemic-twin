@@ -63,7 +63,7 @@ function Row({ name, value, contribution, max, pulse }: { name: string; value: n
                 className="driver__show"
                 onClick={() => {
                   focus.showEvidence(ev, true);
-                  goToSection(ev.kind === "personal" ? "personal" : "timeline");
+                  goToSection(ev.kind === "personal" ? "personal" : "timeline", { focus: ev.kind === "personal" ? undefined : ".tl__svg" });
                 }}
               >
                 {ev.kind === "personal" ? "See personal response" : "Show on timeline"} <Icon name="arrowRight" size={11} />
@@ -124,7 +124,7 @@ function Body({ ex }: { ex: Explanation }) {
       )}
       <div className="row">
         <Button size="sm" variant="ghost" onClick={() => setAll((a) => !a)} aria-expanded={all}>
-          <Icon name={all ? "chevronDown" : "chevronRight"} size={14} />
+          <Icon name="chevronRight" size={14} className="chev" />
           {all ? `Show top ${TOP} only` : `Show all ${ex.contributions.length} inputs`}
         </Button>
       </div>
@@ -173,7 +173,12 @@ export function WhyRisk({ state }: { state: TwinState }) {
       </Loading>
     );
   if (q.isError) return <ErrorState error={q.error} what="the explanation" onRetry={() => void q.refetch()} />;
-  return <Body ex={q.data} />;
+  // a new moment: the previous explanation stays, quieter, until this one arrives (no skeleton flash)
+  return (
+    <div className={cx("why-wrap", q.isPlaceholderData && "is-stale")} aria-busy={q.isPlaceholderData}>
+      <Body ex={q.data} />
+    </div>
+  );
 }
 
 export function WhyRiskAside() {

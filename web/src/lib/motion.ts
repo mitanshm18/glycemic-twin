@@ -20,6 +20,18 @@ export function useReducedMotion(): boolean {
 
 export const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
+/** The same clock as the CSS tokens (tokens.css): JS-driven motion uses these, never its own. */
+export const MOTION = {
+  micro: 120,
+  standard: 200,
+  emphasis: 360,
+  morph: 900,
+  linger: 1800,
+  settle: 600,
+  /** a data reveal (prediction -> reality): slower than UI motion, still brief */
+  dataReveal: 2000,
+} as const;
+
 /**
  * Interpolates from the previous value to the new one when `target` changes: a count-up from 0 the
  * first time, a smooth transition afterwards. The first frame already shows the starting value (no

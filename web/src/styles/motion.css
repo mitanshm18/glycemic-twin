@@ -207,7 +207,7 @@
 
 /* a status label arrives once the number has mostly settled */
 .tag--enter {
-  animation: tag-in var(--dur-standard) var(--ease-standard) 480ms both;
+  animation: tag-in var(--dur-standard) var(--ease-standard) var(--delay-settle) both;
 }
 @keyframes tag-in {
   from {
@@ -222,7 +222,7 @@
 .tl__line--draw {
   stroke-dasharray: 1 1;
   stroke-dashoffset: 1;
-  animation: draw-line 900ms var(--ease-standard) 80ms forwards;
+  animation: draw-line var(--dur-morph) var(--ease-standard) 80ms forwards;
 }
 @keyframes draw-line {
   to {
@@ -412,12 +412,20 @@ html.theme-vt::view-transition-new(root) {
   .dial__tick--crossed {
     animation: none !important;
   }
+  .section.is-arrived > .section__head::before {
+    animation: none !important;
+    opacity: 0;
+  }
   .wi-settle,
   .wi-oos,
   .wi-link__delta,
   .lever__calc-dot {
     animation: none !important;
   }
+  .chev,
+  .why-wrap,
+  .ident button,
+  .workspace__body,
   .wi-side,
   .wi-bars,
   .lever,
