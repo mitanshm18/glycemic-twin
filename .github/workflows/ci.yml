@@ -1,0 +1,141 @@
+# Continuous integration: every pull request and every push to main.
+# Three independent jobs run in parallel. None uses real data, secrets or model bundles: the
+# backend tests build their own SYNTHETIC CGMacros-shaped fixtures and a synthetic M3 bundle, and
+# the PostgreSQL service is a throwaway database that exists only for the length of the job.
+# Nothing is uploaded (no artifacts) and no image is pushed to a registry.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  backend:
+    name: Backend (ruff, mypy, pytest + PostgreSQL)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          # CI-only throwaway server, reachable only from this job; not a real credential
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      # the tests CREATE and DROP one disposable database per session on this server
+      TWIN_TEST_DATABASE_URL: postgresql+psycopg://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          version: "0.12.19" # same uv as api/Dockerfile
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Install (exactly uv.lock; Python from .python-version)
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Type check
+        run: uv run mypy packages/twin_core/src ml/src api/src
+      - name: Tests (twin_core, ml, api incl. migrations and schema)
+        run: uv run pytest -rs --junitxml="$RUNNER_TEMP/pytest.xml"
+      - name: No test was skipped
+        # database tests skip themselves without TWIN_TEST_DATABASE_URL; in CI that is a failure
+        run: |
+          uv run python - "$RUNNER_TEMP/pytest.xml" <<'EOF'
+          import sys
+          import xml.etree.ElementTree as ET
+
+          root = ET.parse(sys.argv[1]).getroot()
+          suite = root.find("testsuite") if root.tag == "testsuites" else root
+          counts = {k: int(suite.get(k, 0)) for k in ("tests", "failures", "errors", "skipped")}
+          print(counts)
+          sys.exit(1 if counts["skipped"] or not counts["tests"] else 0)
+          EOF
+
+  frontend:
+    name: Frontend (lint, typecheck, vitest, build)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: web
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22" # LTS; same major as web/Dockerfile
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  images:
+    name: Docker image (${{ matrix.image }}, linux/amd64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: api
+            context: .
+            file: api/Dockerfile
+          - image: web
+            context: web
+            file: web/Dockerfile
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - name: Build (not pushed)
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
+          # the deployment target is Linux amd64; built natively on the amd64 runner
+          platforms: linux/amd64
+          push: false
+          load: true
+          tags: glycemic-twin-${{ matrix.image }}:ci
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image }}
+      - name: Smoke test (API image)
+        if: matrix.image == 'api'
+        run: |
+          test "$(docker run --rm glycemic-twin-api:ci id -u)" = 10001
+          docker run --rm glycemic-twin-api:ci python -c "import platform, twin_api.app, twin_core, xgboost; print(platform.machine(), xgboost.__version__)"
+          docker run --rm glycemic-twin-api:ci twin-api --help > /dev/null
+      - name: Smoke test (web image)
+        if: matrix.image == 'web'
+        run: |
+          test "$(docker run --rm glycemic-twin-web:ci id -un)" = node
+          docker run -d --name web -p 3000:3000 glycemic-twin-web:ci
+          for _ in $(seq 1 30); do
+            if curl -fsS -o /dev/null http://127.0.0.1:3000/login; then echo "/login served"; exit 0; fi
+            sleep 1
+          done
+          docker logs web
+          exit 1
