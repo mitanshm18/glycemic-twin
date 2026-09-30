@@ -412,6 +412,18 @@ html.theme-vt::view-transition-new(root) {
   .dial__tick--crossed {
     animation: none !important;
   }
+  .wi-settle,
+  .wi-oos,
+  .wi-link__delta,
+  .lever__calc-dot {
+    animation: none !important;
+  }
+  .wi-side,
+  .wi-bars,
+  .lever,
+  .wi-chip {
+    transition: none !important;
+  }
   .dial__ghost,
   .driver__pulse,
   .tl__line--ghost {

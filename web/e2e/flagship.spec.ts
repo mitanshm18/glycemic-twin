@@ -241,7 +241,7 @@ test("twin: estimate vs measurement, explanation, reveal, what-if, context tabs,
     }
     await whatIf.getByRole("slider", { name: "Carbohydrate" }).focus();
     for (let i = 0; i < 4; i++) await page.keyboard.press("ArrowLeft");
-    await expect(whatIf.locator(".wi-result, .state")).toBeVisible({ timeout: 15_000 });
+    await expect(whatIf.locator(".wi-settle, .wi-oos, .wi-note--warn")).toBeVisible({ timeout: 15_000 });
   }
   await expect(page.getByLabel(/insulin|medication|dose/i)).toHaveCount(0);
 
@@ -309,6 +309,32 @@ test("twin as an instrument: glucose context, meal markers, rail, dial to eviden
   await expectNoHorizontalScroll(page);
 });
 
+test("what-if: baseline stays, the scenario moves from it, and settles with delta and support", async ({ page }) => {
+  await signIn(page);
+  await openFirstTwin(page);
+  const whatIf = page.locator("#what-if");
+  await whatIf.scrollIntoViewIfNeeded();
+  if (!(await whatIf.getByRole("slider").count())) return; // no scored meal at this moment
+  const baseline = whatIf.getByRole("img", { name: /^As logged:/ });
+  await expect(baseline).toBeVisible();
+  const before = await baseline.getAttribute("aria-label");
+  await whatIf.getByRole("group", { name: "Quick scenarios" }).getByRole("button").first().click();
+  await expect(whatIf.getByText("calculating", { exact: true })).toBeVisible();
+  await expect(baseline).toHaveAttribute("aria-label", before!); // the baseline never moves
+  const settled = whatIf.locator(".wi-settle, .wi-oos");
+  await expect(settled).toBeVisible({ timeout: 15_000 });
+  if (await whatIf.locator(".wi-settle").count()) {
+    await expect(whatIf.locator(".wi-link__delta")).toHaveText(/pp$/);
+    await expect(whatIf.locator(".wi-threshold")).toContainText(/alert threshold/);
+    await expect(whatIf.getByText("Within training support")).toBeVisible();
+  } else {
+    await expect(whatIf.getByRole("img", { name: /^Scenario: no estimate/ })).toBeVisible();
+  }
+  await expect(whatIf.getByText("Not medical advice")).toBeVisible();
+  await expectAccessible(page);
+  await expectNoHorizontalScroll(page);
+});
+
 test("clinical record and model page are honest and accessible", async ({ page }) => {
   await signIn(page);
   await openFirstTwin(page);
@@ -347,6 +373,13 @@ test("reduced motion: the same states, without movement", async ({ browser, base
     getComputedStyle(document.querySelector(".tl__line--base")!).animationName,
   ]);
   expect(still).toEqual(["0s", "none"]);
+  // what-if: the answer is there at once, without a morph
+  const whatIf = page.locator("#what-if");
+  if (await whatIf.getByRole("slider").count()) {
+    await whatIf.getByRole("group", { name: "Quick scenarios" }).getByRole("button").first().click();
+    await expect(whatIf.locator(".wi-settle, .wi-oos")).toBeVisible({ timeout: 15_000 });
+    expect(await whatIf.locator(".wi-settle, .wi-oos").evaluate((el) => getComputedStyle(el).animationName)).toBe("none");
+  }
   const reveal = page.getByRole("button", { name: /Reveal what happened/ });
   if (await reveal.isVisible()) {
     await reveal.click();
