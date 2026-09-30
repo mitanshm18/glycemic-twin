@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Annotated, Any
@@ -34,6 +35,7 @@ from twin_api.schemas import (
 from twin_api.service import TwinService, resolve_as_of
 
 router = APIRouter()
+log = logging.getLogger("twin_api")
 DB = Annotated[Session, Depends(get_db)]
 Anyone = Annotated[Principal, Depends(any_user)]
 Admin = Annotated[Principal, Depends(admin_only)]
@@ -85,8 +87,15 @@ def ready(request: Request, response: Response, db: DB) -> dict[str, Any]:
                 if rt.support is None:
                     problems.append("no training-support profile: what-if disabled")
             except ModelContractError as err:
-                problems.append(f"active model incompatible: {err}")
+                # unauthenticated endpoint: in production no file paths or hashes leave the server
+                log.error("readiness: active model cannot be served: %s", err)
+                problems.append(
+                    "active model cannot be served"
+                    if request.app.state.settings.production
+                    else f"active model incompatible: {err}"
+                )
     except Exception as err:  # noqa: BLE001 - readiness must report, not crash
+        log.error("readiness: database check failed: %s", type(err).__name__)
         problems.append(f"database error: {type(err).__name__}")
     out["ready"] = out["database"] and out["migrations_at_head"] and out["model_compatible"]
     out["problems"] = problems

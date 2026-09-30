@@ -7,6 +7,7 @@ choosing the default ``as_of``, persistence of the engine's outputs, and error m
 
 from __future__ import annotations
 
+import logging
 import threading
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -39,6 +40,7 @@ from twin_api.registry import ArtifactSearch, active_version, runtime_for
 from twin_api.repository import DbRecordSource, data_range, get_patient
 
 AS_OF_GRACE = timedelta(days=1)
+log = logging.getLogger("twin_api")
 
 
 @dataclass(frozen=True)
@@ -50,9 +52,17 @@ class Active:
 class RuntimeHolder:
     """Loads the active model once and reloads only when the registry's active entry changes."""
 
-    def __init__(self, configs: TwinConfigs, search: ArtifactSearch | None = None) -> None:
+    def __init__(
+        self,
+        configs: TwinConfigs,
+        search: ArtifactSearch | None = None,
+        detailed_errors: bool = True,
+    ) -> None:
         self.configs = configs
         self.search = search
+        # production answers "the model cannot be served" without file paths or hashes; the
+        # detail goes to the server log
+        self.detailed_errors = detailed_errors
         self._lock = threading.Lock()
         self._key: tuple[int, str, int | None] | None = None
         self._active: Active | None = None
@@ -68,7 +78,10 @@ class RuntimeHolder:
                     runtime = runtime_for(row, self.configs, session, self.search)
                 except ModelContractError as err:
                     self._key, self._active = None, None
-                    raise errors.model_incompatible(str(err)) from err
+                    log.error("active model cannot be served: %s", err)
+                    raise errors.model_incompatible(
+                        str(err) if self.detailed_errors else "the active model cannot be served"
+                    ) from err
                 self._key, self._active = key, Active(runtime, row)
             active = self._active
         if require_support and active.runtime.support is None:
