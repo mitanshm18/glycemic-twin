@@ -42,7 +42,7 @@ jobs:
       TWIN_TEST_DATABASE_URL: postgresql+psycopg://postgres:postgres@127.0.0.1:5432/postgres
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.2.0 # astral publishes no floating major tag
         with:
           version: "0.12.19" # same uv as api/Dockerfile
           enable-cache: true
