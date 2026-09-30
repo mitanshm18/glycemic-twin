@@ -32,7 +32,7 @@ def _settings():  # type: ignore[no-untyped-def]
 def _engine():  # type: ignore[no-untyped-def]
     from twin_api.db import make_engine
 
-    return make_engine(_settings().database_url)
+    return make_engine(_settings().database_url.get_secret_value())
 
 
 def cmd_migrate(args: argparse.Namespace) -> int:
@@ -40,7 +40,10 @@ def cmd_migrate(args: argparse.Namespace) -> int:
     from alembic.config import Config
 
     cfg = Config(str(Path(__file__).resolve().parents[2] / "alembic.ini"))
-    cfg.set_main_option("sqlalchemy.url", _settings().database_url)
+    # ConfigParser treats "%" as interpolation: escape it so passwords containing "%" work
+    cfg.set_main_option(
+        "sqlalchemy.url", _settings().database_url.get_secret_value().replace("%", "%%")
+    )
     command.upgrade(cfg, args.revision)
     return 0
 
@@ -132,7 +135,7 @@ def _register(paths: list[Path], activate_name: str | None) -> int:
             if activate_name and (
                 r.model_type.value == activate_name or r.model_version == activate_name
             ):
-                activate(db, r.id, configs)
+                activate(db, r.id, configs, s.artifact_search)
         for r in rows:
             print(
                 json.dumps(
@@ -150,7 +153,7 @@ def _register(paths: list[Path], activate_name: str | None) -> int:
 
 def cmd_register_m3(args: argparse.Namespace) -> int:
     s = _settings()
-    folder = s.repo_root / "data/processed/m3/models"
+    folder = s.models_dir or s.repo_root / "data/processed/m3/models"
     paths = sorted(folder.glob("*__full_personal.joblib"))
     if not paths:
         print(f"no bundles in {folder}; run `make m3` first", file=sys.stderr)
@@ -175,7 +178,7 @@ def _register_activate(path: Path) -> int:
         except ModelContractError as err:
             print(f"REFUSED {path}: {err}", file=sys.stderr)
             return 1
-        activate(db, row.id, configs)
+        activate(db, row.id, configs, s.artifact_search)
         print(json.dumps({"id": row.id, "model_version": row.model_version, "active": True}))
     return 0
 
@@ -227,8 +230,25 @@ def cmd_unlink_google(args: argparse.Namespace) -> int:
 def cmd_serve(args: argparse.Namespace) -> int:
     import uvicorn
 
+    from twin_api.logs import configure_logging
+
+    s = _settings()  # validates the configuration (production rules) before binding a port
+    if args.reload and s.production:
+        print("--reload is for development only; refusing in production", file=sys.stderr)
+        return 2
+    configure_logging(s.log_level, s.log_style)
+
     uvicorn.run(
-        "twin_api.app:create_app", factory=True, host=args.host, port=args.port, reload=args.reload
+        "twin_api.app:create_app",
+        factory=True,
+        host=args.host,
+        port=args.port,
+        reload=args.reload,
+        log_config=None,  # keep the format installed above (uvicorn lines become JSON too)
+        access_log=False,  # RequestLog writes one line per request, without query strings
+        # client address and scheme from X-Forwarded-* only when the reverse proxy sent them
+        proxy_headers=True,
+        forwarded_allow_ips=s.forwarded_allow_ips,
     )
     return 0
 

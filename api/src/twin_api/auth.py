@@ -110,13 +110,18 @@ def login(
     now = _now()
     if user is None or not user.is_active:
         burn_verification_time(password)
+        # an unknown "username" is often a password typed into the wrong field: never store it
+        # verbatim; a hash still lets an admin see repeated attempts at the same name
         audit(
             request,
             "login",
             AuditOutcome.denied,
-            username=username,
+            username=user.username if user is not None else None,
             status_code=401,
-            detail={"reason": "unknown or inactive user"},
+            detail={
+                "reason": "unknown or inactive user",
+                "attempted_sha256": sha256_hex(username.lower())[:16],
+            },
         )
         raise errors.unauthenticated("invalid username or password")
     if user.locked_until is not None and user.locked_until > now:

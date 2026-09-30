@@ -5,6 +5,7 @@ Messages never include stack traces, SQL or submitted values.
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from fastapi import FastAPI, Request
@@ -12,6 +13,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
+
+log = logging.getLogger("twin_api")
 
 
 class ErrorDetail(BaseModel):
@@ -103,5 +106,14 @@ def install(app: FastAPI) -> None:
         return JSONResponse(_body(code, str(exc.detail)), status_code=exc.status_code)
 
     @app.exception_handler(Exception)
-    async def _unhandled(_: Request, exc: Exception) -> JSONResponse:
+    async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
+        # Normally unreachable: logs.RequestLog (the outermost middleware) logs unexpected errors
+        # and answers them with the same envelope. Kept so the envelope holds without it.
+        log.error(
+            "unhandled %s on %s %s",
+            type(exc).__name__,
+            request.method,
+            request.url.path,
+            exc_info=exc,
+        )
         return JSONResponse(_body("INTERNAL_ERROR", "unexpected server error"), status_code=500)

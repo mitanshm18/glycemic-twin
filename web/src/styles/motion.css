@@ -416,12 +416,14 @@ html.theme-vt::view-transition-new(root) {
     animation: none !important;
     opacity: 0;
   }
+  .replay,
   .wi-settle,
   .wi-oos,
   .wi-link__delta,
   .lever__calc-dot {
     animation: none !important;
   }
+  .replay__bar > span,
   .chev,
   .why-wrap,
   .ident button,

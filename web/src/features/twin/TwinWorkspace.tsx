@@ -17,6 +17,7 @@ import { PersonalResponse } from "@/components/twin/PersonalResponse";
 import { Provenance } from "@/components/twin/Provenance";
 import { WhatIf } from "@/components/twin/WhatIf";
 import { WhyRisk, WhyRiskAside } from "@/components/twin/WhyRisk";
+import { ReplayDock } from "@/components/twin/ReplayDock";
 import { TwinRail } from "@/components/twin/TwinRail";
 import { useCgm, useMealOutcomes, useMeals, usePatient, useStateDiff, useTwinState } from "@/lib/api/queries";
 import type { Meal, MealOutcome, PatientDetail, TwinState } from "@/lib/api/types";
@@ -90,7 +91,10 @@ function MomentPicker({ meals, outcomes, moment, onChange }: { meals: Meal[]; ou
   const sorted = useMemo(() => [...meals].sort((a, b) => a.started_at.localeCompare(b.started_at)), [meals]);
   const idx = sorted.findIndex((m) => m.meal_id === moment.mealId);
   const step = (d: number) => {
-    const next = sorted[(idx < 0 ? sorted.length : idx) + d];
+    // between meals (e.g. a replayed step), previous / next are the meals either side of the moment
+    const seen = moment.asOf ? sorted.filter((m) => m.started_at <= moment.asOf!).length : sorted.length;
+    const at = idx >= 0 ? idx + d : d > 0 ? seen : seen - 1;
+    const next = sorted[at];
     if (next) onChange({ asOf: next.started_at, mealId: next.meal_id });
   };
   const byDay = useMemo(() => {
@@ -103,7 +107,7 @@ function MomentPicker({ meals, outcomes, moment, onChange }: { meals: Meal[]; ou
   }, [sorted]);
   return (
     <div className="moment">
-      <Button icon size="md" aria-label="Previous meal" onClick={() => step(-1)} disabled={idx <= 0}>
+      <Button icon size="md" aria-label="Previous meal" onClick={() => step(-1)} disabled={idx === 0 || (idx < 0 && !moment.asOf)}>
         <Icon name="chevronLeft" />
       </Button>
       <label className="moment__select">
@@ -121,6 +125,12 @@ function MomentPicker({ meals, outcomes, moment, onChange }: { meals: Meal[]; ou
           }}
         >
           <option value="latest">Latest data (end of recording)</option>
+          {/* a moment between meals (a replayed step, or a shared link): shown as itself */}
+          {moment.asOf && !moment.mealId && (
+            <option value="">
+              {fmtDay(parseNaive(moment.asOf))} {fmtClock(parseNaive(moment.asOf))} · between meals
+            </option>
+          )}
           {byDay.map(([day, ms]) => (
             <optgroup key={day} label={day}>
               {ms.map((m) => (
@@ -133,7 +143,7 @@ function MomentPicker({ meals, outcomes, moment, onChange }: { meals: Meal[]; ou
           ))}
         </select>
       </label>
-      <Button icon size="md" aria-label="Next meal" onClick={() => step(1)} disabled={idx < 0 || idx >= sorted.length - 1}>
+      <Button icon size="md" aria-label="Next meal" onClick={() => step(1)} disabled={idx >= sorted.length - 1 || (idx < 0 && !moment.asOf)}>
         <Icon name="chevronRight" />
       </Button>
     </div>
@@ -514,6 +524,7 @@ export function TwinWorkspace({ patientId }: { patientId: number }) {
   const meals = useMeals(patientId);
   const [moment, setMoment] = useMoment(outcomes.data);
   const twin = useTwinState(patientId, moment?.asOf ?? null, moment?.mealId ?? null, Boolean(moment) && patient.isSuccess);
+  const [replayOpen, setReplayOpen] = useState(false);
 
   if (patient.isError) return <ErrorState error={patient.error} what="this patient" onRetry={() => void patient.refetch()} center />;
   if (patient.isPending || outcomes.isPending || meals.isPending)
@@ -530,6 +541,12 @@ export function TwinWorkspace({ patientId }: { patientId: number }) {
     return <ErrorState error={outcomes.error ?? meals.error} what="this patient's meals" onRetry={() => { void outcomes.refetch(); void meals.refetch(); }} />;
 
   const state = twin.data;
+  const replayEntry =
+    state && !replayOpen ? (
+      <Button size="sm" variant="ghost" onClick={() => setReplayOpen(true)}>
+        <Icon name="history" size={13} /> Replay history
+      </Button>
+    ) : null;
   const picker = moment ? <MomentPicker meals={meals.data} outcomes={outcomes.data} moment={moment} onChange={setMoment} /> : null;
   const selectMeal = (id: string) => {
     const m = meals.data.find((x) => x.meal_id === id);
@@ -538,7 +555,7 @@ export function TwinWorkspace({ patientId }: { patientId: number }) {
 
   return (
     <TwinFocusProvider>
-      <div className="workspace">
+      <div className={cx("workspace", replayOpen && "has-replay")}>
         <Header patient={patient.data} state={state} moment={picker} />
         {moment && (
           <TwinRail
@@ -550,6 +567,7 @@ export function TwinWorkspace({ patientId }: { patientId: number }) {
             state={state}
             moment={moment}
             onSelect={setMoment}
+            action={replayEntry}
           />
         )}
         <SectionNav />
@@ -592,6 +610,15 @@ export function TwinWorkspace({ patientId }: { patientId: number }) {
               <Provenance state={state} />
             </Section>
           </div>
+        )}
+        {replayOpen && state && (
+          <ReplayDock
+            patientId={patientId}
+            state={state}
+            dataTo={patient.data.data_to}
+            onMoment={(asOf) => setMoment({ asOf, mealId: null })}
+            onExit={() => setReplayOpen(false)}
+          />
         )}
       </div>
     </TwinFocusProvider>

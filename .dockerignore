@@ -1,0 +1,29 @@
+# Build context for api/Dockerfile (repository root). Only source, the lock file, configs and
+# reports are needed; data, models, secrets and local tooling never enter an image.
+**/.DS_Store
+**/__pycache__
+**/*.pyc
+.git
+.github
+.claude
+.venv
+.env
+.env.*
+!.env.example
+.hypothesis
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.m6-transfer
+CGMacros*
+data/raw
+data/processed
+data/manifests
+data/reference
+web
+deploy
+docs
+*.tar.gz
+*.tgz
+**/tests
+audit_*

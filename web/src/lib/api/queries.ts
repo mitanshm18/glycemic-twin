@@ -29,6 +29,8 @@ import type {
   PatientOverview,
   Providers,
   Ready,
+  Replay,
+  ReplayStep,
   ScenarioResult,
   StateDiff,
   TwinState,
@@ -269,4 +271,19 @@ export function useLogout() {
     },
     onError: () => muteSessionExpiry(false),
   });
+}
+
+// ------------------------------------------------------------------ replay (historical)
+
+export function createReplay(input: { patientId: number; startAt: Naive; endAt: Naive; stepMinutes: number }) {
+  return post<Replay>("/replays", {
+    patient_id: input.patientId,
+    start_at: input.startAt,
+    end_at: input.endAt,
+    step_minutes: input.stepMinutes,
+  });
+}
+
+export function stepReplay(id: number) {
+  return post<ReplayStep>(`/replays/${id}/step`);
 }

@@ -10,7 +10,9 @@ from sqlalchemy.orm import Session, sessionmaker
 
 
 def make_engine(url: str) -> Engine:
-    return create_engine(url, pool_pre_ping=True, future=True)
+    # hide_parameters: database errors never carry bound values (tokens' hashes, identifiers) into
+    # exception messages, and so never into logs
+    return create_engine(url, pool_pre_ping=True, future=True, hide_parameters=True)
 
 
 def make_sessionmaker(engine: Engine) -> sessionmaker[Session]:
