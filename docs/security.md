@@ -71,6 +71,22 @@ Database errors never carry bound parameters. In production, model-loading probl
 as "the active model cannot be served" (to clinicians and on `/ready`) without file paths or
 hashes; the detail is logged server-side.
 
+**Operational logs.** One line per request on stderr (JSON in production, readable text in
+development): request id, method, path without the query string, matched route, status, latency.
+The id comes from the proxy's `X-Request-ID` if it looks like one, otherwise it is generated, and
+is returned in the `X-Request-ID` response header so a user can quote it. Unexpected errors are
+logged once, with the id and a redacted traceback, and answered with the generic envelope. Never
+logged: request or response bodies, cookies, headers, query strings (they can carry OAuth codes
+and state), database bound parameters. Every record also passes a redaction filter that masks
+URL passwords, bearer tokens and `password=`/`token=`/`code=`/`state=`-style values, as a last
+line of defence. Health checks (`/api/v1/health`, `/api/v1/ready`) log at DEBUG. Startup and
+shutdown each log one line (environment, trusted hosts, whether Google sign-in is on).
+
+**Health checks.** `GET /api/v1/health` is liveness: no database access, always 200 while the
+process runs. `GET /api/v1/ready` is readiness: 200 only when the database answers, migrations are
+at head and the active model loads and matches its checksum; otherwise 503 with the reasons
+(generic in production). Container health checks should use `/ready`.
+
 **Response headers (API).** `Cache-Control: no-store` (patient data is never cached),
 `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: same-origin`, and in
 production `Content-Security-Policy: default-src 'none'; frame-ancestors 'none'`. The web app sets

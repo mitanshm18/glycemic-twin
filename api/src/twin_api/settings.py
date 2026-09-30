@@ -45,6 +45,10 @@ class Settings(BaseSettings):
     max_failed_logins: int = Field(default=5, ge=1, le=20)
     lockout_minutes: int = Field(default=15, ge=1)
     source_label: str = "CGMacros v1.0.0 (processed by M1/M2)"
+    # Operational logs (stderr). json: one object per line, for containers and log collectors;
+    # text: readable lines for local development. Unset means json in production, text otherwise.
+    log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
+    log_format: Literal["json", "text"] | None = None
 
     # Google sign-in (optional; ADR-019). All three must be set to enable it. The secret stays on
     # the server. The redirect URI is the app's public callback, which the web app proxies to this
@@ -60,6 +64,10 @@ class Settings(BaseSettings):
     @property
     def production(self) -> bool:
         return self.environment == "production"
+
+    @property
+    def log_style(self) -> Literal["json", "text"]:
+        return self.log_format or ("json" if self.production else "text")
 
     @property
     def trusted_host_list(self) -> list[str]:
