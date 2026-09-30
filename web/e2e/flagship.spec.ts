@@ -335,6 +335,43 @@ test("what-if: baseline stays, the scenario moves from it, and settles with delt
   await expectNoHorizontalScroll(page);
 });
 
+test("historical replay: labelled as such, steps the twin forward, pauses and exits cleanly", async ({ page }) => {
+  await signIn(page);
+  await openFirstTwin(page);
+  await page.getByRole("button", { name: "Replay history" }).click();
+  const dock = page.getByRole("region", { name: "Historical replay" });
+  await expect(dock).toBeVisible();
+  await expect(dock).toContainText("Recorded data, not live monitoring.");
+  await expect(dock.getByRole("button", { name: "About historical replay" })).toHaveAccessibleDescription(/not live monitoring.*not a held-out evaluation/);
+  await expectAccessible(page);
+
+  const at = () => new URL(page.url()).searchParams.get("at");
+  const step = dock.getByRole("button", { name: "Step forward one interval" });
+  if (await step.isDisabled()) return; // the recording ends at this moment
+  await step.click();
+  await expect(dock).toContainText(/step 1 of \d+/, { timeout: 15_000 });
+  await expect.poll(at).not.toBeNull();
+  const first = at();
+  await expect(step).toBeEnabled({ timeout: 15_000 });
+  await step.click();
+  await expect(dock).toContainText(/step 2 of \d+/, { timeout: 15_000 });
+  await expect.poll(() => at()! > first!).toBe(true); // time only moves forward (the URL follows)
+  await expect(page.locator(".hero")).toBeVisible();
+
+  await dock.getByRole("button", { name: "Resume replay" }).click();
+  await expect(dock.getByRole("button", { name: "Pause replay" })).toBeFocused(); // one toggling button keeps focus
+  await expect(dock).toContainText(/step 3 of \d+/, { timeout: 15_000 });
+  await dock.getByRole("button", { name: "Pause replay" }).click();
+  await expect(dock).toContainText(/Paused/);
+  await expectNoHorizontalScroll(page);
+
+  const stopped = at();
+  await dock.getByRole("button", { name: "Exit replay" }).click();
+  await expect(dock).toHaveCount(0);
+  await page.waitForTimeout(2_000);
+  expect(at()).toBe(stopped); // nothing moves after exit; the clinician stays at the replayed moment
+});
+
 test("clinical record and model page are honest and accessible", async ({ page }) => {
   await signIn(page);
   await openFirstTwin(page);
@@ -415,6 +452,14 @@ test("reduced motion audit: every M6.5 interaction changes state without movemen
   await expect(page.locator(".hero")).toBeVisible();
   const quick = page.getByRole("group", { name: "Quick scenarios" }).getByRole("button");
   if (await quick.count()) await quick.first().click();
+  expect(await moving(page)).toEqual([]);
+  // historical replay: the dock appears and each step lands without movement
+  await page.getByRole("button", { name: "Replay history" }).click();
+  const step = page.getByRole("button", { name: "Step forward one interval" });
+  if (await step.isEnabled()) {
+    await step.click();
+    await expect(page.getByRole("region", { name: "Historical replay" })).toContainText(/step 1 of/, { timeout: 15_000 });
+  }
   expect(await moving(page)).toEqual([]);
   await ctx.close();
 });

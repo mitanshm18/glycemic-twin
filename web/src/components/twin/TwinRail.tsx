@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { Tag } from "@/components/ui/Tag";
 import { Tip } from "@/components/ui/Tip";
 import { useStateHistory } from "@/lib/api/queries";
@@ -24,6 +24,8 @@ interface Props {
   state: TwinState | undefined;
   moment: RailMoment;
   onSelect: (m: RailMoment) => void;
+  /** an action beside the rail's title (the replay entry point) */
+  action?: ReactNode;
 }
 
 type Kind = "learned" | "seen" | "future";
@@ -34,7 +36,7 @@ type Kind = "learned" | "seen" | "future";
  * are filled, later meals are hollow: it has not seen them yet. Moving the moment is choosing a
  * meal: click, drag, or arrow keys. Snapshots already built are dotted underneath by phase.
  */
-export function TwinRail({ patientId, meals, outcomes, dataFrom, dataTo, state, moment, onSelect }: Props) {
+export function TwinRail({ patientId, meals, outcomes, dataFrom, dataTo, state, moment, onSelect, action }: Props) {
   const history = useStateHistory(patientId);
   const sorted = useMemo(() => [...meals].sort((a, b) => a.started_at.localeCompare(b.started_at)).map((m) => ({ m, t: parseNaive(m.started_at) })), [meals]);
   const eligible = useMemo(() => new Set(outcomes.filter((o) => o.eligible).map((o) => o.meal_id)), [outcomes]);
@@ -83,10 +85,12 @@ export function TwinRail({ patientId, meals, outcomes, dataFrom, dataTo, state, 
     if (e.pointerType !== "mouse") setPreview(null);
   };
   const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
-    const cur = idx < 0 ? sorted.length : idx;
+    // between meals (e.g. a replayed step), "next" and "previous" are the meals either side of it
+    const seen = sorted.filter((m) => m.t <= asOf).length;
+    const cur = idx >= 0 ? idx : moment.asOf ? seen - 0.5 : sorted.length;
     let next: number | null = null;
-    if (e.key === "ArrowRight" || e.key === "ArrowUp") next = Math.min(sorted.length - 1, cur + 1);
-    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = Math.max(0, cur - 1);
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") next = Math.min(sorted.length - 1, Math.floor(cur + 1));
+    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = Math.max(0, Math.ceil(cur - 1));
     else if (e.key === "Home") next = 0;
     else if (e.key === "End") next = sorted.length - 1;
     if (next === null) return;
@@ -117,9 +121,10 @@ export function TwinRail({ patientId, meals, outcomes, dataFrom, dataTo, state, 
               <Tag tone={PHASE_TONE[state.lifecycle.phase]}>{PHASE_LABEL[state.lifecycle.phase]}</Tag>
             </Tip>
           )}
-          <span className="mono">{current ? `${fmtDay(current.t)} ${fmtClock(current.t)}` : "Latest data"}</span>
+          <span className="mono">{current ? `${fmtDay(current.t)} ${fmtClock(current.t)}` : moment.asOf ? `${fmtDay(asOf)} ${fmtClock(asOf)}` : "Latest data"}</span>
           {current && <span className="secondary">{current.m.meal_type ?? "meal"}</span>}
         </span>
+        {action && <span className="rail__action">{action}</span>}
         <span className="rail__legend xsmall" aria-hidden="true">
           <span><i className="rail__key rail__key--learned" /> learned from</span>
           <span><i className="rail__key rail__key--seen" /> seen, window open</span>
@@ -136,7 +141,9 @@ export function TwinRail({ patientId, meals, outcomes, dataFrom, dataTo, state, 
         aria-valuemin={1}
         aria-valuemax={sorted.length}
         aria-valuenow={idx >= 0 ? idx + 1 : sorted.length}
-        aria-valuetext={idx >= 0 ? `Meal ${idx + 1} of ${sorted.length}: ${describe(idx)}` : "Latest data, end of recording"}
+        aria-valuetext={
+          idx >= 0 ? `Meal ${idx + 1} of ${sorted.length}: ${describe(idx)}` : moment.asOf ? `${fmtDay(asOf)} ${fmtClock(asOf)}, between meals` : "Latest data, end of recording"
+        }
         onPointerDown={onDown}
         onPointerMove={onMove}
         onPointerUp={onUp}
