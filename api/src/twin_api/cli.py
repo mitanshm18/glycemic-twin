@@ -32,7 +32,7 @@ def _settings():  # type: ignore[no-untyped-def]
 def _engine():  # type: ignore[no-untyped-def]
     from twin_api.db import make_engine
 
-    return make_engine(_settings().database_url)
+    return make_engine(_settings().database_url.get_secret_value())
 
 
 def cmd_migrate(args: argparse.Namespace) -> int:
@@ -40,7 +40,10 @@ def cmd_migrate(args: argparse.Namespace) -> int:
     from alembic.config import Config
 
     cfg = Config(str(Path(__file__).resolve().parents[2] / "alembic.ini"))
-    cfg.set_main_option("sqlalchemy.url", _settings().database_url)
+    # ConfigParser treats "%" as interpolation: escape it so passwords containing "%" work
+    cfg.set_main_option(
+        "sqlalchemy.url", _settings().database_url.get_secret_value().replace("%", "%%")
+    )
     command.upgrade(cfg, args.revision)
     return 0
 
@@ -226,6 +229,11 @@ def cmd_unlink_google(args: argparse.Namespace) -> int:
 
 def cmd_serve(args: argparse.Namespace) -> int:
     import uvicorn
+
+    s = _settings()  # validates the configuration (production rules) before binding a port
+    if args.reload and s.production:
+        print("--reload is for development only; refusing in production", file=sys.stderr)
+        return 2
 
     uvicorn.run(
         "twin_api.app:create_app", factory=True, host=args.host, port=args.port, reload=args.reload

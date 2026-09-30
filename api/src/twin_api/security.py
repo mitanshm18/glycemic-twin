@@ -11,6 +11,7 @@ import hashlib
 import hmac
 import os
 import secrets
+import threading
 
 from cryptography.exceptions import InvalidKey
 from cryptography.hazmat.primitives.kdf.argon2 import Argon2id
@@ -18,6 +19,11 @@ from cryptography.hazmat.primitives.kdf.argon2 import Argon2id
 ARGON2_LENGTH, ARGON2_ITERATIONS, ARGON2_LANES, ARGON2_MEMORY_KIB = 32, 3, 4, 64 * 1024
 MIN_PASSWORD_LENGTH = 12
 _DUMMY_HASH: str | None = None
+# Each Argon2id call needs 64 MiB. Unbounded, a burst of simultaneous sign-ins (or a password
+# guessing burst) could exhaust memory and fail with MemoryError (a 500). At most this many run at
+# once; the rest wait their turn, which also slows guessing without changing any result.
+MAX_CONCURRENT_HASHES = 2
+_hash_slots = threading.BoundedSemaphore(MAX_CONCURRENT_HASHES)
 
 
 def hash_password(password: str) -> str:
@@ -30,12 +36,14 @@ def hash_password(password: str) -> str:
         lanes=ARGON2_LANES,
         memory_cost=ARGON2_MEMORY_KIB,
     )
-    return kdf.derive_phc_encoded(password.encode())
+    with _hash_slots:
+        return kdf.derive_phc_encoded(password.encode())
 
 
 def verify_password(password: str, encoded: str) -> bool:
     try:
-        Argon2id.verify_phc_encoded(password.encode(), encoded)
+        with _hash_slots:
+            Argon2id.verify_phc_encoded(password.encode(), encoded)
     except (InvalidKey, ValueError):
         return False
     return True
