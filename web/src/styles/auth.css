@@ -470,10 +470,6 @@
   stroke: var(--accent);
   stroke-width: 2;
 }
-.signal__pulse {
-  fill: var(--accent);
-  pointer-events: none;
-}
 .signal__anchor {
   cursor: pointer;
   animation: signal-in var(--dur-emphasis) var(--ease-standard) both;

@@ -417,7 +417,8 @@
   background: var(--surface);
 }
 .model-metrics__foot {
-  grid-column: 1 / -1;
+  margin-top: calc(var(--s-1) * -1);
+  margin-bottom: var(--s-4);
 }
 @media (max-width: 899px) {
   .model-metrics {

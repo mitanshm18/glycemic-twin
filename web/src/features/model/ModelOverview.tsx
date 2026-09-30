@@ -35,61 +35,63 @@ function runLabel(run: string): string {
 
 function Headline({ m, what }: { m: PopulationMetrics; what: string }) {
   return (
-    <dl className="model-metrics">
-      <Metric
-        label={
-          <Tip text="How well the model ranks meals that went above 180 over meals that did not. 0.5 is chance, 1.0 is perfect ranking.">
-            <span className="tip-term">AUROC</span>
-          </Tip>
-        }
-        value={f3(m.auroc)}
-        sub={ci(m.ci.auroc) ?? "no interval"}
-      />
-      <Metric
-        label={
-          <Tip text="Precision–recall area. The chance level equals the share of meals that went above 180 (the prevalence).">
-            <span className="tip-term">PR-AUC</span>
-          </Tip>
-        }
-        value={f3(m.pr_auc)}
-        sub={
-          <>
-            {ci(m.ci.pr_auc) ?? "no interval"}
-            <br />
-            chance level {fmtPct(m.prevalence, 1)}
-          </>
-        }
-      />
-      <Metric
-        label={
-          <Tip text="Mean squared error of the probabilities (lower is better). Skill compares it with always predicting the prevalence.">
-            <span className="tip-term">Brier score</span>
-          </Tip>
-        }
-        value={f3(m.brier)}
-        sub={
-          <>
-            {ci(m.ci.brier) ?? "no interval"}
-            <br />
-            skill {isNum(m.brier_skill) ? m.brier_skill.toFixed(3) : DASH} vs prevalence
-          </>
-        }
-      />
-      <Metric
-        label={
-          <Tip text="Slope 1 and intercept 0 mean predicted probabilities match observed rates on average. ECE is the mean gap per bin.">
-            <span className="tip-term">Calibration</span>
-          </Tip>
-        }
-        value={isNum(m.calibration_slope) ? m.calibration_slope.toFixed(2) : DASH}
-        unit="slope"
-        sub={`intercept ${isNum(m.calibration_intercept) ? m.calibration_intercept.toFixed(2) : DASH} · ECE ${f3(m.ece)}`}
-      />
-      <p className="model-metrics__foot xsmall secondary">
-        {what}: {fmtNum(m.meals)} meals from {fmtNum(m.participants)} participants, {fmtNum(m.positives)} went above 180 (
-        {fmtPct(m.prevalence, 1)}). Out-of-fold predictions; intervals are participant bootstrap.
-      </p>
-    </dl>
+    <div className="model-metrics-wrap">
+      <dl className="model-metrics">
+        <Metric
+          label={
+            <Tip text="How well the model ranks meals that went above 180 over meals that did not. 0.5 is chance, 1.0 is perfect ranking.">
+              <span className="tip-term">AUROC</span>
+            </Tip>
+          }
+          value={f3(m.auroc)}
+          sub={ci(m.ci.auroc) ?? "no interval"}
+        />
+        <Metric
+          label={
+            <Tip text="Precision–recall area. The chance level equals the share of meals that went above 180 (the prevalence).">
+              <span className="tip-term">PR-AUC</span>
+            </Tip>
+          }
+          value={f3(m.pr_auc)}
+          sub={
+            <>
+              {ci(m.ci.pr_auc) ?? "no interval"}
+              <br />
+              chance level {fmtPct(m.prevalence, 1)}
+            </>
+          }
+        />
+        <Metric
+          label={
+            <Tip text="Mean squared error of the probabilities (lower is better). Skill compares it with always predicting the prevalence.">
+              <span className="tip-term">Brier score</span>
+            </Tip>
+          }
+          value={f3(m.brier)}
+          sub={
+            <>
+              {ci(m.ci.brier) ?? "no interval"}
+              <br />
+              skill {isNum(m.brier_skill) ? m.brier_skill.toFixed(3) : DASH} vs prevalence
+            </>
+          }
+        />
+        <Metric
+          label={
+            <Tip text="Slope 1 and intercept 0 mean predicted probabilities match observed rates on average. ECE is the mean gap per bin.">
+              <span className="tip-term">Calibration</span>
+            </Tip>
+          }
+          value={isNum(m.calibration_slope) ? m.calibration_slope.toFixed(2) : DASH}
+          unit="slope"
+          sub={`intercept ${isNum(m.calibration_intercept) ? m.calibration_intercept.toFixed(2) : DASH} · ECE ${f3(m.ece)}`}
+        />
+      </dl>
+        <p className="model-metrics__foot xsmall secondary">
+          {what}: {fmtNum(m.meals)} meals from {fmtNum(m.participants)} participants, {fmtNum(m.positives)} went above 180 (
+          {fmtPct(m.prevalence, 1)}). Out-of-fold predictions; intervals are participant bootstrap.
+        </p>
+    </div>
   );
 }
 
@@ -192,7 +194,7 @@ function AtThreshold({ t, threshold }: { t: Evaluation["active_at_threshold"]; t
 
 function Runs({ ev }: { ev: Evaluation }) {
   return (
-    <div className="table-wrap">
+    <div className="table-wrap" tabIndex={0} role="region" aria-label="All evaluated models on the prediabetes and type 2 diabetes population">
       <table className="table">
         <caption className="sr-only">All evaluated models on the prediabetes and type 2 diabetes population</caption>
         <thead>
@@ -266,7 +268,7 @@ function Comparisons({ ev }: { ev: Evaluation }) {
 
 function Folds({ ev }: { ev: Evaluation }) {
   return (
-    <div className="table-wrap">
+    <div className="table-wrap" tabIndex={0} role="region" aria-label="Per-fold results of the active model">
       <table className="table">
         <caption className="sr-only">Per-fold results of the active model</caption>
         <thead>
@@ -326,7 +328,7 @@ function Importance({ items }: { items: Evaluation["shap_global_importance"] }) 
 
 function Registry({ versions }: { versions: ModelVersion[] }) {
   return (
-    <div className="table-wrap">
+    <div className="table-wrap" tabIndex={0} role="region" aria-label="Registered model versions">
       <table className="table">
         <caption className="sr-only">Registered model versions</caption>
         <thead>

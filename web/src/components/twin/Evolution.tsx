@@ -257,7 +257,7 @@ function Diff({ patientId, current }: { patientId: number; current: TwinState })
           </table>
           {changes.length > key.length && (
             <Button size="sm" variant="ghost" onClick={() => setShowAll((s) => !s)} aria-expanded={showAll}>
-              <Icon name={showAll ? "chevronDown" : "chevronRight"} size={14} />
+              <Icon name="chevronRight" size={14} className="chev" />
               {showAll ? "Key fields only" : `All ${changes.length} changed fields`}
             </Button>
           )}

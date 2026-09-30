@@ -387,3 +387,35 @@ test("reduced motion: the same states, without movement", async ({ browser, base
   }
   await ctx.close();
 });
+
+/** Animations and transitions that would still visibly run (anything longer than a frame). */
+async function moving(page: Page) {
+  return page.evaluate(() =>
+    document
+      .getAnimations()
+      .filter((a) => a.playState === "running" && Number(a.effect?.getTiming().duration ?? 0) > 20)
+      .map((a) => `${(a as CSSAnimation).animationName ?? "transition"} on ${(a.effect as KeyframeEffect | null)?.target?.className ?? "?"}`),
+  );
+}
+
+test("reduced motion audit: every M6.5 interaction changes state without movement", async ({ browser, baseURL }) => {
+  const ctx = await browser.newContext({ reducedMotion: "reduce", baseURL });
+  const page = await ctx.newPage();
+  await page.goto("/login");
+  await expect(page.locator(".login__card")).toBeVisible();
+  expect(await moving(page)).toEqual([]);
+  await signIn(page);
+  await openFirstTwin(page);
+  const trend = page.getByRole("button", { name: /readings from the 90 minutes/ });
+  if (await trend.count()) await trend.click();
+  const marker = page.locator(".tl__meal").first();
+  if (await marker.count()) await marker.focus();
+  await page.getByRole("slider", { name: /Twin moment/ }).focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(page.locator(".hero")).toBeVisible();
+  const quick = page.getByRole("group", { name: "Quick scenarios" }).getByRole("button");
+  if (await quick.count()) await quick.first().click();
+  expect(await moving(page)).toEqual([]);
+  await ctx.close();
+});
+

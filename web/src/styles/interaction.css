@@ -77,6 +77,7 @@ button.hero__trend[aria-expanded="true"] {
 /* the surrounding readings open in place, under the value they explain */
 .gctx {
   justify-self: stretch;
+  min-width: 0;
   display: grid;
   gap: var(--s-3);
   margin-top: var(--s-1);
@@ -132,10 +133,15 @@ button.hero__trend[aria-expanded="true"] {
   background: var(--surface-sunken);
   color: var(--text);
 }
+/* the drawing is sized by its box, never the other way round (no overflow on phones) */
 .gctx__plot {
   position: relative;
+  min-width: 0;
+  height: 88px;
 }
 .gctx__plot svg {
+  position: absolute;
+  inset: 0;
   display: block;
   overflow: visible;
   cursor: crosshair;
@@ -274,7 +280,7 @@ button.hero__trend[aria-expanded="true"] {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, 0);
-  transition-delay: 120ms, 120ms, 0s;
+  transition-delay: var(--delay-tip), var(--delay-tip), 0s;
 }
 .dial-card__facts {
   display: grid;
@@ -301,7 +307,7 @@ button.hero__trend[aria-expanded="true"] {
 /* the previous value lingers briefly where the arc used to end */
 .dial__ghost {
   fill: var(--text-muted);
-  animation: ghost-out 1800ms var(--ease-standard) forwards;
+  animation: ghost-out var(--dur-linger) var(--ease-standard) forwards;
 }
 @keyframes ghost-out {
   0%,
@@ -314,7 +320,7 @@ button.hero__trend[aria-expanded="true"] {
 }
 /* the threshold lights once as the arc passes it */
 .dial__tick--crossed {
-  animation: tick-cross 900ms var(--ease-standard);
+  animation: tick-cross var(--dur-morph) var(--ease-standard);
 }
 @keyframes tick-cross {
   30% {
@@ -330,7 +336,7 @@ button.hero__trend[aria-expanded="true"] {
   border-radius: var(--r-sm);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
-  animation: tag-in var(--dur-standard) var(--ease-standard) 600ms both;
+  animation: tag-in var(--dur-standard) var(--ease-standard) var(--delay-settle) both;
 }
 .hero__crossing.is-up {
   background: var(--risk-soft);
@@ -595,7 +601,7 @@ button.hero__trend[aria-expanded="true"] {
 .tl.is-gliding .tl__cross,
 .tl.is-gliding .tl__dot,
 .tl.is-gliding .tl__tip {
-  transition: transform 110ms var(--ease-standard);
+  transition: transform var(--dur-micro) var(--ease-standard);
 }
 .tl.is-pinned .tl__tip {
   pointer-events: auto;
@@ -621,7 +627,7 @@ button.hero__trend[aria-expanded="true"] {
 }
 .tl__line--ghost {
   opacity: 0;
-  animation: ghost-line 420ms var(--ease-standard);
+  animation: ghost-line var(--dur-emphasis) var(--ease-standard);
   pointer-events: none;
 }
 @keyframes ghost-line {
@@ -703,7 +709,6 @@ button.hero__trend[aria-expanded="true"] {
 .tl__meal svg {
   fill: var(--text-muted);
   transform-origin: 50% 70%;
-  animation: mark-in var(--dur-standard) var(--ease-standard) 200ms both;
   transition:
     fill var(--dur-micro) var(--ease-standard),
     transform var(--dur-standard) var(--ease-standard);
@@ -914,7 +919,7 @@ button.hero__trend[aria-expanded="true"] {
   background: color-mix(in oklch, var(--accent) 14%, transparent);
   pointer-events: none;
   opacity: 0;
-  animation: driver-pulse 1800ms var(--ease-standard);
+  animation: driver-pulse var(--dur-linger) var(--ease-standard);
 }
 @keyframes driver-pulse {
   15%,
@@ -995,7 +1000,7 @@ button.hero__trend[aria-expanded="true"] {
   height: 6px;
   border-radius: var(--r-full);
   background: var(--model);
-  animation: calc-dot 900ms var(--ease-standard) infinite alternate;
+  animation: calc-dot var(--dur-morph) var(--ease-standard) infinite alternate;
 }
 @keyframes calc-dot {
   from {
@@ -1228,4 +1233,91 @@ button.hero__trend[aria-expanded="true"] {
 }
 .wi-foot.is-empty {
   min-height: 0;
+}
+
+/* ---------------------------------------------------------------- one product: shared patterns (step 4) */
+
+/* expand/collapse: one chevron that turns, everywhere (Disclosure, "Show all inputs", "All changed fields") */
+.chev {
+  transition: transform var(--dur-standard) var(--ease-standard);
+}
+[aria-expanded="true"] > .chev {
+  transform: rotate(90deg);
+}
+
+/* CONNECT: the destination of a jump is marked briefly, so where you arrived is obvious */
+.section__head {
+  position: relative;
+}
+.section.is-arrived > .section__head::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--s-3) * -1);
+  top: 2px;
+  bottom: 2px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  animation: arrive var(--dur-linger) var(--ease-standard) forwards;
+}
+.section.is-arrived .section__eyebrow {
+  color: var(--accent-text);
+  transition: color var(--dur-standard) var(--ease-standard);
+}
+@keyframes arrive {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.section__title:focus {
+  outline: none;
+}
+.section__title:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+/* continuity: a new moment keeps the previous explanation, quieter, until the new one lands */
+.why-wrap {
+  transition: opacity var(--dur-standard) var(--ease-standard);
+}
+.why-wrap.is-stale {
+  opacity: 0.55;
+}
+/* the whole page only dims if the twin takes a noticeable time to rebuild (no flash on every move) */
+.workspace__body.is-refreshing {
+  opacity: 0.8;
+  transition-delay: 250ms;
+}
+
+/* copy -> confirmation, in place */
+.ident button {
+  transition:
+    background-color var(--dur-micro) var(--ease-standard),
+    color var(--dur-micro) var(--ease-standard);
+}
+.ident button.is-done {
+  color: var(--success-fg);
+}
+
+/* status pills that explain themselves on hover / focus */
+.tip__trigger:has(.tag) {
+  border-radius: var(--r-full);
+  cursor: help;
+}
+.tip__trigger:has(.tag):focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+/* the reading the hero shows, marked where it sits in its context */
+.gctx__latest {
+  fill: none;
+  stroke: var(--accent);
+  stroke-opacity: 0.35;
+  stroke-width: 1.5;
 }

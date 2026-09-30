@@ -2,10 +2,11 @@
 
 import { useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { Tag } from "@/components/ui/Tag";
+import { Tip } from "@/components/ui/Tip";
 import { useStateHistory } from "@/lib/api/queries";
 import type { Meal, MealOutcome, Phase, TwinState } from "@/lib/api/types";
 import { cx } from "@/lib/cx";
-import { PHASE_LABEL, PHASE_TONE } from "@/lib/risk";
+import { PHASE_HELP, PHASE_LABEL, PHASE_TONE } from "@/lib/risk";
 import { DAY, fmtClock, fmtDay, parseNaive, type Millis } from "@/lib/time";
 
 export interface RailMoment {
@@ -111,7 +112,11 @@ export function TwinRail({ patientId, meals, outcomes, dataFrom, dataTo, state, 
       <div className="rail__head">
         <span className="rail__title">Twin timeline</span>
         <span className="rail__now">
-          {state && <Tag tone={PHASE_TONE[state.lifecycle.phase]}>{PHASE_LABEL[state.lifecycle.phase]}</Tag>}
+          {state && (
+            <Tip text={PHASE_HELP[state.lifecycle.phase]} focusable label={`${PHASE_LABEL[state.lifecycle.phase]}: what this phase means`}>
+              <Tag tone={PHASE_TONE[state.lifecycle.phase]}>{PHASE_LABEL[state.lifecycle.phase]}</Tag>
+            </Tip>
+          )}
           <span className="mono">{current ? `${fmtDay(current.t)} ${fmtClock(current.t)}` : "Latest data"}</span>
           {current && <span className="secondary">{current.m.meal_type ?? "meal"}</span>}
         </span>

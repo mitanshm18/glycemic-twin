@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEve
 import { Icon } from "@/components/ui/Icon";
 import { cx } from "@/lib/cx";
 import { fmtNum, fmtPct } from "@/lib/format";
-import { useReducedMotion } from "@/lib/motion";
+import { MOTION, useReducedMotion } from "@/lib/motion";
 import { THRESHOLD_MGDL } from "@/lib/risk";
 import { fmtClock, MINUTE, type Millis } from "@/lib/time";
 import { deltaFromPrevious, glucoseDomain, linear, linePath, nearest, timeTicks, type Pt } from "@/lib/timeline";
@@ -231,7 +231,7 @@ export function GlucoseTimeline({
     if (prev && prev.start !== start) moved.current = true;
     if (prev && prev.start !== start && !reduced) {
       setGhost({ d: prev.d, key: prev.start });
-      t = window.setTimeout(() => setGhost(null), 420);
+      t = window.setTimeout(() => setGhost(null), MOTION.emphasis + 60);
     }
     prevDrawing.current = { start, d: beforeD + afterD };
     return () => window.clearTimeout(t);

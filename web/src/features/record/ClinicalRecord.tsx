@@ -268,7 +268,7 @@ function DayDetail({ patientId, day, outcomes }: { patientId: number; day: DayIn
       {day.meals.length === 0 ? (
         <EmptyState icon="meal" title="No meals logged on this day" />
       ) : (
-        <div className="table-wrap">
+        <div className="table-wrap" tabIndex={0} role="region" aria-label={`Meals logged on ${fmtDay(day.t)}`}>
           <table className="table rec-meals">
             <caption className="sr-only">Meals logged on {fmtDay(day.t)}</caption>
             <thead>

@@ -11,7 +11,7 @@ import type { Lever, ScenarioResult, TwinState } from "@/lib/api/types";
 import { cx } from "@/lib/cx";
 import { featureInfo, fmtFeature } from "@/lib/features";
 import { fmtNum, fmtPct, fmtPp } from "@/lib/format";
-import { prefersReducedMotion, useAnimatedNumber, easeOut } from "@/lib/motion";
+import { easeOut, MOTION, prefersReducedMotion, useAnimatedNumber } from "@/lib/motion";
 import { riskView, UNCERTAINTY_LABEL, UNCERTAINTY_TONE } from "@/lib/risk";
 import { QUICK, scenarioSummary, thresholdRelation } from "@/lib/whatif";
 import { RiskDial } from "./RiskDial";
@@ -29,8 +29,8 @@ const LEVERS: Array<{ key: Lever; label: string; unit: string; min: number; max:
 ];
 
 const DEBOUNCE_MS = 450;
-const MORPH_MS = 900; // the same time the risk dial takes: number, arc and bar move as one
-const SETTLE_MS = 620; // the delta and the support/uncertainty arrive once the value has mostly settled
+const MORPH_MS = MOTION.morph; // the same time the risk dial takes: number, arc and bar move as one
+const SETTLE_MS = MOTION.settle; // the delta and the support/uncertainty arrive once the value has mostly settled
 
 type Deltas = Partial<Record<Lever, number>>;
 
@@ -254,7 +254,7 @@ export function WhatIf({ state }: { state: TwinState }) {
     }
     const began = performance.now();
     const tick = (now: number) => {
-      const p = Math.min(1, (now - began) / 320);
+      const p = Math.min(1, (now - began) / MOTION.emphasis);
       const v = Math.round((from + (to - from) * easeOut(p)) / lever.step) * lever.step;
       setDeltas((d) => ({ ...d, [k]: p < 1 ? v : to }));
       if (p < 1) quickRaf.current = requestAnimationFrame(tick);
