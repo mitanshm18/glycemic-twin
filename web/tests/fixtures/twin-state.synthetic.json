@@ -1,0 +1,298 @@
+{
+ "_fixture": "SYNTHETIC TEST FIXTURE: twin-state/1 produced by the real twin_core engine on the synthetic twin_factory record (tests only; not real patient data).",
+ "schema_version": "twin-state/1",
+ "state_id": "a6e01a3fd2c3e663af2a862e7ce4f32dda1f151383d591cfacbcf802ea0b87d1",
+ "patient_id": 7,
+ "as_of": "2021-06-06T19:00:00",
+ "lifecycle": {
+  "phase": "PERSONALIZED",
+  "reason": "17 closed usable meals; personal weight 0.83 >= 0.50",
+  "closed_usable_meals": 17,
+  "personal_weight": 0.8284615396334272,
+  "next_phase_requires": null
+ },
+ "static_clinical": {
+  "glycemic_group": "prediabetes",
+  "fields": [
+   {
+    "name": "hba1c_pct",
+    "value": 6.1,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "fasting_glucose_mgdl",
+    "value": 105.0,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "fasting_insulin_uu_ml",
+    "value": 12.0,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "bmi",
+    "value": 29.0,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "age_years",
+    "value": 52.0,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "triglycerides_mgdl",
+    "value": 150.0,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "hdl_mgdl",
+    "value": 45.0,
+    "provenance": "observed",
+    "source": "bio.csv"
+   },
+   {
+    "name": "sex_female",
+    "value": 1.0,
+    "provenance": "derived",
+    "source": "bio.csv Gender (F=1, M=0)"
+   },
+   {
+    "name": "homa_ir",
+    "value": 3.111111111111111,
+    "provenance": "derived",
+    "source": "fasting glucose x fasting insulin / 405"
+   }
+  ]
+ },
+ "personal_baselines": {
+  "overnight_glucose_mgdl": 110.0,
+  "resting_hr_bpm": 62.884735954155225,
+  "time_in_range_24h": 0.8685121107266436
+ },
+ "current_physiology": {
+  "glucose_mgdl": 112.0,
+  "glucose_age_min": 0.0,
+  "slope_15_mgdl_per_min": 0.04,
+  "slope_30_mgdl_per_min": -0.16428571428571428,
+  "sd_60_mgdl": 3.105000103224739,
+  "glucose_vs_baseline_mgdl": 2.0,
+  "hr_30_bpm": 66.83809733935622,
+  "hr_delta_bpm": 3.9533613852009992,
+  "mets_60": 1.8433027817624674,
+  "active_min_3h": 0.0,
+  "activity_kcal_60": 1.4904264038716337
+ },
+ "recent_history": {
+  "glucose_mean_180_mgdl": 118.05405405405405,
+  "glucose_min_180_mgdl": 107.0,
+  "glucose_max_180_mgdl": 138.0,
+  "carbs_prev_3h_g": 0.0,
+  "mins_since_previous_meal": 360.0,
+  "meals_logged_24h": 3,
+  "meals_logged_total": 18,
+  "recent_closed_meals": [
+   {
+    "meal_id": "7-5-13",
+    "started_at": "2021-06-06T13:00:00",
+    "window_closed_at": "2021-06-06T15:00:00",
+    "frozen_usable": true,
+    "label": 1,
+    "rise_native_mgdl": 124.0
+   },
+   {
+    "meal_id": "7-5-8",
+    "started_at": "2021-06-06T08:00:00",
+    "window_closed_at": "2021-06-06T10:00:00",
+    "frozen_usable": true,
+    "label": 0,
+    "rise_native_mgdl": 63.0
+   },
+   {
+    "meal_id": "7-4-19",
+    "started_at": "2021-06-05T19:00:00",
+    "window_closed_at": "2021-06-05T21:00:00",
+    "frozen_usable": true,
+    "label": 1,
+    "rise_native_mgdl": 134.0
+   },
+   {
+    "meal_id": "7-4-13",
+    "started_at": "2021-06-05T13:00:00",
+    "window_closed_at": "2021-06-05T15:00:00",
+    "frozen_usable": true,
+    "label": 0,
+    "rise_native_mgdl": 58.0
+   },
+   {
+    "meal_id": "7-4-8",
+    "started_at": "2021-06-05T08:00:00",
+    "window_closed_at": "2021-06-05T10:00:00",
+    "frozen_usable": true,
+    "label": 0,
+    "rise_native_mgdl": 47.0
+   }
+  ]
+ },
+ "current_meal": {
+  "meal_id": "7-5-19",
+  "origin": "logged",
+  "started_at": "2021-06-06T19:00:00",
+  "prediction_window_closes_at": "2021-06-06T21:00:00",
+  "minutes_since_start": 0.0,
+  "meal_type": "dinner",
+  "carbs_g": 92.45493498305088,
+  "protein_g": 38.72848054957398,
+  "fat_g": 10.268369064741211,
+  "fiber_g": 5.339911493794029,
+  "calories_kcal": 617.1489837131703,
+  "macros_valid": true,
+  "applicable": true,
+  "not_applicable_reasons": []
+ },
+ "personal_response": {
+  "closed_usable_meals": 17,
+  "closed_positive_meals": 9,
+  "population_rate": 0.4322815369679151,
+  "p_personal": 0.5195689203767772,
+  "rise_offset_mgdl": 25.611608107793305,
+  "personal_weight": 0.8284615396334272,
+  "prior_fitted_on_people": 43,
+  "prior_fitted_on_meals": 1368
+ },
+ "risk": {
+  "status": "scored",
+  "reason": null,
+  "probability": 0.6757997958427439,
+  "threshold": 0.3760417467427397,
+  "above_threshold": true,
+  "features_at": "2021-06-06T19:00:00",
+  "model_inputs": {
+   "g_last": 112.0,
+   "g_age_min": 0.0,
+   "slope_15": 0.04,
+   "slope_30": -0.16428571428571428,
+   "sd_60": 3.105000103224739,
+   "mean_180": 118.05405405405405,
+   "min_180": 107.0,
+   "max_180": 138.0,
+   "tir_24h": 0.8685121107266436,
+   "g_overnight_baseline": 110.0,
+   "g_vs_baseline": 2.0,
+   "carbs_g": 92.45493498305088,
+   "protein_g": 38.72848054957398,
+   "fat_g": 10.268369064741211,
+   "fiber_g": 5.339911493794029,
+   "calories_kcal": 617.1489837131703,
+   "meal_breakfast": 0.0,
+   "meal_lunch": 0.0,
+   "meal_dinner": 1.0,
+   "meal_snack": 0.0,
+   "hour_sin": -0.9659258262890684,
+   "hour_cos": 0.2588190451025203,
+   "carbs_prev_3h": 0.0,
+   "invalid_meal_prev_3h": 0.0,
+   "mins_since_meal": 360.0,
+   "hr_30": 66.83809733935622,
+   "hr_resting": 62.884735954155225,
+   "hr_delta": 3.9533613852009992,
+   "mets_available": 1.0,
+   "mets_60": 1.8433027817624674,
+   "active_min_3h": 0.0,
+   "activity_kcal_60": 1.4904264038716337,
+   "hr_age_min": 1.0,
+   "hba1c_pct": 6.1,
+   "fasting_glucose_mgdl": 105.0,
+   "fasting_insulin_uu_ml": 12.0,
+   "homa_ir": 3.111111111111111,
+   "bmi": 29.0,
+   "age_years": 52.0,
+   "sex_female": 1.0,
+   "triglycerides_mgdl": 150.0,
+   "hdl_mgdl": 45.0,
+   "p_personal": 0.5195689203767772,
+   "rise_offset_mgdl": 25.611608107793305,
+   "personal_weight": 0.8284615396334272
+  },
+  "uncertainty": {
+   "level": "low",
+   "reasons": [],
+   "outcome_entropy_bits": 0.908891,
+   "distance_to_threshold": 0.29975804910000414,
+   "personal_weight": 0.8284615396334272,
+   "missing_inputs": [],
+   "out_of_support_inputs": [],
+   "support_checked": true,
+   "note": "Qualitative reliability flags, not a confidence interval; the probability itself is calibrated on held-out participants (M3)."
+  }
+ },
+ "freshness": {
+  "last_cgm_native_at": "2021-06-06T19:00:00",
+  "cgm_age_min": 0.0,
+  "cgm_stale": false,
+  "last_wearable_at": "2021-06-06T19:00:00",
+  "wearable_age_min": 0.0,
+  "wearable_stale": false,
+  "last_meal_at": "2021-06-06T19:00:00"
+ },
+ "provenance": {
+  "source": "SYNTHETIC TEST FIXTURE",
+  "record_sha256": "d84f55e376dd6c74a8bc200343c9990a024ef6efa20d772f61cbe5c7bd668944",
+  "cgm_native_readings_used": 1669,
+  "wearable_minutes_used": 8341,
+  "meals_logged_used": 18,
+  "closed_meal_ids_used": [
+   "7-0-8",
+   "7-0-13",
+   "7-0-19",
+   "7-1-8",
+   "7-1-13",
+   "7-1-19",
+   "7-2-8",
+   "7-2-13",
+   "7-2-19",
+   "7-3-8",
+   "7-3-13",
+   "7-3-19",
+   "7-4-8",
+   "7-4-13",
+   "7-4-19",
+   "7-5-8",
+   "7-5-13"
+  ],
+  "current_meal_id": "7-5-19",
+  "max_source_ts": "2021-06-06T19:00:00",
+  "config_sha256": {
+   "features": "efe1cbfdcfff70497ff20de57824d441f5f7805715ededf331e037acb7d23b35",
+   "labels": "6088a0ad14b19ffc3b7b4254dac09bb1664c19b17577fbe15fb3adbe01e8a9de",
+   "model_contract": "92b22c0cf283d0eeac0a2ad3addbfbad1841bc58435c386223917bb67d28cc32",
+   "twin": "933a7fa2b2cbcdd861c99a049316822eeccd33f1909b4c95a4f2c705439814b7"
+  },
+  "engine_version": "m4.1",
+  "model": {
+   "model_version": "logistic__full_personal@contract-v1-92b22c0cf283/data-0c61090e1568/2026-09-29T15:33:10+00:00",
+   "model_name": "logistic",
+   "feature_set": "full_personal",
+   "n_columns": 45,
+   "contract_version": 1,
+   "contract_sha256": "92b22c0cf283d0eeac0a2ad3addbfbad1841bc58435c386223917bb67d28cc32",
+   "features_sha256": "efe1cbfdcfff70497ff20de57824d441f5f7805715ededf331e037acb7d23b35",
+   "labels_sha256": "6088a0ad14b19ffc3b7b4254dac09bb1664c19b17577fbe15fb3adbe01e8a9de",
+   "training_config_sha256": "b1b70232c31ea7da41e6be7d5a85deda7ddfdf07316dcc8a29425d9063ba9c17",
+   "dataset_content_sha256": "0c61090e1568ea611fc6a20087b8fe9981c05b6272d13a5f78224bb6f45fd844",
+   "dataset_label": "CGMacros v1.0.0 (real data, processed by M1/M2)",
+   "created_utc": "2026-09-29T15:33:10+00:00",
+   "threshold": 0.3760417467427397,
+   "params": {
+    "C": 0.01,
+    "max_iter": 5000
+   }
+  }
+ },
+ "disclaimer": "Model-estimated association from observational data (CGMacros). Not a causal effect, not a diagnosis and not medical advice. The twin never simulates medication, insulin, diagnosis or treatment."
+}

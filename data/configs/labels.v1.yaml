@@ -1,0 +1,22 @@
+# Frozen prediction target (Phase 0A, 29 Sep 2026). Do not edit; a change is labels.v2.yaml.
+version: 1
+threshold_mgdl: 180            # label = 1 if Dexcom > 180 at any minute row in (t0, t0 + horizon]
+horizon_min: 120
+min_window_coverage: 0.80      # non-null Dexcom minute rows in the window / horizon_min
+# The frozen audit computed peak and coverage on the 1-minute Dexcom rows; kept identical here.
+window_basis: minute_rows
+# A meal is not usable when another meal starts less than horizon_min after it (Phase 0A rule: < 120).
+overlap_rule: next_meal_start_lt_horizon
+
+# Data-quality exclusions added in Phase 0A / 0B (applied after the frozen usability rule):
+pre_meal_lookback_min: 15      # last NATIVE Dexcom reading must be within [t0 - 15, t0]
+already_high_threshold_mgdl: 180   # that reading > 180 -> excursion already under way; excluded
+exclude_macro_validity: [missing, invalid, empty, inconsistent]
+
+target_groups: [prediabetes, T2D]
+
+# Pre-committed viability rule, checked on the target groups.
+viability:
+  min_positives: 100
+  positive_rate_range: [0.10, 0.60]
+  min_participants_with_positive: 12

@@ -1,0 +1,6254 @@
+{
+  "issues": [],
+  "meals": {
+    "amount_consumed": {
+      "above_100_invalid": 131,
+      "below_100": 391,
+      "files_without_column": [
+        28,
+        29
+      ],
+      "max": 900.0,
+      "missing": 64,
+      "negative_invalid": 0,
+      "present": 1599,
+      "used_as_feature": false
+    },
+    "by_type": {
+      "breakfast": 426,
+      "dinner": 478,
+      "lunch": 425,
+      "snack": 334
+    },
+    "duplicate_start_meals": 0,
+    "macro_ranges_valid_meals": {
+      "calories_kcal": [
+        2.4,
+        2826.0
+      ],
+      "carbs_g": [
+        0.0,
+        472.0
+      ],
+      "fat_g": [
+        0.0,
+        141.0
+      ],
+      "fiber_g": [
+        0.0,
+        53.0
+      ],
+      "protein_g": [
+        0.0,
+        148.0
+      ]
+    },
+    "macro_rule_counts": {
+      "empty_meal": 43,
+      "energy_ratio_out_of_band": 52,
+      "fiber_exceeds_carbs": 33,
+      "zero_calories_with_macros": 1
+    },
+    "macro_validity": {
+      "empty": 43,
+      "inconsistent": 48,
+      "invalid": 34,
+      "valid": 1538
+    },
+    "meal_rows": 1663,
+    "raw_type_spellings": {
+      "Breakfast": 160,
+      "Dinner": 60,
+      "Lunch": 153,
+      "Snack": 4,
+      "Snacks": 29,
+      "breakfast": 266,
+      "dinner": 418,
+      "lunch": 272,
+      "snack": 300,
+      "snack 1": 1
+    }
+  },
+  "native_cgm": {
+    "dexcom": {
+      "decisions": {
+        "native_lattice": 44
+      },
+      "intervals_checked": 122830,
+      "intervals_linear": 122830,
+      "linear_share": 1.0,
+      "native_readings": 123161,
+      "not_lattice": [],
+      "values": 615560
+    },
+    "libre": {
+      "decisions": {
+        "native_lattice": 42,
+        "undetermined": 2
+      },
+      "intervals_checked": 43465,
+      "intervals_linear": 43465,
+      "linear_share": 1.0,
+      "native_readings": 43531,
+      "not_lattice": [
+        4,
+        7
+      ],
+      "values": 672621
+    }
+  },
+  "outcomes": {
+    "already_high_among_frozen_usable": {
+      "by_group": {
+        "T2D": 70,
+        "healthy": 3,
+        "prediabetes": 18
+      },
+      "negatives": 1,
+      "positives": 90,
+      "total": 91
+    },
+    "by_participant": [
+      {
+        "already_high": 1,
+        "eligible": 25,
+        "eligible_positives": 11,
+        "frozen_positives": 12,
+        "frozen_usable": 27,
+        "glycemic_group": "healthy",
+        "meals": 37,
+        "participant_id": 2
+      },
+      {
+        "already_high": 0,
+        "eligible": 31,
+        "eligible_positives": 13,
+        "frozen_positives": 14,
+        "frozen_usable": 32,
+        "glycemic_group": "T2D",
+        "meals": 35,
+        "participant_id": 3
+      },
+      {
+        "already_high": 0,
+        "eligible": 38,
+        "eligible_positives": 2,
+        "frozen_positives": 2,
+        "frozen_usable": 38,
+        "glycemic_group": "healthy",
+        "meals": 62,
+        "participant_id": 4
+      },
+      {
+        "already_high": 2,
+        "eligible": 32,
+        "eligible_positives": 14,
+        "frozen_positives": 16,
+        "frozen_usable": 34,
+        "glycemic_group": "T2D",
+        "meals": 46,
+        "participant_id": 5
+      },
+      {
+        "already_high": 0,
+        "eligible": 33,
+        "eligible_positives": 4,
+        "frozen_positives": 4,
+        "frozen_usable": 33,
+        "glycemic_group": "healthy",
+        "meals": 38,
+        "participant_id": 6
+      },
+      {
+        "already_high": 0,
+        "eligible": 1,
+        "eligible_positives": 0,
+        "frozen_positives": 0,
+        "frozen_usable": 1,
+        "glycemic_group": "prediabetes",
+        "meals": 17,
+        "participant_id": 7
+      },
+      {
+        "already_high": 0,
+        "eligible": 27,
+        "eligible_positives": 10,
+        "frozen_positives": 10,
+        "frozen_usable": 28,
+        "glycemic_group": "prediabetes",
+        "meals": 30,
+        "participant_id": 8
+      },
+      {
+        "already_high": 0,
+        "eligible": 34,
+        "eligible_positives": 5,
+        "frozen_positives": 6,
+        "frozen_usable": 36,
+        "glycemic_group": "prediabetes",
+        "meals": 41,
+        "participant_id": 9
+      },
+      {
+        "already_high": 1,
+        "eligible": 32,
+        "eligible_positives": 6,
+        "frozen_positives": 8,
+        "frozen_usable": 37,
+        "glycemic_group": "prediabetes",
+        "meals": 45,
+        "participant_id": 10
+      },
+      {
+        "already_high": 0,
+        "eligible": 35,
+        "eligible_positives": 13,
+        "frozen_positives": 13,
+        "frozen_usable": 36,
+        "glycemic_group": "prediabetes",
+        "meals": 39,
+        "participant_id": 11
+      },
+      {
+        "already_high": 2,
+        "eligible": 28,
+        "eligible_positives": 15,
+        "frozen_positives": 16,
+        "frozen_usable": 32,
+        "glycemic_group": "T2D",
+        "meals": 33,
+        "participant_id": 12
+      },
+      {
+        "already_high": 0,
+        "eligible": 33,
+        "eligible_positives": 6,
+        "frozen_positives": 6,
+        "frozen_usable": 35,
+        "glycemic_group": "prediabetes",
+        "meals": 39,
+        "participant_id": 13
+      },
+      {
+        "already_high": 1,
+        "eligible": 31,
+        "eligible_positives": 15,
+        "frozen_positives": 17,
+        "frozen_usable": 34,
+        "glycemic_group": "T2D",
+        "meals": 40,
+        "participant_id": 14
+      },
+      {
+        "already_high": 0,
+        "eligible": 30,
+        "eligible_positives": 2,
+        "frozen_positives": 2,
+        "frozen_usable": 33,
+        "glycemic_group": "healthy",
+        "meals": 52,
+        "participant_id": 15
+      },
+      {
+        "already_high": 0,
+        "eligible": 16,
+        "eligible_positives": 3,
+        "frozen_positives": 4,
+        "frozen_usable": 27,
+        "glycemic_group": "prediabetes",
+        "meals": 28,
+        "participant_id": 16
+      },
+      {
+        "already_high": 0,
+        "eligible": 29,
+        "eligible_positives": 4,
+        "frozen_positives": 4,
+        "frozen_usable": 34,
+        "glycemic_group": "healthy",
+        "meals": 48,
+        "participant_id": 17
+      },
+      {
+        "already_high": 0,
+        "eligible": 33,
+        "eligible_positives": 19,
+        "frozen_positives": 19,
+        "frozen_usable": 33,
+        "glycemic_group": "healthy",
+        "meals": 39,
+        "participant_id": 18
+      },
+      {
+        "already_high": 0,
+        "eligible": 23,
+        "eligible_positives": 6,
+        "frozen_positives": 11,
+        "frozen_usable": 34,
+        "glycemic_group": "healthy",
+        "meals": 48,
+        "participant_id": 19
+      },
+      {
+        "already_high": 3,
+        "eligible": 31,
+        "eligible_positives": 25,
+        "frozen_positives": 29,
+        "frozen_usable": 35,
+        "glycemic_group": "prediabetes",
+        "meals": 41,
+        "participant_id": 20
+      },
+      {
+        "already_high": 0,
+        "eligible": 31,
+        "eligible_positives": 7,
+        "frozen_positives": 7,
+        "frozen_usable": 32,
+        "glycemic_group": "healthy",
+        "meals": 39,
+        "participant_id": 21
+      },
+      {
+        "already_high": 0,
+        "eligible": 34,
+        "eligible_positives": 2,
+        "frozen_positives": 3,
+        "frozen_usable": 36,
+        "glycemic_group": "prediabetes",
+        "meals": 42,
+        "participant_id": 22
+      },
+      {
+        "already_high": 0,
+        "eligible": 39,
+        "eligible_positives": 29,
+        "frozen_positives": 29,
+        "frozen_usable": 39,
+        "glycemic_group": "prediabetes",
+        "meals": 42,
+        "participant_id": 23
+      },
+      {
+        "already_high": 1,
+        "eligible": 25,
+        "eligible_positives": 13,
+        "frozen_positives": 14,
+        "frozen_usable": 28,
+        "glycemic_group": "prediabetes",
+        "meals": 36,
+        "participant_id": 26
+      },
+      {
+        "already_high": 0,
+        "eligible": 29,
+        "eligible_positives": 6,
+        "frozen_positives": 6,
+        "frozen_usable": 31,
+        "glycemic_group": "healthy",
+        "meals": 36,
+        "participant_id": 27
+      },
+      {
+        "already_high": 1,
+        "eligible": 30,
+        "eligible_positives": 18,
+        "frozen_positives": 19,
+        "frozen_usable": 31,
+        "glycemic_group": "T2D",
+        "meals": 34,
+        "participant_id": 28
+      },
+      {
+        "already_high": 0,
+        "eligible": 29,
+        "eligible_positives": 8,
+        "frozen_positives": 8,
+        "frozen_usable": 29,
+        "glycemic_group": "prediabetes",
+        "meals": 30,
+        "participant_id": 29
+      },
+      {
+        "already_high": 5,
+        "eligible": 20,
+        "eligible_positives": 15,
+        "frozen_positives": 22,
+        "frozen_usable": 27,
+        "glycemic_group": "T2D",
+        "meals": 28,
+        "participant_id": 30
+      },
+      {
+        "already_high": 0,
+        "eligible": 27,
+        "eligible_positives": 2,
+        "frozen_positives": 2,
+        "frozen_usable": 30,
+        "glycemic_group": "healthy",
+        "meals": 54,
+        "participant_id": 31
+      },
+      {
+        "already_high": 0,
+        "eligible": 18,
+        "eligible_positives": 1,
+        "frozen_positives": 1,
+        "frozen_usable": 20,
+        "glycemic_group": "healthy",
+        "meals": 20,
+        "participant_id": 32
+      },
+      {
+        "already_high": 2,
+        "eligible": 28,
+        "eligible_positives": 18,
+        "frozen_positives": 21,
+        "frozen_usable": 32,
+        "glycemic_group": "healthy",
+        "meals": 33,
+        "participant_id": 33
+      },
+      {
+        "already_high": 0,
+        "eligible": 35,
+        "eligible_positives": 0,
+        "frozen_positives": 0,
+        "frozen_usable": 35,
+        "glycemic_group": "healthy",
+        "meals": 49,
+        "participant_id": 34
+      },
+      {
+        "already_high": 16,
+        "eligible": 8,
+        "eligible_positives": 6,
+        "frozen_positives": 25,
+        "frozen_usable": 27,
+        "glycemic_group": "T2D",
+        "meals": 27,
+        "participant_id": 35
+      },
+      {
+        "already_high": 4,
+        "eligible": 23,
+        "eligible_positives": 13,
+        "frozen_positives": 17,
+        "frozen_usable": 29,
+        "glycemic_group": "T2D",
+        "meals": 30,
+        "participant_id": 36
+      },
+      {
+        "already_high": 0,
+        "eligible": 27,
+        "eligible_positives": 16,
+        "frozen_positives": 17,
+        "frozen_usable": 33,
+        "glycemic_group": "T2D",
+        "meals": 40,
+        "participant_id": 38
+      },
+      {
+        "already_high": 16,
+        "eligible": 13,
+        "eligible_positives": 12,
+        "frozen_positives": 30,
+        "frozen_usable": 31,
+        "glycemic_group": "T2D",
+        "meals": 34,
+        "participant_id": 39
+      },
+      {
+        "already_high": 9,
+        "eligible": 31,
+        "eligible_positives": 25,
+        "frozen_positives": 35,
+        "frozen_usable": 41,
+        "glycemic_group": "prediabetes",
+        "meals": 48,
+        "participant_id": 41
+      },
+      {
+        "already_high": 1,
+        "eligible": 19,
+        "eligible_positives": 10,
+        "frozen_positives": 12,
+        "frozen_usable": 21,
+        "glycemic_group": "T2D",
+        "meals": 22,
+        "participant_id": 42
+      },
+      {
+        "already_high": 0,
+        "eligible": 39,
+        "eligible_positives": 9,
+        "frozen_positives": 9,
+        "frozen_usable": 40,
+        "glycemic_group": "prediabetes",
+        "meals": 64,
+        "participant_id": 43
+      },
+      {
+        "already_high": 1,
+        "eligible": 32,
+        "eligible_positives": 11,
+        "frozen_positives": 12,
+        "frozen_usable": 34,
+        "glycemic_group": "prediabetes",
+        "meals": 43,
+        "participant_id": 44
+      },
+      {
+        "already_high": 3,
+        "eligible": 26,
+        "eligible_positives": 15,
+        "frozen_positives": 18,
+        "frozen_usable": 29,
+        "glycemic_group": "prediabetes",
+        "meals": 32,
+        "participant_id": 45
+      },
+      {
+        "already_high": 5,
+        "eligible": 21,
+        "eligible_positives": 14,
+        "frozen_positives": 19,
+        "frozen_usable": 26,
+        "glycemic_group": "T2D",
+        "meals": 29,
+        "participant_id": 46
+      },
+      {
+        "already_high": 14,
+        "eligible": 14,
+        "eligible_positives": 13,
+        "frozen_positives": 27,
+        "frozen_usable": 28,
+        "glycemic_group": "T2D",
+        "meals": 29,
+        "participant_id": 47
+      },
+      {
+        "already_high": 0,
+        "eligible": 32,
+        "eligible_positives": 8,
+        "frozen_positives": 8,
+        "frozen_usable": 33,
+        "glycemic_group": "healthy",
+        "meals": 36,
+        "participant_id": 48
+      },
+      {
+        "already_high": 3,
+        "eligible": 24,
+        "eligible_positives": 23,
+        "frozen_positives": 26,
+        "frozen_usable": 27,
+        "glycemic_group": "T2D",
+        "meals": 28,
+        "participant_id": 49
+      }
+    ],
+    "eligible_by_group": {
+      "T2D": {
+        "participants": 14,
+        "participants_with_positive": 14,
+        "positive_rate": 0.6137,
+        "positives": 197,
+        "usable_meals": 321
+      },
+      "healthy": {
+        "participants": 14,
+        "participants_with_positive": 13,
+        "positive_rate": 0.219,
+        "positives": 90,
+        "usable_meals": 411
+      },
+      "prediabetes": {
+        "participants": 16,
+        "participants_with_positive": 15,
+        "positive_rate": 0.3879,
+        "positives": 180,
+        "usable_meals": 464
+      }
+    },
+    "exclusion_counts_any": {
+      "already_high": 102,
+      "low_cgm_coverage": 52,
+      "macro_excluded": 125,
+      "no_pre_meal_native": 19,
+      "overlap_next_meal": 244
+    },
+    "exclusion_waterfall": {
+      "already_high": 91,
+      "eligible": 1196,
+      "low_cgm_coverage": 51,
+      "macro_excluded": 81,
+      "no_pre_meal_native": 0,
+      "overlap_next_meal": 244
+    },
+    "frozen_by_group": {
+      "T2D": {
+        "participants": 14,
+        "participants_with_positive": 14,
+        "positive_rate": 0.6723,
+        "positives": 277,
+        "usable_meals": 412
+      },
+      "healthy": {
+        "participants": 14,
+        "participants_with_positive": 13,
+        "positive_rate": 0.2225,
+        "positives": 99,
+        "usable_meals": 445
+      },
+      "prediabetes": {
+        "participants": 16,
+        "participants_with_positive": 15,
+        "positive_rate": 0.3992,
+        "positives": 204,
+        "usable_meals": 511
+      }
+    },
+    "frozen_positive_rate": 0.424,
+    "frozen_positives": 580,
+    "frozen_usable": 1368,
+    "meals": 1663,
+    "target_eligible": {
+      "groups": [
+        "prediabetes",
+        "T2D"
+      ],
+      "participants": 30,
+      "participants_with_positive": 29,
+      "participants_without_positive": [
+        7
+      ],
+      "positive_rate": 0.4803,
+      "positives": 377,
+      "usable_meals": 785,
+      "viability": {
+        "min_positives": {
+          "measured": 377,
+          "pass": true,
+          "required": 100
+        },
+        "participants_with_positive": {
+          "measured": 29,
+          "pass": true,
+          "required": 12
+        },
+        "positive_rate": {
+          "measured": 0.4803,
+          "pass": true,
+          "required": [
+            0.1,
+            0.6
+          ]
+        }
+      },
+      "viability_pass": true
+    },
+    "target_frozen": {
+      "groups": [
+        "prediabetes",
+        "T2D"
+      ],
+      "participants": 30,
+      "participants_with_positive": 29,
+      "participants_without_positive": [
+        7
+      ],
+      "positive_rate": 0.5211,
+      "positives": 481,
+      "usable_meals": 923,
+      "viability": {
+        "min_positives": {
+          "measured": 481,
+          "pass": true,
+          "required": 100
+        },
+        "participants_with_positive": {
+          "measured": 29,
+          "pass": true,
+          "required": 12
+        },
+        "positive_rate": {
+          "measured": 0.5211,
+          "pass": true,
+          "required": [
+            0.1,
+            0.6
+          ]
+        }
+      },
+      "viability_pass": true
+    }
+  },
+  "participants": {
+    "bio_rows": 45,
+    "bio_without_timeseries": [
+      1
+    ],
+    "bio_without_timeseries_groups": {
+      "1": "healthy"
+    },
+    "groups_bio": {
+      "T2D": 14,
+      "healthy": 15,
+      "prediabetes": 16
+    },
+    "groups_with_timeseries": {
+      "T2D": 14,
+      "healthy": 14,
+      "prediabetes": 16
+    },
+    "ids_absent_between_1_and_max": [
+      1,
+      24,
+      25,
+      37,
+      40
+    ],
+    "timeseries_files": 44,
+    "timeseries_ids": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      38,
+      39,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49
+    ],
+    "timeseries_without_bio": []
+  },
+  "per_participant": [
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2019-11-15 20:12:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2019-11-27 15:56:00",
+      "longest_gap_min": 0.0,
+      "meals": 37,
+      "missing_share": {
+        "activity_kcal": 0.1408,
+        "dexcom": 0.1967,
+        "hr": 0.1609,
+        "libre": 0.0,
+        "mets": 0.1408
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2735,
+          "n_values": 13677,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26244488,
+              "integer_share_by_phase": [
+                0.2673,
+                0.2673,
+                0.2672,
+                0.2672,
+                1.0
+              ],
+              "n_intervals_checked": 2734,
+              "n_intervals_linear": 2734,
+              "n_lattice_non_integer": 0,
+              "n_native": 2735,
+              "n_values": 13677,
+              "phase": 4,
+              "start_minute": 26230812,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1135,
+          "n_values": 17025,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26247836,
+              "integer_share_by_phase": [
+                0.2194,
+                0.1172,
+                0.3225,
+                0.2194,
+                0.1172,
+                0.1172,
+                0.2194,
+                0.3225,
+                0.1172,
+                0.2194,
+                0.1172,
+                0.1172,
+                1.0,
+                0.1172,
+                0.1172
+              ],
+              "n_intervals_checked": 1134,
+              "n_intervals_linear": 1134,
+              "n_lattice_non_integer": 0,
+              "n_native": 1135,
+              "n_values": 17025,
+              "phase": 12,
+              "start_minute": 26230812,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 2,
+      "rows_after_dedup": 17025,
+      "rows_staged": 17025,
+      "span_days": 11.822,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-03-11 09:03:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2020-03-21 12:02:00",
+      "longest_gap_min": 0.0,
+      "meals": 35,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0209,
+        "hr": 0.006,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2852,
+          "n_values": 14260,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26412968,
+              "integer_share_by_phase": [
+                0.3166,
+                0.3166,
+                0.3166,
+                0.3166,
+                1.0
+              ],
+              "n_intervals_checked": 2847,
+              "n_intervals_linear": 2847,
+              "n_lattice_non_integer": 0,
+              "n_native": 2852,
+              "n_values": 14260,
+              "phase": 4,
+              "start_minute": 26398694,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 971,
+          "n_values": 14565,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26413202,
+              "integer_share_by_phase": [
+                0.2019,
+                0.1205,
+                0.1205,
+                1.0,
+                0.1205,
+                0.1205,
+                0.2019,
+                0.1205,
+                0.3429,
+                0.2019,
+                0.1205,
+                0.1205,
+                0.2019,
+                0.3429,
+                0.1205
+              ],
+              "n_intervals_checked": 969,
+              "n_intervals_linear": 969,
+              "n_lattice_non_integer": 0,
+              "n_native": 971,
+              "n_values": 14565,
+              "phase": 3,
+              "start_minute": 26398623,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 3,
+      "rows_after_dedup": 14565,
+      "rows_staged": 14565,
+      "span_days": 10.124,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-09-11 09:54:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2023-09-21 07:48:00",
+      "longest_gap_min": 0.0,
+      "meals": 62,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0,
+        "hr": 0.0028,
+        "libre": 0.0154,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28254708,
+              "integer_share_by_phase": [
+                0.2522,
+                0.2522,
+                0.2522,
+                0.2522,
+                1.0
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 4,
+              "start_minute": 28240434,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "undetermined",
+          "linear_share": null,
+          "n_native": 0,
+          "n_values": 14055,
+          "native_share": 0.0,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28254708,
+              "integer_share_by_phase": [
+                0.143,
+                0.113,
+                0.1846,
+                0.1429,
+                0.3355,
+                0.1846,
+                0.1432,
+                0.1131,
+                0.1848,
+                0.5347,
+                0.1131,
+                0.1846,
+                0.143,
+                0.1131,
+                0.8006
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 14055,
+              "phase": null,
+              "start_minute": 28240434,
+              "status": "no_integer_phase"
+            }
+          ]
+        }
+      },
+      "participant_id": 4,
+      "rows_after_dedup": 14275,
+      "rows_staged": 14275,
+      "span_days": 9.912,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-08-17 11:14:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2020-08-27 12:13:00",
+      "longest_gap_min": 0.0,
+      "meals": 46,
+      "missing_share": {
+        "activity_kcal": 0.0015,
+        "dexcom": 0.0128,
+        "hr": 0.0122,
+        "libre": 0.0,
+        "mets": 0.0016
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26642077,
+              "integer_share_by_phase": [
+                0.2431,
+                0.2431,
+                0.2431,
+                1.0,
+                0.2431
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 3,
+              "start_minute": 26627803,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 964,
+          "n_values": 14460,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26642173,
+              "integer_share_by_phase": [
+                0.1037,
+                0.1037,
+                0.2147,
+                0.1037,
+                0.3278,
+                0.2147,
+                0.1037,
+                0.1037,
+                0.2147,
+                0.3278,
+                0.1037,
+                0.2147,
+                0.1037,
+                0.1037,
+                1.0
+              ],
+              "n_intervals_checked": 963,
+              "n_intervals_linear": 963,
+              "n_lattice_non_integer": 0,
+              "n_native": 964,
+              "n_values": 14460,
+              "phase": 14,
+              "start_minute": 26627714,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 5,
+      "rows_after_dedup": 14460,
+      "rows_staged": 14460,
+      "span_days": 10.041,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 1
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-04-07 11:19:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2023-04-17 12:18:00",
+      "longest_gap_min": 0.0,
+      "meals": 38,
+      "missing_share": {
+        "activity_kcal": 0.0017,
+        "dexcom": 0.0128,
+        "hr": 0.0083,
+        "libre": 0.0,
+        "mets": 0.0018
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28028741,
+              "integer_share_by_phase": [
+                0.3335,
+                0.3335,
+                1.0,
+                0.3335,
+                0.3335
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 2,
+              "start_minute": 28014467,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 964,
+          "n_values": 14460,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28028898,
+              "integer_share_by_phase": [
+                0.1245,
+                0.2137,
+                0.1245,
+                0.1245,
+                1.0,
+                0.1245,
+                0.1245,
+                0.2137,
+                0.1245,
+                0.3268,
+                0.2137,
+                0.1245,
+                0.1245,
+                0.2137,
+                0.3268
+              ],
+              "n_intervals_checked": 963,
+              "n_intervals_linear": 963,
+              "n_lattice_non_integer": 0,
+              "n_native": 964,
+              "n_values": 14460,
+              "phase": 4,
+              "start_minute": 28014439,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 6,
+      "rows_after_dedup": 14460,
+      "rows_staged": 14460,
+      "span_days": 10.041,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 1
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-11-03 10:41:00",
+      "gaps_over_flag": 390,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2023-11-10 16:10:00",
+      "longest_gap_min": 23.0,
+      "meals": 17,
+      "missing_share": {
+        "activity_kcal": 1.0,
+        "dexcom": 0.0027,
+        "hr": 0.0027,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1176,
+          "n_values": 5640,
+          "native_share": 0.2085,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28327210,
+              "integer_share_by_phase": [
+                0.3369,
+                1.0,
+                0.3378,
+                0.3432,
+                0.3414
+              ],
+              "n_intervals_checked": 953,
+              "n_intervals_linear": 953,
+              "n_lattice_non_integer": 0,
+              "n_native": 1176,
+              "n_values": 5640,
+              "phase": 1,
+              "start_minute": 28316816,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "undetermined",
+          "linear_share": null,
+          "n_native": 0,
+          "n_values": 5655,
+          "native_share": 0.0,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28327210,
+              "integer_share_by_phase": [
+                0.4086,
+                0.5622,
+                0.4511,
+                0.4086,
+                0.4086,
+                0.4511,
+                0.5622,
+                0.4086,
+                0.4511,
+                0.4086,
+                0.4086,
+                0.9271,
+                0.4086,
+                0.4086,
+                0.4511
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 5655,
+              "phase": null,
+              "start_minute": 28316801,
+              "status": "no_integer_phase"
+            }
+          ]
+        }
+      },
+      "participant_id": 7,
+      "rows_after_dedup": 5655,
+      "rows_staged": 5655,
+      "span_days": 7.228,
+      "wearable": {
+        "activity_kcal_available": false,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-01-30 10:52:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2023-02-09 16:51:00",
+      "longest_gap_min": 0.0,
+      "meals": 30,
+      "missing_share": {
+        "activity_kcal": 0.0179,
+        "dexcom": 0.0366,
+        "hr": 0.022,
+        "libre": 0.0,
+        "mets": 0.018
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2844,
+          "n_values": 14220,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27932217,
+              "integer_share_by_phase": [
+                0.2305,
+                0.2305,
+                0.2305,
+                0.9972,
+                0.2305
+              ],
+              "n_intervals_checked": 2839,
+              "n_intervals_linear": 2839,
+              "n_lattice_non_integer": 8,
+              "n_native": 2844,
+              "n_values": 14220,
+              "phase": 3,
+              "start_minute": 27917943,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 984,
+          "n_values": 14760,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27932691,
+              "integer_share_by_phase": [
+                0.1179,
+                0.1992,
+                0.3303,
+                0.1179,
+                0.1992,
+                0.1179,
+                0.1179,
+                1.0,
+                0.1179,
+                0.1179,
+                0.1992,
+                0.1179,
+                0.3303,
+                0.1992,
+                0.1179
+              ],
+              "n_intervals_checked": 983,
+              "n_intervals_linear": 983,
+              "n_lattice_non_integer": 0,
+              "n_native": 984,
+              "n_values": 14760,
+              "phase": 7,
+              "start_minute": 27917932,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 8,
+      "rows_after_dedup": 14760,
+      "rows_staged": 14760,
+      "span_days": 10.249,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 1
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-09-15 09:05:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2020-09-25 08:34:00",
+      "longest_gap_min": 0.0,
+      "meals": 41,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.01,
+        "hr": 0.0148,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2846,
+          "n_values": 14226,
+          "native_share": 0.2001,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26683714,
+              "integer_share_by_phase": [
+                0.2538,
+                0.2538,
+                0.2538,
+                0.2538,
+                1.0
+              ],
+              "n_intervals_checked": 2842,
+              "n_intervals_linear": 2842,
+              "n_lattice_non_integer": 0,
+              "n_native": 2846,
+              "n_values": 14226,
+              "phase": 4,
+              "start_minute": 26669474,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 958,
+          "n_values": 14370,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26683714,
+              "integer_share_by_phase": [
+                0.3288,
+                0.0877,
+                0.1837,
+                0.0877,
+                0.0877,
+                1.0,
+                0.0877,
+                0.0877,
+                0.1837,
+                0.0877,
+                0.3288,
+                0.1837,
+                0.0877,
+                0.0877,
+                0.1837
+              ],
+              "n_intervals_checked": 957,
+              "n_intervals_linear": 957,
+              "n_lattice_non_integer": 0,
+              "n_native": 958,
+              "n_values": 14370,
+              "phase": 5,
+              "start_minute": 26669345,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 9,
+      "rows_after_dedup": 14370,
+      "rows_staged": 14370,
+      "span_days": 9.978,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-06-21 09:18:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2020-07-02 14:32:00",
+      "longest_gap_min": 0.0,
+      "meals": 45,
+      "missing_share": {
+        "activity_kcal": 0.054,
+        "dexcom": 0.1164,
+        "hr": 0.0629,
+        "libre": 0.0,
+        "mets": 0.054
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26559860,
+              "integer_share_by_phase": [
+                0.2473,
+                1.0,
+                0.2473,
+                0.2473,
+                0.2473
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 1,
+              "start_minute": 26545586,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1077,
+          "n_values": 16155,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26561672,
+              "integer_share_by_phase": [
+                0.2136,
+                0.1161,
+                0.1161,
+                1.0,
+                0.1161,
+                0.1161,
+                0.2136,
+                0.1161,
+                0.324,
+                0.2136,
+                0.1161,
+                0.1161,
+                0.2136,
+                0.324,
+                0.1161
+              ],
+              "n_intervals_checked": 1076,
+              "n_intervals_linear": 1076,
+              "n_lattice_non_integer": 0,
+              "n_native": 1077,
+              "n_values": 16155,
+              "phase": 3,
+              "start_minute": 26545518,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 10,
+      "rows_after_dedup": 16155,
+      "rows_staged": 16155,
+      "span_days": 11.218,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-10-03 09:21:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2020-10-13 16:05:00",
+      "longest_gap_min": 0.0,
+      "meals": 39,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0358,
+        "hr": 0.0101,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26709623,
+              "integer_share_by_phase": [
+                0.2417,
+                0.2417,
+                0.2417,
+                0.2417,
+                1.0
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 4,
+              "start_minute": 26695349,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 987,
+          "n_values": 14805,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26710085,
+              "integer_share_by_phase": [
+                0.2148,
+                0.305,
+                0.1013,
+                0.2148,
+                0.1013,
+                0.1013,
+                1.0,
+                0.1013,
+                0.1013,
+                0.2148,
+                0.1013,
+                0.305,
+                0.2148,
+                0.1013,
+                0.1013
+              ],
+              "n_intervals_checked": 986,
+              "n_intervals_linear": 986,
+              "n_lattice_non_integer": 0,
+              "n_native": 987,
+              "n_values": 14805,
+              "phase": 6,
+              "start_minute": 26695281,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 11,
+      "rows_after_dedup": 14805,
+      "rows_staged": 14805,
+      "span_days": 10.281,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-02-26 08:43:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2023-03-08 13:12:00",
+      "longest_gap_min": 0.0,
+      "meals": 33,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0263,
+        "hr": 0.0857,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2854,
+          "n_values": 14270,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27971029,
+              "integer_share_by_phase": [
+                1.0,
+                0.232,
+                0.232,
+                0.232,
+                0.232
+              ],
+              "n_intervals_checked": 2852,
+              "n_intervals_linear": 2852,
+              "n_lattice_non_integer": 0,
+              "n_native": 2854,
+              "n_values": 14270,
+              "phase": 0,
+              "start_minute": 27956755,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 977,
+          "n_values": 14655,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27971352,
+              "integer_share_by_phase": [
+                0.1024,
+                0.2068,
+                0.1024,
+                0.3664,
+                0.2068,
+                0.1024,
+                0.1024,
+                0.2068,
+                0.3664,
+                0.1024,
+                0.2068,
+                0.1024,
+                0.1024,
+                1.0,
+                0.1024
+              ],
+              "n_intervals_checked": 975,
+              "n_intervals_linear": 975,
+              "n_lattice_non_integer": 0,
+              "n_native": 977,
+              "n_values": 14655,
+              "phase": 13,
+              "start_minute": 27956683,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 12,
+      "rows_after_dedup": 14655,
+      "rows_staged": 14655,
+      "span_days": 10.187,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-01-25 08:42:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2024-02-05 08:41:00",
+      "longest_gap_min": 0.0,
+      "meals": 39,
+      "missing_share": {
+        "activity_kcal": 0.033,
+        "dexcom": 0.0988,
+        "hr": 0.0406,
+        "libre": 0.0,
+        "mets": 0.033
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28450607,
+              "integer_share_by_phase": [
+                0.2557,
+                0.2557,
+                0.2557,
+                1.0,
+                0.2557
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 3,
+              "start_minute": 28436333,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1056,
+          "n_values": 15840,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28452041,
+              "integer_share_by_phase": [
+                0.2027,
+                0.1127,
+                0.3494,
+                0.2027,
+                0.1127,
+                0.1127,
+                0.2027,
+                0.3494,
+                0.1127,
+                0.2027,
+                0.1127,
+                0.1127,
+                1.0,
+                0.1127,
+                0.1127
+              ],
+              "n_intervals_checked": 1055,
+              "n_intervals_linear": 1055,
+              "n_lattice_non_integer": 0,
+              "n_native": 1056,
+              "n_values": 15840,
+              "phase": 12,
+              "start_minute": 28436202,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 13,
+      "rows_after_dedup": 15840,
+      "rows_staged": 15840,
+      "span_days": 10.999,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-05-09 09:01:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2023-05-21 08:30:00",
+      "longest_gap_min": 0.0,
+      "meals": 40,
+      "missing_share": {
+        "activity_kcal": 0.1131,
+        "dexcom": 0.1725,
+        "hr": 0.1216,
+        "libre": 0.0,
+        "mets": 0.1131
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28074726,
+              "integer_share_by_phase": [
+                0.2452,
+                0.2452,
+                1.0,
+                0.2452,
+                0.2452
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 2,
+              "start_minute": 28060452,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1150,
+          "n_values": 17250,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28077630,
+              "integer_share_by_phase": [
+                0.0983,
+                1.0,
+                0.0983,
+                0.0983,
+                0.1904,
+                0.0983,
+                0.3426,
+                0.1904,
+                0.0983,
+                0.0983,
+                0.1904,
+                0.3426,
+                0.0983,
+                0.1904,
+                0.0983
+              ],
+              "n_intervals_checked": 1149,
+              "n_intervals_linear": 1149,
+              "n_lattice_non_integer": 0,
+              "n_native": 1150,
+              "n_values": 17250,
+              "phase": 1,
+              "start_minute": 28060381,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 14,
+      "rows_after_dedup": 17250,
+      "rows_staged": 17250,
+      "span_days": 11.978,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-01-25 09:12:00",
+      "gaps_over_flag": 30,
+      "glycemic_group": "healthy",
+      "last_ts": "2024-02-06 08:26:00",
+      "longest_gap_min": 7.0,
+      "meals": 52,
+      "missing_share": {
+        "activity_kcal": 0.105,
+        "dexcom": 0.1579,
+        "hr": 0.1176,
+        "libre": 0.0,
+        "mets": 0.105
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2842,
+          "n_values": 14210,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28450575,
+              "integer_share_by_phase": [
+                0.2635,
+                1.0,
+                0.2635,
+                0.2635,
+                0.2643
+              ],
+              "n_intervals_checked": 2828,
+              "n_intervals_linear": 2828,
+              "n_lattice_non_integer": 0,
+              "n_native": 2842,
+              "n_values": 14210,
+              "phase": 1,
+              "start_minute": 28436301,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1129,
+          "n_values": 16875,
+          "native_share": 0.0669,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28453466,
+              "integer_share_by_phase": [
+                0.5384,
+                0.4746,
+                0.6325,
+                0.5384,
+                0.4746,
+                0.4746,
+                0.5384,
+                0.6325,
+                0.4746,
+                0.5384,
+                0.4746,
+                0.4746,
+                0.9965,
+                0.4746,
+                0.4746
+              ],
+              "n_intervals_checked": 1114,
+              "n_intervals_linear": 1114,
+              "n_lattice_non_integer": 4,
+              "n_native": 1129,
+              "n_values": 16875,
+              "phase": 12,
+              "start_minute": 28436232,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 15,
+      "rows_after_dedup": 16875,
+      "rows_staged": 16875,
+      "span_days": 11.968,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-07-14 09:12:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2023-07-25 16:41:00",
+      "longest_gap_min": 0.0,
+      "meals": 28,
+      "missing_share": {
+        "activity_kcal": 0.0615,
+        "dexcom": 0.1237,
+        "hr": 0.0651,
+        "libre": 0.0,
+        "mets": 0.0615
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28169777,
+              "integer_share_by_phase": [
+                0.2298,
+                0.2298,
+                0.2298,
+                1.0,
+                0.2298
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 3,
+              "start_minute": 28155503,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1086,
+          "n_values": 16290,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28171721,
+              "integer_share_by_phase": [
+                0.1952,
+                0.105,
+                0.3158,
+                0.1952,
+                0.105,
+                0.105,
+                0.1952,
+                0.3158,
+                0.105,
+                0.1952,
+                0.105,
+                0.105,
+                1.0,
+                0.105,
+                0.105
+              ],
+              "n_intervals_checked": 1085,
+              "n_intervals_linear": 1085,
+              "n_lattice_non_integer": 0,
+              "n_native": 1086,
+              "n_values": 16290,
+              "phase": 12,
+              "start_minute": 28155432,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 16,
+      "rows_after_dedup": 16290,
+      "rows_staged": 16290,
+      "span_days": 11.312,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-10-10 08:51:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2023-10-21 14:35:00",
+      "longest_gap_min": 0.0,
+      "meals": 48,
+      "missing_share": {
+        "activity_kcal": 0.0541,
+        "dexcom": 0.1202,
+        "hr": 0.187,
+        "libre": 0.0,
+        "mets": 0.0541
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2848,
+          "n_values": 14240,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28296475,
+              "integer_share_by_phase": [
+                0.2482,
+                1.0,
+                0.2482,
+                0.2482,
+                0.2482
+              ],
+              "n_intervals_checked": 2846,
+              "n_intervals_linear": 2846,
+              "n_lattice_non_integer": 0,
+              "n_native": 2848,
+              "n_values": 14240,
+              "phase": 1,
+              "start_minute": 28282201,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1079,
+          "n_values": 16185,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28298315,
+              "integer_share_by_phase": [
+                0.1965,
+                0.3383,
+                0.1029,
+                0.1965,
+                0.1029,
+                0.1029,
+                1.0,
+                0.1029,
+                0.1029,
+                0.1965,
+                0.1029,
+                0.3383,
+                0.1965,
+                0.1029,
+                0.1029
+              ],
+              "n_intervals_checked": 1078,
+              "n_intervals_linear": 1078,
+              "n_lattice_non_integer": 0,
+              "n_native": 1079,
+              "n_values": 16185,
+              "phase": 6,
+              "start_minute": 28282131,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 17,
+      "rows_after_dedup": 16185,
+      "rows_staged": 16185,
+      "span_days": 11.239,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-01-28 08:10:00",
+      "gaps_over_flag": 15,
+      "glycemic_group": "healthy",
+      "last_ts": "2024-02-16 11:51:00",
+      "longest_gap_min": 901.0,
+      "meals": 39,
+      "missing_share": {
+        "activity_kcal": 0.001,
+        "dexcom": 0.0107,
+        "hr": 0.007,
+        "libre": 0.0,
+        "mets": 0.001
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2788,
+          "n_values": 13934,
+          "native_share": 0.2001,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28441435,
+              "integer_share_by_phase": [
+                0.2273,
+                0.2229,
+                0.2229,
+                0.2229,
+                1.0
+              ],
+              "n_intervals_checked": 175,
+              "n_intervals_linear": 175,
+              "n_lattice_non_integer": 0,
+              "n_native": 176,
+              "n_values": 877,
+              "phase": 4,
+              "start_minute": 28440559,
+              "status": "accepted"
+            },
+            {
+              "end_minute": 28454980,
+              "integer_share_by_phase": [
+                0.0,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28454980,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28468071,
+              "integer_share_by_phase": [
+                0.2325,
+                1.0,
+                0.2325,
+                0.2325,
+                0.2325
+              ],
+              "n_intervals_checked": 2611,
+              "n_intervals_linear": 2611,
+              "n_lattice_non_integer": 0,
+              "n_native": 2612,
+              "n_values": 13056,
+              "phase": 1,
+              "start_minute": 28455016,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 939,
+          "n_values": 14085,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28441435,
+              "integer_share_by_phase": [
+                0.2222,
+                0.1746,
+                0.0635,
+                0.0635,
+                0.1746,
+                0.2222,
+                0.0635,
+                0.1746,
+                0.0635,
+                0.0635,
+                1.0,
+                0.0635,
+                0.0635,
+                0.1746,
+                0.0635
+              ],
+              "n_intervals_checked": 63,
+              "n_intervals_linear": 63,
+              "n_lattice_non_integer": 0,
+              "n_native": 64,
+              "n_values": 946,
+              "phase": 10,
+              "start_minute": 28440490,
+              "status": "accepted"
+            },
+            {
+              "end_minute": 28442335,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28442335,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28443236,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28443236,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28444137,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28444137,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28445038,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28445038,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28445939,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.0
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28445939,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28446839,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28446839,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28447740,
+              "integer_share_by_phase": [
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28447740,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28448641,
+              "integer_share_by_phase": [
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28448641,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28449542,
+              "integer_share_by_phase": [
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28449542,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28450443,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                1.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28450443,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28451343,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28451343,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28452244,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28452244,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28453145,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28453145,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28454046,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 28454046,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 28468071,
+              "integer_share_by_phase": [
+                0.1326,
+                0.2331,
+                0.3634,
+                0.1326,
+                0.2331,
+                0.1326,
+                0.1326,
+                1.0,
+                0.1326,
+                0.1326,
+                0.2331,
+                0.1326,
+                0.3634,
+                0.2331,
+                0.1326
+              ],
+              "n_intervals_checked": 874,
+              "n_intervals_linear": 874,
+              "n_lattice_non_integer": 0,
+              "n_native": 875,
+              "n_values": 13125,
+              "phase": 7,
+              "start_minute": 28454947,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 18,
+      "rows_after_dedup": 14085,
+      "rows_staged": 14085,
+      "span_days": 19.153,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-09-29 08:32:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2020-10-09 09:16:00",
+      "longest_gap_min": 0.0,
+      "meals": 48,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0118,
+        "hr": 0.0203,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2852,
+          "n_values": 14260,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26703816,
+              "integer_share_by_phase": [
+                0.2752,
+                0.2752,
+                1.0,
+                0.2752,
+                0.2752
+              ],
+              "n_intervals_checked": 2848,
+              "n_intervals_linear": 2848,
+              "n_lattice_non_integer": 0,
+              "n_native": 2852,
+              "n_values": 14260,
+              "phase": 2,
+              "start_minute": 26689542,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 962,
+          "n_values": 14430,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26703916,
+              "integer_share_by_phase": [
+                0.0967,
+                0.0967,
+                1.0,
+                0.0967,
+                0.0967,
+                0.1881,
+                0.0967,
+                0.3181,
+                0.1881,
+                0.0967,
+                0.0967,
+                0.1881,
+                0.3181,
+                0.0967,
+                0.1881
+              ],
+              "n_intervals_checked": 960,
+              "n_intervals_linear": 960,
+              "n_lattice_non_integer": 0,
+              "n_native": 962,
+              "n_values": 14430,
+              "phase": 2,
+              "start_minute": 26689472,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 19,
+      "rows_after_dedup": 14430,
+      "rows_staged": 14430,
+      "span_days": 10.031,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-03-19 07:36:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2024-03-30 14:35:00",
+      "longest_gap_min": 0.0,
+      "meals": 41,
+      "missing_share": {
+        "activity_kcal": 0.0539,
+        "dexcom": 0.1221,
+        "hr": 0.1172,
+        "libre": 0.0,
+        "mets": 0.0539
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28528245,
+              "integer_share_by_phase": [
+                0.2343,
+                1.0,
+                0.2343,
+                0.2343,
+                0.2343
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 1,
+              "start_minute": 28513971,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1084,
+          "n_values": 16260,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28530155,
+              "integer_share_by_phase": [
+                0.191,
+                0.3155,
+                0.0812,
+                0.191,
+                0.0812,
+                0.0812,
+                1.0,
+                0.0812,
+                0.0812,
+                0.191,
+                0.0812,
+                0.3155,
+                0.191,
+                0.0812,
+                0.0812
+              ],
+              "n_intervals_checked": 1083,
+              "n_intervals_linear": 1083,
+              "n_lattice_non_integer": 0,
+              "n_native": 1084,
+              "n_values": 16260,
+              "phase": 6,
+              "start_minute": 28513896,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 20,
+      "rows_after_dedup": 16260,
+      "rows_staged": 16260,
+      "span_days": 11.291,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2020-06-08 08:12:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2020-06-19 12:56:00",
+      "longest_gap_min": 0.0,
+      "meals": 39,
+      "missing_share": {
+        "activity_kcal": 0.0482,
+        "dexcom": 0.1147,
+        "hr": 0.0626,
+        "libre": 0.0,
+        "mets": 0.0482
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26541077,
+              "integer_share_by_phase": [
+                0.268,
+                0.268,
+                0.268,
+                1.0,
+                0.268
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 3,
+              "start_minute": 26526803,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1075,
+          "n_values": 16125,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26542856,
+              "integer_share_by_phase": [
+                0.2167,
+                0.106,
+                0.3228,
+                0.2167,
+                0.106,
+                0.106,
+                0.2167,
+                0.3228,
+                0.106,
+                0.2167,
+                0.106,
+                0.106,
+                1.0,
+                0.106,
+                0.106
+              ],
+              "n_intervals_checked": 1074,
+              "n_intervals_linear": 1074,
+              "n_lattice_non_integer": 0,
+              "n_native": 1075,
+              "n_values": 16125,
+              "phase": 12,
+              "start_minute": 26526732,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 21,
+      "rows_after_dedup": 16125,
+      "rows_staged": 16125,
+      "span_days": 11.197,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2021-03-28 08:09:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2021-04-09 13:53:00",
+      "longest_gap_min": 0.0,
+      "meals": 42,
+      "missing_share": {
+        "activity_kcal": 0.129,
+        "dexcom": 0.1901,
+        "hr": 0.1766,
+        "libre": 0.0,
+        "mets": 0.129
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26962996,
+              "integer_share_by_phase": [
+                0.2347,
+                0.2347,
+                1.0,
+                0.2347,
+                0.2347
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 2,
+              "start_minute": 26948722,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1175,
+          "n_values": 17625,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26966273,
+              "integer_share_by_phase": [
+                0.1906,
+                0.0902,
+                0.0902,
+                0.1906,
+                0.3166,
+                0.0902,
+                0.1906,
+                0.0902,
+                0.0902,
+                1.0,
+                0.0902,
+                0.0902,
+                0.1906,
+                0.0902,
+                0.3166
+              ],
+              "n_intervals_checked": 1174,
+              "n_intervals_linear": 1174,
+              "n_lattice_non_integer": 0,
+              "n_native": 1175,
+              "n_values": 17625,
+              "phase": 9,
+              "start_minute": 26948649,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 22,
+      "rows_after_dedup": 17625,
+      "rows_staged": 17625,
+      "span_days": 12.239,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2021-05-05 08:37:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2021-05-16 14:21:00",
+      "longest_gap_min": 0.0,
+      "meals": 42,
+      "missing_share": {
+        "activity_kcal": 0.0533,
+        "dexcom": 0.1186,
+        "hr": 0.0651,
+        "libre": 0.0,
+        "mets": 0.0533
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2853,
+          "n_values": 14265,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27017743,
+              "integer_share_by_phase": [
+                0.2142,
+                0.2142,
+                0.2142,
+                0.2142,
+                1.0
+              ],
+              "n_intervals_checked": 2851,
+              "n_intervals_linear": 2851,
+              "n_lattice_non_integer": 0,
+              "n_native": 2853,
+              "n_values": 14265,
+              "phase": 4,
+              "start_minute": 27003469,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1079,
+          "n_values": 16185,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27019581,
+              "integer_share_by_phase": [
+                0.0982,
+                0.2076,
+                0.329,
+                0.0982,
+                0.2076,
+                0.0982,
+                0.0982,
+                1.0,
+                0.0982,
+                0.0982,
+                0.2076,
+                0.0982,
+                0.329,
+                0.2076,
+                0.0982
+              ],
+              "n_intervals_checked": 1078,
+              "n_intervals_linear": 1078,
+              "n_lattice_non_integer": 0,
+              "n_native": 1079,
+              "n_values": 16185,
+              "phase": 7,
+              "start_minute": 27003397,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 23,
+      "rows_after_dedup": 16185,
+      "rows_staged": 16185,
+      "span_days": 11.239,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2021-03-26 08:16:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2021-04-06 16:15:00",
+      "longest_gap_min": 0.0,
+      "meals": 36,
+      "missing_share": {
+        "activity_kcal": 0.0598,
+        "dexcom": 0.1529,
+        "hr": 0.068,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2765,
+          "n_values": 13824,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26952371,
+              "integer_share_by_phase": [
+                0.2123,
+                1.0,
+                0.2123,
+                0.2123,
+                0.2123
+              ],
+              "n_intervals_checked": 1305,
+              "n_intervals_linear": 1305,
+              "n_lattice_non_integer": 0,
+              "n_native": 1306,
+              "n_values": 6526,
+              "phase": 1,
+              "start_minute": 26945846,
+              "status": "accepted"
+            },
+            {
+              "end_minute": 26952857,
+              "integer_share_by_phase": [
+                null,
+                null,
+                0.0,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 26952857,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 26953343,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                0.0,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 26953343,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 26953829,
+              "integer_share_by_phase": [
+                null,
+                null,
+                null,
+                null,
+                0.0
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 26953829,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 26954316,
+              "integer_share_by_phase": [
+                null,
+                0.0,
+                null,
+                null,
+                null
+              ],
+              "n_intervals_checked": 0,
+              "n_intervals_linear": 0,
+              "n_lattice_non_integer": 0,
+              "n_native": 0,
+              "n_values": 1,
+              "phase": null,
+              "start_minute": 26954316,
+              "status": "too_short"
+            },
+            {
+              "end_minute": 26962095,
+              "integer_share_by_phase": [
+                0.2097,
+                0.2092,
+                1.0,
+                0.2097,
+                0.2097
+              ],
+              "n_intervals_checked": 1458,
+              "n_intervals_linear": 1458,
+              "n_lattice_non_integer": 0,
+              "n_native": 1459,
+              "n_values": 7294,
+              "phase": 2,
+              "start_minute": 26954802,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1088,
+          "n_values": 16320,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26962095,
+              "integer_share_by_phase": [
+                0.1066,
+                1.0,
+                0.1066,
+                0.1066,
+                0.2031,
+                0.1066,
+                0.3355,
+                0.2031,
+                0.1066,
+                0.1066,
+                0.2031,
+                0.3355,
+                0.1066,
+                0.2031,
+                0.1066
+              ],
+              "n_intervals_checked": 1087,
+              "n_intervals_linear": 1087,
+              "n_lattice_non_integer": 0,
+              "n_native": 1088,
+              "n_values": 16320,
+              "phase": 1,
+              "start_minute": 26945776,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 26,
+      "rows_after_dedup": 16320,
+      "rows_staged": 16320,
+      "span_days": 11.333,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-06-10 08:12:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2024-06-20 10:26:00",
+      "longest_gap_min": 0.0,
+      "meals": 36,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0224,
+        "hr": 0.0034,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2842,
+          "n_values": 14210,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28647797,
+              "integer_share_by_phase": [
+                0.2438,
+                0.2438,
+                0.2438,
+                1.0,
+                0.2438
+              ],
+              "n_intervals_checked": 2840,
+              "n_intervals_linear": 2840,
+              "n_lattice_non_integer": 0,
+              "n_native": 2842,
+              "n_values": 14210,
+              "phase": 3,
+              "start_minute": 28633523,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 969,
+          "n_values": 14535,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28647986,
+              "integer_share_by_phase": [
+                0.225,
+                0.1238,
+                0.3137,
+                0.225,
+                0.1238,
+                0.1238,
+                0.225,
+                0.3137,
+                0.1238,
+                0.225,
+                0.1238,
+                0.1238,
+                1.0,
+                0.1238,
+                0.1238
+              ],
+              "n_intervals_checked": 968,
+              "n_intervals_linear": 968,
+              "n_lattice_non_integer": 0,
+              "n_native": 969,
+              "n_values": 14535,
+              "phase": 12,
+              "start_minute": 28633452,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 27,
+      "rows_after_dedup": 14535,
+      "rows_staged": 14535,
+      "span_days": 10.093,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2023-11-28 08:04:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2023-12-11 08:18:00",
+      "longest_gap_min": 0.0,
+      "meals": 34,
+      "missing_share": {
+        "activity_kcal": 0.1804,
+        "dexcom": 0.2405,
+        "hr": 0.2373,
+        "libre": 0.0,
+        "mets": 0.1804
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2846,
+          "n_values": 14230,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28366990,
+              "integer_share_by_phase": [
+                0.2422,
+                0.9986,
+                0.2422,
+                0.2422,
+                0.2422
+              ],
+              "n_intervals_checked": 2844,
+              "n_intervals_linear": 2844,
+              "n_lattice_non_integer": 4,
+              "n_native": 2846,
+              "n_values": 14230,
+              "phase": 1,
+              "start_minute": 28352716,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1249,
+          "n_values": 18735,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28371378,
+              "integer_share_by_phase": [
+                0.1057,
+                0.209,
+                0.1057,
+                0.1057,
+                1.0,
+                0.1057,
+                0.1057,
+                0.209,
+                0.1057,
+                0.3299,
+                0.209,
+                0.1057,
+                0.1057,
+                0.209,
+                0.3299
+              ],
+              "n_intervals_checked": 1248,
+              "n_intervals_linear": 1248,
+              "n_lattice_non_integer": 0,
+              "n_native": 1249,
+              "n_values": 18735,
+              "phase": 4,
+              "start_minute": 28352644,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 28,
+      "rows_after_dedup": 18735,
+      "rows_staged": 18735,
+      "span_days": 13.01,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-01-17 08:13:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2024-01-29 15:42:00",
+      "longest_gap_min": 0.0,
+      "meals": 30,
+      "missing_share": {
+        "activity_kcal": 0.1344,
+        "dexcom": 0.1949,
+        "hr": 0.1499,
+        "libre": 0.0,
+        "mets": 0.1344
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28439000,
+              "integer_share_by_phase": [
+                0.2651,
+                1.0,
+                0.2651,
+                0.2651,
+                0.2651
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 1,
+              "start_minute": 28424726,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1182,
+          "n_values": 17730,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28442382,
+              "integer_share_by_phase": [
+                0.1151,
+                0.2047,
+                0.1151,
+                0.3181,
+                0.2047,
+                0.1151,
+                0.1151,
+                0.2047,
+                0.3181,
+                0.1151,
+                0.2047,
+                0.1151,
+                0.1151,
+                1.0,
+                0.1151
+              ],
+              "n_intervals_checked": 1181,
+              "n_intervals_linear": 1181,
+              "n_lattice_non_integer": 0,
+              "n_native": 1182,
+              "n_values": 17730,
+              "phase": 13,
+              "start_minute": 28424653,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 29,
+      "rows_after_dedup": 17730,
+      "rows_staged": 17730,
+      "span_days": 12.312,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 9
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2021-01-23 09:27:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2021-02-03 03:11:00",
+      "longest_gap_min": 0.0,
+      "meals": 28,
+      "missing_share": {
+        "activity_kcal": 0.1055,
+        "dexcom": 0.0812,
+        "hr": 0.2,
+        "libre": 0.0006,
+        "mets": 0.1055
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2842,
+          "n_values": 14210,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 26870853,
+              "integer_share_by_phase": [
+                0.221,
+                0.221,
+                0.221,
+                0.221,
+                1.0
+              ],
+              "n_intervals_checked": 2840,
+              "n_intervals_linear": 2840,
+              "n_lattice_non_integer": 0,
+              "n_native": 2842,
+              "n_values": 14210,
+              "phase": 4,
+              "start_minute": 26856579,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1030,
+          "n_values": 15456,
+          "native_share": 0.0666,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 26872031,
+              "integer_share_by_phase": [
+                0.1922,
+                0.0834,
+                0.3123,
+                0.192,
+                0.0834,
+                0.0834,
+                0.192,
+                0.3126,
+                0.0835,
+                0.1922,
+                0.0835,
+                0.0835,
+                1.0,
+                0.0835,
+                0.0835
+              ],
+              "n_intervals_checked": 1028,
+              "n_intervals_linear": 1028,
+              "n_lattice_non_integer": 0,
+              "n_native": 1030,
+              "n_values": 15456,
+              "phase": 12,
+              "start_minute": 26856567,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 30,
+      "rows_after_dedup": 15465,
+      "rows_staged": 15465,
+      "span_days": 10.739,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-06-29 20:05:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2022-07-09 08:49:00",
+      "longest_gap_min": 0.0,
+      "meals": 54,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0038,
+        "hr": 0.0138,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2734,
+          "n_values": 13673,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27622557,
+              "integer_share_by_phase": [
+                0.2285,
+                0.2285,
+                0.2285,
+                1.0,
+                0.2286
+              ],
+              "n_intervals_checked": 2733,
+              "n_intervals_linear": 2733,
+              "n_lattice_non_integer": 0,
+              "n_native": 2734,
+              "n_values": 13673,
+              "phase": 3,
+              "start_minute": 27608885,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 915,
+          "n_values": 13725,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27622609,
+              "integer_share_by_phase": [
+                0.3421,
+                0.094,
+                0.2153,
+                0.094,
+                0.094,
+                1.0,
+                0.094,
+                0.094,
+                0.2153,
+                0.094,
+                0.3421,
+                0.2153,
+                0.094,
+                0.094,
+                0.2153
+              ],
+              "n_intervals_checked": 914,
+              "n_intervals_linear": 914,
+              "n_lattice_non_integer": 0,
+              "n_native": 915,
+              "n_values": 13725,
+              "phase": 5,
+              "start_minute": 27608885,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 31,
+      "rows_after_dedup": 13725,
+      "rows_staged": 13725,
+      "span_days": 9.531,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-01-01 20:54:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2022-01-11 10:38:00",
+      "longest_gap_min": 0.0,
+      "meals": 20,
+      "missing_share": {
+        "activity_kcal": 0.0464,
+        "dexcom": 0.0094,
+        "hr": 0.5242,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2731,
+          "n_values": 13656,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27364844,
+              "integer_share_by_phase": [
+                1.0,
+                0.2215,
+                0.2215,
+                0.2215,
+                0.2214
+              ],
+              "n_intervals_checked": 2729,
+              "n_intervals_linear": 2729,
+              "n_lattice_non_integer": 0,
+              "n_native": 2731,
+              "n_values": 13656,
+              "phase": 0,
+              "start_minute": 27351174,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 919,
+          "n_values": 13785,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27364958,
+              "integer_share_by_phase": [
+                0.2949,
+                0.2024,
+                0.2024,
+                0.2949,
+                0.4081,
+                0.2024,
+                0.2949,
+                0.2024,
+                0.2024,
+                1.0,
+                0.2024,
+                0.2024,
+                0.2949,
+                0.2024,
+                0.4081
+              ],
+              "n_intervals_checked": 918,
+              "n_intervals_linear": 918,
+              "n_lattice_non_integer": 0,
+              "n_native": 919,
+              "n_values": 13785,
+              "phase": 9,
+              "start_minute": 27351174,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 32,
+      "rows_after_dedup": 13785,
+      "rows_staged": 13785,
+      "span_days": 9.572,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-04-16 09:30:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2022-04-27 09:44:00",
+      "longest_gap_min": 0.0,
+      "meals": 33,
+      "missing_share": {
+        "activity_kcal": 0.2188,
+        "dexcom": 0.1026,
+        "hr": 0.3147,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2843,
+          "n_values": 14215,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27516033,
+              "integer_share_by_phase": [
+                0.2019,
+                0.2015,
+                0.2019,
+                0.2015,
+                1.0
+              ],
+              "n_intervals_checked": 2836,
+              "n_intervals_linear": 2836,
+              "n_lattice_non_integer": 0,
+              "n_native": 2843,
+              "n_values": 14215,
+              "phase": 4,
+              "start_minute": 27501759,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1056,
+          "n_values": 15840,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27517544,
+              "integer_share_by_phase": [
+                1.0,
+                0.0767,
+                0.0767,
+                0.2008,
+                0.0767,
+                0.34,
+                0.2008,
+                0.0767,
+                0.0767,
+                0.2008,
+                0.34,
+                0.0767,
+                0.2008,
+                0.0767,
+                0.0767
+              ],
+              "n_intervals_checked": 1054,
+              "n_intervals_linear": 1054,
+              "n_lattice_non_integer": 0,
+              "n_native": 1056,
+              "n_values": 15840,
+              "phase": 0,
+              "start_minute": 27501690,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 33,
+      "rows_after_dedup": 15840,
+      "rows_staged": 15840,
+      "span_days": 11.01,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-03-02 09:12:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2022-03-12 14:11:00",
+      "longest_gap_min": 0.0,
+      "meals": 49,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0289,
+        "hr": 0.4591,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27451215,
+              "integer_share_by_phase": [
+                0.2203,
+                1.0,
+                0.2203,
+                0.2203,
+                0.2203
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 1,
+              "start_minute": 27436941,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 980,
+          "n_values": 14700,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27451571,
+              "integer_share_by_phase": [
+                0.2337,
+                0.0959,
+                0.3286,
+                0.2337,
+                0.0959,
+                0.0959,
+                0.2337,
+                0.3286,
+                0.0959,
+                0.2337,
+                0.0959,
+                0.0959,
+                1.0,
+                0.0959,
+                0.0959
+              ],
+              "n_intervals_checked": 979,
+              "n_intervals_linear": 979,
+              "n_lattice_non_integer": 0,
+              "n_native": 980,
+              "n_values": 14700,
+              "phase": 12,
+              "start_minute": 27436872,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 34,
+      "rows_after_dedup": 14700,
+      "rows_staged": 14700,
+      "span_days": 10.208,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2024-12-12 09:07:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2024-12-22 09:06:00",
+      "longest_gap_min": 0.0,
+      "meals": 27,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.009,
+        "hr": 0.163,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2854,
+          "n_values": 14270,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28914250,
+              "integer_share_by_phase": [
+                0.2106,
+                1.0,
+                0.2106,
+                0.2106,
+                0.2106
+              ],
+              "n_intervals_checked": 2852,
+              "n_intervals_linear": 2852,
+              "n_lattice_non_integer": 0,
+              "n_native": 2854,
+              "n_values": 14270,
+              "phase": 1,
+              "start_minute": 28899976,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 960,
+          "n_values": 14400,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28914306,
+              "integer_share_by_phase": [
+                0.0792,
+                0.2073,
+                0.3219,
+                0.0792,
+                0.2073,
+                0.0792,
+                0.0792,
+                1.0,
+                0.0792,
+                0.0792,
+                0.2073,
+                0.0792,
+                0.3219,
+                0.2073,
+                0.0792
+              ],
+              "n_intervals_checked": 959,
+              "n_intervals_linear": 959,
+              "n_lattice_non_integer": 0,
+              "n_native": 960,
+              "n_values": 14400,
+              "phase": 7,
+              "start_minute": 28899907,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 35,
+      "rows_after_dedup": 14400,
+      "rows_staged": 14400,
+      "span_days": 9.999,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-03-29 09:58:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2022-04-10 07:12:00",
+      "longest_gap_min": 0.0,
+      "meals": 30,
+      "missing_share": {
+        "activity_kcal": 0.1094,
+        "dexcom": 0.1659,
+        "hr": 0.1585,
+        "libre": 0.0,
+        "mets": 0.1094
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27490142,
+              "integer_share_by_phase": [
+                0.2144,
+                0.2144,
+                0.2144,
+                1.0,
+                0.2144
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 3,
+              "start_minute": 27475868,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1141,
+          "n_values": 17115,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27492912,
+              "integer_share_by_phase": [
+                0.092,
+                0.2138,
+                0.092,
+                0.3348,
+                0.2138,
+                0.092,
+                0.092,
+                0.2138,
+                0.3348,
+                0.092,
+                0.2138,
+                0.092,
+                0.092,
+                1.0,
+                0.092
+              ],
+              "n_intervals_checked": 1140,
+              "n_intervals_linear": 1140,
+              "n_lattice_non_integer": 0,
+              "n_native": 1141,
+              "n_values": 17115,
+              "phase": 13,
+              "start_minute": 27475798,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 36,
+      "rows_after_dedup": 17115,
+      "rows_staged": 17115,
+      "span_days": 11.885,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-01-25 08:56:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2022-02-04 10:40:00",
+      "longest_gap_min": 0.0,
+      "meals": 40,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0162,
+        "hr": 0.011,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2854,
+          "n_values": 14270,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27399373,
+              "integer_share_by_phase": [
+                0.2246,
+                0.2246,
+                0.2246,
+                0.2246,
+                1.0
+              ],
+              "n_intervals_checked": 2852,
+              "n_intervals_linear": 2852,
+              "n_lattice_non_integer": 0,
+              "n_native": 2854,
+              "n_values": 14270,
+              "phase": 4,
+              "start_minute": 27385099,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 967,
+          "n_values": 14505,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27399520,
+              "integer_share_by_phase": [
+                0.1055,
+                0.3247,
+                0.1975,
+                0.1055,
+                0.1055,
+                0.1975,
+                0.3247,
+                0.1055,
+                0.1975,
+                0.1055,
+                0.1055,
+                1.0,
+                0.1055,
+                0.1055,
+                0.1975
+              ],
+              "n_intervals_checked": 966,
+              "n_intervals_linear": 966,
+              "n_lattice_non_integer": 0,
+              "n_native": 967,
+              "n_values": 14505,
+              "phase": 11,
+              "start_minute": 27385016,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 38,
+      "rows_after_dedup": 14505,
+      "rows_staged": 14505,
+      "span_days": 10.072,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-02-07 09:28:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2025-02-19 08:12:00",
+      "longest_gap_min": 0.0,
+      "meals": 34,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.1703,
+        "hr": 0.1666,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 28996353,
+              "integer_share_by_phase": [
+                0.2126,
+                0.2126,
+                0.2126,
+                0.2126,
+                1.0
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 4,
+              "start_minute": 28982079,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1147,
+          "n_values": 17205,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 28999212,
+              "integer_share_by_phase": [
+                0.0802,
+                0.1874,
+                0.0802,
+                0.3391,
+                0.1874,
+                0.0802,
+                0.0802,
+                0.1874,
+                0.3391,
+                0.0802,
+                0.1874,
+                0.0802,
+                0.0802,
+                1.0,
+                0.0802
+              ],
+              "n_intervals_checked": 1146,
+              "n_intervals_linear": 1146,
+              "n_lattice_non_integer": 0,
+              "n_native": 1147,
+              "n_values": 17205,
+              "phase": 13,
+              "start_minute": 28982008,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 39,
+      "rows_after_dedup": 17205,
+      "rows_staged": 17205,
+      "span_days": 11.947,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-04-26 09:04:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2022-05-06 07:33:00",
+      "longest_gap_min": 0.0,
+      "meals": 48,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0048,
+        "hr": 0.3118,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2849,
+          "n_values": 14241,
+          "native_share": 0.2001,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27530373,
+              "integer_share_by_phase": [
+                0.2275,
+                0.2275,
+                0.2275,
+                1.0,
+                0.2275
+              ],
+              "n_intervals_checked": 2848,
+              "n_intervals_linear": 2848,
+              "n_lattice_non_integer": 0,
+              "n_native": 2849,
+              "n_values": 14241,
+              "phase": 3,
+              "start_minute": 27516133,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 954,
+          "n_values": 14310,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27530373,
+              "integer_share_by_phase": [
+                0.087,
+                0.1792,
+                0.087,
+                0.087,
+                1.0,
+                0.087,
+                0.087,
+                0.1792,
+                0.087,
+                0.3627,
+                0.1792,
+                0.087,
+                0.087,
+                0.1792,
+                0.3627
+              ],
+              "n_intervals_checked": 953,
+              "n_intervals_linear": 953,
+              "n_lattice_non_integer": 0,
+              "n_native": 954,
+              "n_values": 14310,
+              "phase": 4,
+              "start_minute": 27516064,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 41,
+      "rows_after_dedup": 14310,
+      "rows_staged": 14310,
+      "span_days": 9.937,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-07-25 10:10:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2025-08-04 12:09:00",
+      "longest_gap_min": 0.0,
+      "meals": 22,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0169,
+        "hr": 0.0885,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 29238319,
+              "integer_share_by_phase": [
+                1.0,
+                0.207,
+                0.207,
+                0.207,
+                0.207
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 0,
+              "start_minute": 29224045,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 968,
+          "n_values": 14520,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 29238489,
+              "integer_share_by_phase": [
+                0.3182,
+                0.1973,
+                0.0878,
+                0.0878,
+                0.1973,
+                0.3182,
+                0.0878,
+                0.1973,
+                0.0878,
+                0.0878,
+                1.0,
+                0.0878,
+                0.0878,
+                0.1973,
+                0.0878
+              ],
+              "n_intervals_checked": 967,
+              "n_intervals_linear": 967,
+              "n_lattice_non_integer": 0,
+              "n_native": 968,
+              "n_values": 14520,
+              "phase": 10,
+              "start_minute": 29223970,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 42,
+      "rows_after_dedup": 14520,
+      "rows_staged": 14520,
+      "span_days": 10.083,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-10-14 09:09:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2025-10-24 11:23:00",
+      "longest_gap_min": 0.0,
+      "meals": 64,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0179,
+        "hr": 0.0353,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2852,
+          "n_values": 14260,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 29354895,
+              "integer_share_by_phase": [
+                0.25,
+                1.0,
+                0.2496,
+                0.2496,
+                0.2496
+              ],
+              "n_intervals_checked": 2847,
+              "n_intervals_linear": 2847,
+              "n_lattice_non_integer": 0,
+              "n_native": 2852,
+              "n_values": 14260,
+              "phase": 1,
+              "start_minute": 29340621,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 968,
+          "n_values": 14520,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 29355083,
+              "integer_share_by_phase": [
+                0.187,
+                0.1033,
+                0.1033,
+                0.187,
+                0.3574,
+                0.1033,
+                0.187,
+                0.1033,
+                0.1033,
+                1.0,
+                0.1033,
+                0.1033,
+                0.187,
+                0.1033,
+                0.3574
+              ],
+              "n_intervals_checked": 966,
+              "n_intervals_linear": 966,
+              "n_lattice_non_integer": 0,
+              "n_native": 968,
+              "n_values": 14520,
+              "phase": 9,
+              "start_minute": 29340549,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 43,
+      "rows_after_dedup": 14520,
+      "rows_staged": 14520,
+      "span_days": 10.093,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-10-17 08:36:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2022-10-27 10:50:00",
+      "longest_gap_min": 0.0,
+      "meals": 43,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0213,
+        "hr": 0.1589,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2845,
+          "n_values": 14225,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27780943,
+              "integer_share_by_phase": [
+                0.2629,
+                0.2629,
+                0.2629,
+                0.2629,
+                1.0
+              ],
+              "n_intervals_checked": 2843,
+              "n_intervals_linear": 2843,
+              "n_lattice_non_integer": 0,
+              "n_native": 2845,
+              "n_values": 14225,
+              "phase": 4,
+              "start_minute": 27766669,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 969,
+          "n_values": 14535,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27781130,
+              "integer_share_by_phase": [
+                0.2291,
+                0.3313,
+                0.1135,
+                0.2291,
+                0.1135,
+                0.1135,
+                1.0,
+                0.1135,
+                0.1135,
+                0.2291,
+                0.1135,
+                0.3313,
+                0.2291,
+                0.1135,
+                0.1135
+              ],
+              "n_intervals_checked": 968,
+              "n_intervals_linear": 968,
+              "n_lattice_non_integer": 0,
+              "n_native": 969,
+              "n_values": 14535,
+              "phase": 6,
+              "start_minute": 27766596,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 44,
+      "rows_after_dedup": 14535,
+      "rows_staged": 14535,
+      "span_days": 10.093,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-03-25 19:59:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "prediabetes",
+      "last_ts": "2025-04-05 15:28:00",
+      "longest_gap_min": 0.0,
+      "meals": 32,
+      "missing_share": {
+        "activity_kcal": 0.0597,
+        "dexcom": 0.1221,
+        "hr": 0.0625,
+        "libre": 0.0,
+        "mets": 0.0597
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2733,
+          "n_values": 13669,
+          "native_share": 0.1999,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 29062552,
+              "integer_share_by_phase": [
+                0.1993,
+                0.1993,
+                0.1993,
+                1.0,
+                0.1993
+              ],
+              "n_intervals_checked": 2731,
+              "n_intervals_linear": 2731,
+              "n_lattice_non_integer": 0,
+              "n_native": 2733,
+              "n_values": 13669,
+              "phase": 3,
+              "start_minute": 29048879,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1038,
+          "n_values": 15570,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 29064448,
+              "integer_share_by_phase": [
+                0.0559,
+                0.0559,
+                0.1724,
+                0.0559,
+                0.316,
+                0.1724,
+                0.0559,
+                0.0559,
+                0.1724,
+                0.316,
+                0.0559,
+                0.1724,
+                0.0559,
+                0.0559,
+                1.0
+              ],
+              "n_intervals_checked": 1037,
+              "n_intervals_linear": 1037,
+              "n_lattice_non_integer": 0,
+              "n_native": 1038,
+              "n_values": 15570,
+              "phase": 14,
+              "start_minute": 29048879,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 45,
+      "rows_after_dedup": 15570,
+      "rows_staged": 15570,
+      "span_days": 10.812,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-05-01 08:32:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2025-05-11 13:16:00",
+      "longest_gap_min": 0.0,
+      "meals": 29,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.028,
+        "hr": 0.0705,
+        "libre": 0.0,
+        "mets": 1.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2849,
+          "n_values": 14245,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 29115822,
+              "integer_share_by_phase": [
+                0.2225,
+                0.2225,
+                0.2225,
+                1.0,
+                0.2225
+              ],
+              "n_intervals_checked": 2840,
+              "n_intervals_linear": 2840,
+              "n_lattice_non_integer": 0,
+              "n_native": 2849,
+              "n_values": 14245,
+              "phase": 3,
+              "start_minute": 29101548,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 977,
+          "n_values": 14655,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 29116156,
+              "integer_share_by_phase": [
+                0.0931,
+                0.0931,
+                1.0,
+                0.0931,
+                0.0931,
+                0.2088,
+                0.0931,
+                0.3378,
+                0.2088,
+                0.0931,
+                0.0931,
+                0.2088,
+                0.3378,
+                0.0931,
+                0.2088
+              ],
+              "n_intervals_checked": 974,
+              "n_intervals_linear": 974,
+              "n_lattice_non_integer": 0,
+              "n_native": 977,
+              "n_values": 14655,
+              "phase": 2,
+              "start_minute": 29101472,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 46,
+      "rows_after_dedup": 14655,
+      "rows_staged": 14655,
+      "span_days": 10.197,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": false,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-10-30 08:49:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2025-11-10 06:18:00",
+      "longest_gap_min": 0.0,
+      "meals": 29,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.0934,
+        "hr": 0.0822,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2845,
+          "n_values": 14225,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 29377915,
+              "integer_share_by_phase": [
+                0.1909,
+                1.0,
+                0.1909,
+                0.1909,
+                0.1909
+              ],
+              "n_intervals_checked": 2841,
+              "n_intervals_linear": 2841,
+              "n_lattice_non_integer": 0,
+              "n_native": 2845,
+              "n_values": 14225,
+              "phase": 1,
+              "start_minute": 29363641,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1046,
+          "n_values": 15690,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 29379258,
+              "integer_share_by_phase": [
+                0.0813,
+                0.2036,
+                0.0813,
+                0.0813,
+                1.0,
+                0.0813,
+                0.0813,
+                0.2036,
+                0.0813,
+                0.3308,
+                0.2036,
+                0.0813,
+                0.0813,
+                0.2036,
+                0.3308
+              ],
+              "n_intervals_checked": 1045,
+              "n_intervals_linear": 1045,
+              "n_lattice_non_integer": 0,
+              "n_native": 1046,
+              "n_values": 15690,
+              "phase": 4,
+              "start_minute": 29363569,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 47,
+      "rows_after_dedup": 15690,
+      "rows_staged": 15690,
+      "span_days": 10.895,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2022-11-14 09:14:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "healthy",
+      "last_ts": "2022-11-26 10:28:00",
+      "longest_gap_min": 0.0,
+      "meals": 36,
+      "missing_share": {
+        "activity_kcal": 0.0,
+        "dexcom": 0.1776,
+        "hr": 0.1726,
+        "libre": 0.0,
+        "mets": 0.0
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2852,
+          "n_values": 14260,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 27821291,
+              "integer_share_by_phase": [
+                0.2461,
+                0.2461,
+                1.0,
+                0.2465,
+                0.2461
+              ],
+              "n_intervals_checked": 2847,
+              "n_intervals_linear": 2847,
+              "n_lattice_non_integer": 0,
+              "n_native": 2852,
+              "n_values": 14260,
+              "phase": 2,
+              "start_minute": 27807017,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1156,
+          "n_values": 17340,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 27824308,
+              "integer_share_by_phase": [
+                0.1332,
+                0.1332,
+                0.2189,
+                0.1332,
+                0.3676,
+                0.2189,
+                0.1332,
+                0.1332,
+                0.2189,
+                0.3676,
+                0.1332,
+                0.2189,
+                0.1332,
+                0.1332,
+                1.0
+              ],
+              "n_intervals_checked": 1154,
+              "n_intervals_linear": 1154,
+              "n_lattice_non_integer": 0,
+              "n_native": 1156,
+              "n_values": 17340,
+              "phase": 14,
+              "start_minute": 27806954,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 48,
+      "rows_after_dedup": 17340,
+      "rows_staged": 17340,
+      "span_days": 12.051,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    },
+    {
+      "cgm_out_of_range": {
+        "dexcom": 0,
+        "libre": 0
+      },
+      "duplicates": {
+        "conflicting_groups": 0,
+        "duplicated_timestamps": 0,
+        "identical_groups": 0,
+        "rows_removed": 0
+      },
+      "first_ts": "2025-05-11 08:53:00",
+      "gaps_over_flag": 0,
+      "glycemic_group": "T2D",
+      "last_ts": "2025-05-22 00:07:00",
+      "longest_gap_min": 0.0,
+      "meals": 28,
+      "missing_share": {
+        "activity_kcal": 0.0005,
+        "dexcom": 0.0679,
+        "hr": 0.0876,
+        "libre": 0.0,
+        "mets": 0.0005
+      },
+      "native_grid": {
+        "dexcom": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 2855,
+          "n_values": 14275,
+          "native_share": 0.2,
+          "period_min": 5,
+          "segments": [
+            {
+              "end_minute": 29130237,
+              "integer_share_by_phase": [
+                0.221,
+                0.221,
+                0.221,
+                1.0,
+                0.221
+              ],
+              "n_intervals_checked": 2854,
+              "n_intervals_linear": 2854,
+              "n_lattice_non_integer": 0,
+              "n_native": 2855,
+              "n_values": 14275,
+              "phase": 3,
+              "start_minute": 29115963,
+              "status": "accepted"
+            }
+          ]
+        },
+        "libre": {
+          "decision": "native_lattice",
+          "linear_share": 1.0,
+          "n_native": 1021,
+          "n_values": 15315,
+          "native_share": 0.0667,
+          "period_min": 15,
+          "segments": [
+            {
+              "end_minute": 29131207,
+              "integer_share_by_phase": [
+                0.0842,
+                0.0842,
+                0.2223,
+                0.334,
+                0.0842,
+                0.2223,
+                0.0842,
+                0.0842,
+                1.0,
+                0.0842,
+                0.0842,
+                0.2223,
+                0.0842,
+                0.334,
+                0.2223
+              ],
+              "n_intervals_checked": 1020,
+              "n_intervals_linear": 1020,
+              "n_lattice_non_integer": 0,
+              "n_native": 1021,
+              "n_values": 15315,
+              "phase": 8,
+              "start_minute": 29115893,
+              "status": "accepted"
+            }
+          ]
+        }
+      },
+      "participant_id": 49,
+      "rows_after_dedup": 15315,
+      "rows_staged": 15315,
+      "span_days": 10.635,
+      "wearable": {
+        "activity_kcal_available": true,
+        "activity_kcal_negative": 0,
+        "hr_out_of_range": 0,
+        "mets_available": true,
+        "mets_out_of_range": 0
+      }
+    }
+  ],
+  "provenance": {
+    "cleaning_config_sha256": "5c227e4db35e4ec1321517b2a374e3011b54aae3d9a4e6af99e534f45c78faf0",
+    "cleaning_config_version": 1,
+    "csv_files": 47,
+    "label_config_sha256": "6088a0ad14b19ffc3b7b4254dac09bb1664c19b17577fbe15fb3adbe01e8a9de",
+    "label_config_version": 1,
+    "lock_check": {
+      "lock": "cgmacros-1.0.0.lock.json",
+      "status": "pinned"
+    },
+    "manifest_sha256": "b9956fc7535abd9607e60faa1f3d5250619f8716c2ef84199c2fc863d205cf8c",
+    "non_csv_files": 3365,
+    "official_check": {
+      "detail": "source is an extracted folder; PhysioNet publishes checksums for the ZIP only",
+      "status": "not_applicable"
+    },
+    "pipeline_version": "m1.1",
+    "source_kind": "folder",
+    "source_name": "CGMacros:"
+  },
+  "reconciliation": [
+    {
+      "expected_equal": true,
+      "m1": 44,
+      "match": true,
+      "note": "",
+      "phase0a": 44,
+      "quantity": "participant files"
+    },
+    {
+      "expected_equal": true,
+      "m1": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "match": true,
+      "note": "",
+      "phase0a": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        38,
+        39,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "quantity": "participant IDs"
+    },
+    {
+      "expected_equal": true,
+      "m1": 1663,
+      "match": true,
+      "note": "",
+      "phase0a": 1663,
+      "quantity": "meal rows"
+    },
+    {
+      "expected_equal": true,
+      "m1": 1368,
+      "match": true,
+      "note": "",
+      "phase0a": 1368,
+      "quantity": "usable meals (frozen)"
+    },
+    {
+      "expected_equal": true,
+      "m1": 580,
+      "match": true,
+      "note": "",
+      "phase0a": 580,
+      "quantity": "positives (frozen)"
+    },
+    {
+      "expected_equal": true,
+      "m1": 244,
+      "match": true,
+      "note": "",
+      "phase0a": 244,
+      "quantity": "excluded: next meal < 120 min"
+    },
+    {
+      "expected_equal": true,
+      "m1": 52,
+      "match": true,
+      "note": "",
+      "phase0a": 52,
+      "quantity": "excluded: coverage < 80%"
+    },
+    {
+      "expected_equal": true,
+      "m1": 412,
+      "match": true,
+      "note": "",
+      "phase0a": 412,
+      "quantity": "T2D: usable"
+    },
+    {
+      "expected_equal": true,
+      "m1": 277,
+      "match": true,
+      "note": "",
+      "phase0a": 277,
+      "quantity": "T2D: positives"
+    },
+    {
+      "expected_equal": true,
+      "m1": 14,
+      "match": true,
+      "note": "",
+      "phase0a": 14,
+      "quantity": "T2D: participants with positive"
+    },
+    {
+      "expected_equal": true,
+      "m1": 445,
+      "match": true,
+      "note": "",
+      "phase0a": 445,
+      "quantity": "healthy: usable"
+    },
+    {
+      "expected_equal": true,
+      "m1": 99,
+      "match": true,
+      "note": "",
+      "phase0a": 99,
+      "quantity": "healthy: positives"
+    },
+    {
+      "expected_equal": true,
+      "m1": 13,
+      "match": true,
+      "note": "",
+      "phase0a": 13,
+      "quantity": "healthy: participants with positive"
+    },
+    {
+      "expected_equal": true,
+      "m1": 511,
+      "match": true,
+      "note": "",
+      "phase0a": 511,
+      "quantity": "prediabetes: usable"
+    },
+    {
+      "expected_equal": true,
+      "m1": 204,
+      "match": true,
+      "note": "",
+      "phase0a": 204,
+      "quantity": "prediabetes: positives"
+    },
+    {
+      "expected_equal": true,
+      "m1": 15,
+      "match": true,
+      "note": "",
+      "phase0a": 15,
+      "quantity": "prediabetes: participants with positive"
+    },
+    {
+      "expected_equal": false,
+      "m1": 90,
+      "match": true,
+      "note": "Phase 0A used the interpolated minute value; M1 uses the last native reading",
+      "phase0a": 90,
+      "quantity": "already-high positives"
+    }
+  ],
+  "schema": {
+    "canonical_columns_present": {
+      "activity_kcal_raw": 43,
+      "amount_consumed_raw": 42,
+      "calories_kcal": 44,
+      "carbs_g": 44,
+      "dexcom_raw": 44,
+      "fat_g": 44,
+      "fiber_g": 44,
+      "hr_raw": 44,
+      "image_path": 44,
+      "libre_raw": 44,
+      "meal_type_raw": 44,
+      "mets_raw": 33,
+      "protein_g": 44,
+      "ts": 44
+    },
+    "ignored_columns": {
+      "intensity": [
+        11,
+        26,
+        27,
+        31,
+        32,
+        33,
+        34,
+        35,
+        38,
+        42,
+        46
+      ],
+      "recordindex": [
+        7
+      ],
+      "steps": [
+        7
+      ],
+      "sugar": [
+        13
+      ],
+      "unnamed: 0": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        33,
+        36,
+        49
+      ]
+    },
+    "non_numeric_values_nulled": {},
+    "optional_columns_missing": {
+      "activity_kcal_raw": [
+        7
+      ],
+      "amount_consumed_raw": [
+        28,
+        29
+      ],
+      "mets_raw": [
+        11,
+        26,
+        27,
+        31,
+        32,
+        33,
+        34,
+        35,
+        38,
+        42,
+        46
+      ]
+    },
+    "timestamps_with_seconds": 0
+  },
+  "wearable": {
+    "activity_kcal_column_missing": [
+      7
+    ],
+    "activity_kcal_negative": 0,
+    "hr_out_of_range": 0,
+    "intensity_files": [
+      11,
+      26,
+      27,
+      31,
+      32,
+      33,
+      34,
+      35,
+      38,
+      42,
+      46
+    ],
+    "intensity_files_equal_mets_missing": true,
+    "mets_column_missing": [
+      11,
+      26,
+      27,
+      31,
+      32,
+      33,
+      34,
+      35,
+      38,
+      42,
+      46
+    ],
+    "mets_out_of_range": 3,
+    "target_group_without_mets": [
+      11,
+      26,
+      35,
+      38,
+      42,
+      46
+    ]
+  }
+}

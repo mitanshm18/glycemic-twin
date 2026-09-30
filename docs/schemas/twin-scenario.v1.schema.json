@@ -1,0 +1,391 @@
+{
+  "$defs": {
+    "ChangedInput": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "After"
+        },
+        "before": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Before"
+        },
+        "feature": {
+          "title": "Feature",
+          "type": "string"
+        },
+        "in_support": {
+          "title": "In Support",
+          "type": "boolean"
+        },
+        "support_hi": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Support Hi"
+        },
+        "support_lo": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Support Lo"
+        }
+      },
+      "required": [
+        "feature",
+        "before",
+        "after",
+        "support_lo",
+        "support_hi",
+        "in_support"
+      ],
+      "title": "ChangedInput",
+      "type": "object"
+    },
+    "ModelIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_sha256": {
+          "title": "Contract Sha256",
+          "type": "string"
+        },
+        "contract_version": {
+          "title": "Contract Version",
+          "type": "integer"
+        },
+        "created_utc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Created Utc"
+        },
+        "dataset_content_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Content Sha256"
+        },
+        "dataset_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dataset Label"
+        },
+        "feature_set": {
+          "title": "Feature Set",
+          "type": "string"
+        },
+        "features_sha256": {
+          "title": "Features Sha256",
+          "type": "string"
+        },
+        "labels_sha256": {
+          "title": "Labels Sha256",
+          "type": "string"
+        },
+        "model_name": {
+          "title": "Model Name",
+          "type": "string"
+        },
+        "model_version": {
+          "title": "Model Version",
+          "type": "string"
+        },
+        "n_columns": {
+          "title": "N Columns",
+          "type": "integer"
+        },
+        "params": {
+          "additionalProperties": true,
+          "title": "Params",
+          "type": "object"
+        },
+        "threshold": {
+          "title": "Threshold",
+          "type": "number"
+        },
+        "training_config_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Training Config Sha256"
+        }
+      },
+      "required": [
+        "model_version",
+        "model_name",
+        "feature_set",
+        "n_columns",
+        "contract_version",
+        "contract_sha256",
+        "features_sha256",
+        "labels_sha256",
+        "training_config_sha256",
+        "dataset_content_sha256",
+        "dataset_label",
+        "created_utc",
+        "threshold",
+        "params"
+      ],
+      "title": "ModelIdentity",
+      "type": "object"
+    },
+    "Uncertainty": {
+      "additionalProperties": false,
+      "properties": {
+        "distance_to_threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Distance To Threshold"
+        },
+        "level": {
+          "enum": [
+            "low",
+            "moderate",
+            "high"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "missing_inputs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Inputs",
+          "type": "array"
+        },
+        "note": {
+          "default": "Qualitative reliability flags, not a confidence interval; the probability itself is calibrated on held-out participants (M3).",
+          "title": "Note",
+          "type": "string"
+        },
+        "out_of_support_inputs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Out Of Support Inputs",
+          "type": "array"
+        },
+        "outcome_entropy_bits": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Outcome Entropy Bits"
+        },
+        "personal_weight": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Personal Weight"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "support_checked": {
+          "title": "Support Checked",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "level",
+        "reasons",
+        "outcome_entropy_bits",
+        "distance_to_threshold",
+        "personal_weight",
+        "missing_inputs",
+        "out_of_support_inputs",
+        "support_checked"
+      ],
+      "title": "Uncertainty",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "as_of": {
+      "title": "As Of",
+      "type": "string"
+    },
+    "base_state_id": {
+      "title": "Base State Id",
+      "type": "string"
+    },
+    "baseline_probability": {
+      "title": "Baseline Probability",
+      "type": "number"
+    },
+    "changed_inputs": {
+      "items": {
+        "$ref": "#/$defs/ChangedInput"
+      },
+      "title": "Changed Inputs",
+      "type": "array"
+    },
+    "changes": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Changes",
+      "type": "object"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "type": "string"
+    },
+    "held_fixed": {
+      "title": "Held Fixed",
+      "type": "string"
+    },
+    "kind": {
+      "default": "model-estimated, non-causal, non-medical what-if",
+      "title": "Kind",
+      "type": "string"
+    },
+    "meal_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Meal Id"
+    },
+    "model": {
+      "$ref": "#/$defs/ModelIdentity"
+    },
+    "patient_id": {
+      "title": "Patient Id",
+      "type": "integer"
+    },
+    "risk_delta": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Risk Delta"
+    },
+    "scenario_id": {
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "scenario_probability": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Scenario Probability"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "out_of_support"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "uncertainty": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Uncertainty"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "scenario_id",
+    "status",
+    "patient_id",
+    "as_of",
+    "base_state_id",
+    "meal_id",
+    "changes",
+    "baseline_probability",
+    "scenario_probability",
+    "risk_delta",
+    "changed_inputs",
+    "held_fixed",
+    "uncertainty",
+    "model",
+    "disclaimer"
+  ],
+  "title": "ScenarioResult",
+  "type": "object"
+}

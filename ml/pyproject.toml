@@ -1,0 +1,23 @@
+[project]
+name = "twin-ml"
+version = "0.1.0"
+description = "Offline data pipeline (M1-M2) and leakage-safe training and evaluation (M3)"
+requires-python = ">=3.11"
+dependencies = [
+    "twin-core",
+    "pyarrow>=15",
+    "scikit-learn>=1.5",
+    "scipy>=1.11",
+    "joblib>=1.3",
+    "xgboost>=2.1.4",
+]
+
+[project.scripts]
+twin-ml = "twin_ml.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/twin_ml"]

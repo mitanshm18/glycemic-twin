@@ -1,0 +1,61 @@
+# Feature set v1. Fixed before any model is trained; a change is features.v2.yaml.
+# Every feature is computed by twin_core.features.meal_features(history, meal) using only data at or
+# before meal start t0. CGM features read NATIVE Dexcom readings only (ADR-009, ADR-013).
+version: 1
+
+windows:
+  g_last_lookback_min: 15        # same lookback as the labels' pre-meal reading
+  slope_short_min: 15
+  slope_long_min: 30
+  min_slope_readings: 3
+  sd_window_min: 60
+  min_sd_readings: 6
+  stats_window_min: 180
+  tir_window_min: 1440
+  min_native_coverage: 0.5       # judgment: >= 50% of expected native readings (one per 5 min)
+  target_range_mgdl: [70, 180]
+  overnight_hours: [2, 6]        # 02:00-06:00, completed nights only (night end <= t0)
+  min_overnight_readings: 24     # half of the 48 native readings in 4 hours
+  hr_window_min: 30
+  mets_window_min: 60
+  activity_window_min: 180
+  min_wearable_coverage: 0.5
+  sedentary_mets_max: 1.5        # standard sedentary definition (<= 1.5 METs)
+  active_mets_min: 3.0           # standard moderate-activity threshold (>= 3 METs)
+  resting_hr_percentile: 10
+  min_resting_hr_minutes: 60
+  prev_meal_window_min: 180
+  mins_since_meal_cap: 720
+
+# The exact feature list. The pipeline fails if it produces anything else.
+features:
+  glucose: [g_last, g_age_min, slope_15, slope_30, sd_60, mean_180, min_180, max_180, tir_24h,
+            g_overnight_baseline, g_vs_baseline]
+  meal: [carbs_g, protein_g, fat_g, fiber_g, calories_kcal, meal_breakfast, meal_lunch, meal_dinner,
+         meal_snack, hour_sin, hour_cos]
+  context: [carbs_prev_3h, invalid_meal_prev_3h, mins_since_meal]
+  wearable: [hr_30, hr_resting, hr_delta, mets_available, mets_60, active_min_3h, activity_kcal_60,
+             hr_age_min]
+  clinical: [hba1c_pct, fasting_glucose_mgdl, fasting_insulin_uu_ml, homa_ir, bmi, age_years,
+             sex_female, triglycerides_mgdl, hdl_mgdl]
+  # Personal features need population priors fitted on TRAINING participants only, so they are
+  # computed per fold in M3 by twin_core.personalization, from the columns below. Only the raw
+  # past-only counts are stored in the M2 dataset.
+  personal_raw: [n_closed_meals, n_closed_positive]
+
+personal:
+  closed_window_min: 120         # a past meal's outcome is known only once its window has closed
+
+folds:
+  n_folds: 5
+  seed: 20261001
+  stratify_by: glycemic_group
+
+leakage:
+  # No feature name may contain these (post-meal or outcome information).
+  deny_patterns: [amount, peak, label, post, outcome, exclusion, usable, eligible, already_high,
+                  coverage, next_meal, waterfall]
+  # A single feature this predictive on eligible target-group meals is flagged for manual review.
+  single_feature_auroc_max: 0.95
+  # Number of meals re-checked at runtime by recomputing features from a history cut at t0.
+  truncation_check_meals: 100

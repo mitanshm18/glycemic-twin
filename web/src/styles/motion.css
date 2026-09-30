@@ -1,0 +1,400 @@
+/*
+ * Motion and interaction polish (M6 refinement). Principles:
+ * - motion explains a change of state, place or data; nothing moves on its own;
+ * - UI transitions 120–360 ms on one easing (--ease-standard); data reveals 700–2000 ms;
+ * - transform/opacity only (compositor-friendly); no bounce, parallax or scroll effects;
+ * - prefers-reduced-motion: every movement below is removed; state changes stay visible.
+ */
+
+/* ---------------------------------------------------------------- navigation */
+
+/* a new page settles in; changes within a page (the moment, a day) do not re-trigger it */
+.page-enter {
+  animation: page-in var(--dur-standard) var(--ease-standard) both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* content that replaces a skeleton fades in rather than popping */
+.enter {
+  animation: fade-up var(--dur-standard) var(--ease-standard) both;
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+/* sidebar: the active item carries a small indicator that grows in */
+.nav__link {
+  position: relative;
+}
+.nav__link::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 22%;
+  bottom: 22%;
+  width: 2px;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform var(--dur-standard) var(--ease-standard);
+}
+.nav__link--active::before {
+  transform: scaleY(1);
+}
+.sidebar--sheet .nav__link::before {
+  left: 0;
+}
+
+/* patient view tabs (Twin | Clinical record): they close the header, so it needs less space below */
+.page-head:has(.ptabs) {
+  margin-bottom: var(--s-2);
+}
+.ptabs {
+  display: flex;
+  gap: var(--s-1);
+  margin-top: var(--s-1);
+  border-bottom: 1px solid var(--border);
+}
+.ptabs__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 2.5rem;
+  padding: 0 var(--s-3);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  transition: color var(--dur-micro) var(--ease-standard);
+}
+.ptabs__tab::after {
+  content: "";
+  position: absolute;
+  left: var(--s-2);
+  right: var(--s-2);
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: var(--text);
+  transform: scaleX(0);
+  transition: transform var(--dur-standard) var(--ease-standard);
+}
+.ptabs__tab:hover {
+  color: var(--text);
+  text-decoration: none;
+}
+.ptabs__tab.is-active {
+  color: var(--text);
+}
+.ptabs__tab.is-active::after {
+  transform: scaleX(1);
+}
+.ptabs__tab svg {
+  color: var(--text-muted);
+}
+.ptabs__tab.is-active svg {
+  color: var(--accent);
+}
+
+/* ---------------------------------------------------------------- patient list */
+
+.plist td {
+  height: 2.625rem;
+}
+.table--interactive tbody tr {
+  transition: background-color var(--dur-micro) var(--ease-standard);
+}
+.plist tbody tr:focus-within {
+  background: var(--surface-subtle);
+}
+.plist tbody tr:focus-within .plist__name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.plist__go-col {
+  width: 2rem;
+}
+.plist__go {
+  color: var(--text-muted);
+  text-align: right;
+}
+.plist__go svg {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity var(--dur-micro) var(--ease-standard),
+    transform var(--dur-standard) var(--ease-standard);
+}
+.plist tbody tr:hover .plist__go svg,
+.plist tbody tr:focus-within .plist__go svg {
+  opacity: 1;
+  transform: none;
+}
+.plist__est {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px var(--s-2);
+}
+.plist__pct {
+  min-width: 2.75rem;
+  font-weight: var(--weight-semibold);
+}
+.plist__when {
+  flex-basis: 100%;
+}
+.plist__fresh {
+  display: table-cell;
+}
+.plist__fresh > span {
+  display: block;
+  line-height: 1.35;
+}
+.plist__count {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: var(--control-sm);
+  margin-top: calc(var(--s-2) * -1);
+}
+.search__kbd {
+  position: absolute;
+  right: var(--s-2);
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 1.25rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  line-height: 1.1rem;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity var(--dur-micro) var(--ease-standard);
+}
+.search:focus-within .search__kbd {
+  opacity: 0;
+}
+/* the table header (and its sort buttons) is hidden on phones: a sort control takes its place */
+.toolbar__sort {
+  display: none;
+}
+@media (max-width: 767px) {
+  .toolbar__sort {
+    display: block;
+  }
+  .plist td.plist__go,
+  .plist th.plist__go-col,
+  .search__kbd {
+    display: none;
+  }
+  .plist__fresh {
+    display: block;
+  }
+}
+
+/* ---------------------------------------------------------------- risk and status */
+
+/* a status label arrives once the number has mostly settled */
+.tag--enter {
+  animation: tag-in var(--dur-standard) var(--ease-standard) 480ms both;
+}
+@keyframes tag-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+}
+
+/* ---------------------------------------------------------------- charts */
+
+/* the measured line draws on (pathLength=1) when a new window appears */
+.tl__line--draw {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 900ms var(--ease-standard) 80ms forwards;
+}
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.tl__band,
+.tl__window,
+.tl__threshold,
+.tl__thlabel {
+  animation: fade-in var(--dur-emphasis) var(--ease-standard) both;
+}
+.tl__meal-mark {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: mark-in var(--dur-standard) var(--ease-standard) both;
+}
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.tl__peak {
+  animation: fade-in var(--dur-standard) var(--ease-standard) both;
+}
+.tl__peak circle {
+  fill: var(--surface);
+  stroke: var(--chart-series-2);
+  stroke-width: 2;
+}
+.tl__peak text {
+  fill: var(--text);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: var(--weight-semibold);
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* ---------------------------------------------------------------- prediction -> reality */
+
+.reveal__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 13rem;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+.reveal__clock {
+  min-width: 3rem;
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+.reveal__bar {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+.reveal__bar > span {
+  display: block;
+  height: 100%;
+  background: var(--chart-series-2);
+  transform-origin: left;
+}
+.reveal__step {
+  animation: fade-up var(--dur-emphasis) var(--ease-standard) both;
+}
+.reveal__k {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.reveal__k .origin {
+  font-size: var(--text-2xs);
+}
+
+/* ---------------------------------------------------------------- what-if */
+
+.wi-result {
+  animation: fade-in var(--dur-standard) var(--ease-standard);
+}
+.wi-result__delta {
+  margin: var(--s-2) 0 0;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
+}
+.wi-delta {
+  font-variant-numeric: tabular-nums;
+}
+.whatif__out > div {
+  transition: opacity var(--dur-standard) var(--ease-standard);
+}
+
+/* ---------------------------------------------------------------- feedback */
+
+.toasts > div {
+  display: grid;
+  gap: var(--s-2);
+}
+.toast {
+  transition:
+    opacity var(--dur-micro) var(--ease-standard),
+    transform var(--dur-micro) var(--ease-standard);
+}
+.toast.is-leaving {
+  opacity: 0;
+  transform: translateY(4px);
+}
+.toast--error {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--risk-line);
+}
+.toast--error svg {
+  color: var(--risk-fg);
+}
+
+/* skeleton shimmer is a loading signal, not decoration: slow and low-contrast */
+.skel {
+  animation-duration: 1600ms;
+}
+
+/* ---------------------------------------------------------------- theme change */
+
+/* View Transitions: one cross-fade between two finished frames (no per-element colour flashes) */
+html.theme-vt::view-transition-old(root),
+html.theme-vt::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: var(--ease-standard);
+}
+
+/* ---------------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .enter,
+  .tag--enter,
+  .tl__band,
+  .tl__window,
+  .tl__threshold,
+  .tl__thlabel,
+  .tl__meal-mark,
+  .tl__peak,
+  .reveal__step,
+  .wi-result,
+  .login__card,
+  .login__msg,
+  .field__error {
+    animation: none !important;
+  }
+  .tl__line--draw {
+    animation: none !important;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+  .nav__link::before,
+  .ptabs__tab::after,
+  .plist__go svg,
+  .toast {
+    transition: none !important;
+  }
+  .spinner {
+    animation-duration: 1600ms;
+  }
+  html.theme-vt::view-transition-old(root),
+  html.theme-vt::view-transition-new(root) {
+    animation: none !important;
+  }
+}
