@@ -8,6 +8,7 @@ import { cx } from "@/lib/cx";
 import { fmtNum, fmtPct, fmtSigned } from "@/lib/format";
 import { PHASE_HELP, PHASE_LABEL, PHASES } from "@/lib/risk";
 import { fmtClock, fmtDay, parseNaive } from "@/lib/time";
+import { useTwinFocus } from "@/lib/twinFocus";
 
 /** The PERSONALIZED weight threshold, read from the engine's own lifecycle text (twin.v1). */
 function weightThreshold(reason: string): number {
@@ -17,13 +18,14 @@ function weightThreshold(reason: string): number {
 }
 
 export function PersonalResponse({ state }: { state: TwinState }) {
+  const { evidence } = useTwinFocus();
   const { lifecycle, personal_response: pr } = state;
   const current = PHASES.indexOf(lifecycle.phase);
   const need = weightThreshold(lifecycle.reason);
   const weight = pr?.personal_weight ?? lifecycle.personal_weight ?? 0;
 
   return (
-    <div className="personal">
+    <div className={cx("personal", evidence?.kind === "personal" && "is-evidence")}>
       <ol className="lifecycle" aria-label="Twin lifecycle">
         {PHASES.map((p, i) => (
           <li

@@ -264,6 +264,51 @@ test("twin: estimate vs measurement, explanation, reveal, what-if, context tabs,
   await expectNoHorizontalScroll(page);
 });
 
+test("twin as an instrument: glucose context, meal markers, rail, dial to evidence", async ({ page }) => {
+  await signIn(page);
+  await openFirstTwin(page);
+
+  // the measured reading opens its own context in place, and gives focus back on Esc
+  const trend = page.getByRole("button", { name: /readings from the 90 minutes before this moment/ });
+  if (await trend.count()) {
+    await trend.click();
+    const ctx = page.getByRole("region", { name: /90 minutes before the twin's moment/ });
+    await expect(ctx).toBeVisible();
+    await expect(ctx).toContainText(/nothing after the twin/);
+    await expectAccessible(page);
+    await page.keyboard.press("Escape");
+    await expect(ctx).toHaveCount(0);
+    await expect(trend).toBeFocused();
+  }
+
+  // meal markers are real buttons: keyboard reachable, with the logged macros
+  const markers = page.locator(".tl__meal");
+  await page.locator("#timeline").scrollIntoViewIfNeeded();
+  if (await markers.count()) {
+    await markers.first().focus();
+    await expect(page.locator("#tl-meal-card")).toContainText(/Carbs/);
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#tl-meal-card")).toHaveCount(0);
+  }
+
+  // the rail moves the moment (URL state) with the keyboard
+  const rail = page.getByRole("slider", { name: /Twin moment/ });
+  const before = page.url();
+  await rail.focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(page).not.toHaveURL(before);
+  await expect(page.locator(".hero")).toBeVisible();
+
+  // the dial leads to its strongest driver
+  const dial = page.getByRole("button", { name: /Show what drives this estimate/ });
+  if (await dial.count()) {
+    await dial.click();
+    await expect(page.locator(".driver.is-pulsed")).toHaveCount(1);
+    await expect(page.locator(".driver.is-pulsed")).toBeFocused();
+  }
+  await expectNoHorizontalScroll(page);
+});
+
 test("clinical record and model page are honest and accessible", async ({ page }) => {
   await signIn(page);
   await openFirstTwin(page);
@@ -296,6 +341,12 @@ test("reduced motion: the same states, without movement", async ({ browser, base
   await openFirstTwin(page);
   const animation = await page.evaluate(() => getComputedStyle(document.querySelector(".page-enter")!).animationName);
   expect(animation).toBe("none");
+  // the twin's moment moves without sliding; the chart line appears without drawing on
+  const still = await page.evaluate(() => [
+    getComputedStyle(document.querySelector(".rail__knob")!).transitionDuration,
+    getComputedStyle(document.querySelector(".tl__line--base")!).animationName,
+  ]);
+  expect(still).toEqual(["0s", "none"]);
   const reveal = page.getByRole("button", { name: /Reveal what happened/ });
   if (await reveal.isVisible()) {
     await reveal.click();
