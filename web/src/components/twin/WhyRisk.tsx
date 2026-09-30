@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Loading, Skeleton } from "@/components/ui/Skeleton";
@@ -9,17 +9,40 @@ import { Tag } from "@/components/ui/Tag";
 import { useExplanation } from "@/lib/api/queries";
 import type { Explanation, TwinState } from "@/lib/api/types";
 import { cx } from "@/lib/cx";
+import { evidenceFor, evidenceText } from "@/lib/evidence";
 import { featureInfo, fmtFeature, GROUP_LABEL } from "@/lib/features";
 import { fmtNum, fmtPct, fmtSigned } from "@/lib/format";
+import { goToSection, useTwinFocus } from "@/lib/twinFocus";
 
 const TOP = 6;
 
-function Row({ name, value, contribution, max }: { name: string; value: number | null; contribution: number; max: number }) {
+function Row({ name, value, contribution, max, pulse }: { name: string; value: number | null; contribution: number; max: number; pulse: number | null }) {
   const info = featureInfo(name);
   const up = contribution > 0;
   const share = max > 0 ? Math.abs(contribution) / max : 0;
+  const focus = useTwinFocus();
+  const ev = evidenceFor(name);
+  const evId = useId();
+  const ref = useRef<HTMLLIElement>(null);
+  const active = focus.evidence?.feature === name;
+  // led here from the dial: take focus quietly so the keyboard continues from this driver
+  useEffect(() => {
+    if (pulse !== null) ref.current?.focus({ preventScroll: true });
+  }, [pulse]);
+  const enter = () => ev && focus.showEvidence(ev);
+  const leave = () => ev && focus.showEvidence(null);
   return (
-    <li className="driver">
+    <li
+      ref={ref}
+      className={cx("driver", ev && "driver--linked", active && "is-active", pulse !== null && "is-pulsed")}
+      tabIndex={ev ? 0 : -1}
+      aria-describedby={ev ? evId : undefined}
+      onPointerEnter={(e) => e.pointerType === "mouse" && enter()}
+      onPointerLeave={(e) => e.pointerType === "mouse" && leave()}
+      onFocus={(e) => e.target === e.currentTarget && enter()}
+      onBlur={(e) => e.target === e.currentTarget && leave()}
+    >
+      {pulse !== null && <span key={pulse} className="driver__pulse" aria-hidden="true" />}
       <div className="driver__text">
         <div className="driver__name">
           {info.label}
@@ -31,6 +54,23 @@ function Row({ name, value, contribution, max }: { name: string; value: number |
             ? `Missing for this meal (${info.what}); the model's learned handling of missing values ${up ? "raised" : "lowered"} the estimate.`
             : `${capitalize(info.what)}. Associated with a ${up ? "higher" : "lower"} estimate for this meal.`}
         </p>
+        {ev && (
+          <p id={evId} className="driver__evidence">
+            {evidenceText(ev)}
+            {(ev.kind === "lookback" || ev.kind === "prior-meals" || ev.kind === "personal") && (
+              <button
+                type="button"
+                className="driver__show"
+                onClick={() => {
+                  focus.showEvidence(ev, true);
+                  goToSection(ev.kind === "personal" ? "personal" : "timeline");
+                }}
+              >
+                {ev.kind === "personal" ? "See personal response" : "Show on timeline"} <Icon name="arrowRight" size={11} />
+              </button>
+            )}
+          </p>
+        )}
       </div>
       <div className="driver__bar" aria-hidden="true">
         <span className="driver__axis" />
@@ -54,6 +94,7 @@ function capitalize(s: string) {
 
 function Body({ ex }: { ex: Explanation }) {
   const [all, setAll] = useState(false);
+  const { pulse } = useTwinFocus();
   const max = useMemo(() => Math.max(...ex.contributions.map((c) => Math.abs(c.contribution)), 0), [ex]);
   const shown = all ? ex.contributions : ex.contributions.slice(0, TOP);
   const rest = ex.contributions.slice(TOP);
@@ -72,7 +113,7 @@ function Body({ ex }: { ex: Explanation }) {
       </div>
       <ol className="drivers" aria-label={all ? "All model inputs by contribution" : `Top ${TOP} model inputs by contribution`}>
         {shown.map((c) => (
-          <Row key={c.feature} name={c.feature} value={c.value} contribution={c.contribution} max={max} />
+          <Row key={c.feature} name={c.feature} value={c.value} contribution={c.contribution} max={max} pulse={pulse?.feature === c.feature ? pulse.n : null} />
         ))}
       </ol>
       {!all && rest.length > 0 && (

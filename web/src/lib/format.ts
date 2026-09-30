@@ -52,3 +52,23 @@ export function tidyNumbers(text: string): string {
     return Math.abs(v) <= 1 ? v.toFixed(3) : v.toFixed(1);
   });
 }
+
+const PHASE_WORDS: Record<string, string> = { COLD_START: "Cold start", WARMING: "Warming up", PERSONALIZED: "Personalized" };
+const asPct = (s: string) => (s === "None" ? "no estimate" : `${Math.round(Number(s) * 100)}%`);
+
+/**
+ * One engine diff explanation (twin_core diff.py) in the page's own words, or null when it only
+ * restates what the page already shows (the meal id). Values are the engine's, only re-expressed.
+ */
+export function readableChange(e: string): { text: string; rank: number } | null {
+  let m: RegExpExecArray | null;
+  if (/^current meal /.test(e)) return null;
+  if ((m = /^lifecycle (\w+) -> (\w+)/.exec(e))) return { text: `Lifecycle ${PHASE_WORDS[m[1]!] ?? m[1]} → ${PHASE_WORDS[m[2]!] ?? m[2]}`, rank: 0 };
+  if ((m = /^risk \w+:([\d.]+|None) -> \w+:([\d.]+|None)/.exec(e))) return { text: `Estimated risk ${asPct(m[1]!)} → ${asPct(m[2]!)}`, rank: 1 };
+  if ((m = /^latest glucose ([\d.]+|None) -> ([\d.]+|None) mg\/dL/.exec(e)))
+    return { text: `Latest glucose ${m[1] === "None" ? "none" : Math.round(Number(m[1]))} → ${m[2] === "None" ? "none" : Math.round(Number(m[2]))} mg/dL`, rank: 2 };
+  if ((m = /^(\d+) meal window\(s\) closed/.exec(e))) return { text: `${m[1]} more meal window${m[1] === "1" ? "" : "s"} closed and became personal evidence`, rank: 3 };
+  if ((m = /^personal rate ([\d.]+) -> ([\d.]+), weight ([\d.]+) -> ([\d.]+)/.exec(e)))
+    return { text: `Personal response rate ${asPct(m[1]!)} → ${asPct(m[2]!)}, evidence weight ${asPct(m[3]!)} → ${asPct(m[4]!)}`, rank: 4 };
+  return { text: tidyNumbers(e).replace(/ -> /g, " → "), rank: 5 };
+}

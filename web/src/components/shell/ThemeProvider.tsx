@@ -41,8 +41,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
     if (typeof doc.startViewTransition === "function") {
       root.classList.add("theme-vt");
-      const vt = doc.startViewTransition(commit) as { finished?: Promise<unknown> } | undefined;
-      void vt?.finished?.finally(() => root.classList.remove("theme-vt"));
+      const vt = doc.startViewTransition(commit) as { ready?: Promise<unknown>; finished?: Promise<unknown> } | undefined;
+      // a transition the browser skips (hidden tab, rapid second change) rejects: the theme still
+      // applies (commit always runs), so the rejection is not an error
+      vt?.ready?.catch(() => undefined);
+      void vt?.finished?.catch(() => undefined).finally(() => root.classList.remove("theme-vt"));
       return;
     }
     root.classList.add("theme-transition");

@@ -1,4 +1,4 @@
-import { clamp, DASH, fmtNum, fmtPct, fmtPp, fmtSigned, isNum, modelLabel, shortHash } from "@/lib/format";
+import { clamp, DASH, fmtNum, fmtPct, fmtPp, fmtSigned, isNum, modelLabel, shortHash, readableChange } from "@/lib/format";
 
 describe("number formatting", () => {
   it("never renders NaN, Infinity or null as a number", () => {
@@ -28,5 +28,17 @@ describe("number formatting", () => {
     expect(modelLabel(null)).toBe(DASH);
     expect(shortHash("0c61090e1568ea611fc6a200")).toBe("0c61090e1568");
     expect(clamp(5, 0, 1)).toBe(1);
+  });
+});
+
+describe("readable engine changes", () => {
+  it("re-expresses the engine's own values and drops what the page already shows", () => {
+    expect(readableChange("risk scored:0.118 -> scored:0.136")).toEqual({ text: "Estimated risk 12% → 14%", rank: 1 });
+    expect(readableChange("personal rate 0.450 -> 0.478, weight 0.90 -> 0.89")?.text).toBe("Personal response rate 45% → 48%, evidence weight 90% → 89%");
+    expect(readableChange("lifecycle WARMING -> PERSONALIZED: weight >= 0.5")?.text).toBe("Lifecycle Warming up → Personalized");
+    expect(readableChange("latest glucose 97.0 -> 86.0 mg/dL")?.text).toBe("Latest glucose 97 → 86 mg/dL");
+    expect(readableChange("risk scored:0.2 -> not_applicable:None")?.text).toBe("Estimated risk 20% → no estimate");
+    expect(readableChange("current meal 3-1 -> 3-2")).toBeNull();
+    expect(readableChange("a different model version produced the risk")?.text).toBe("a different model version produced the risk");
   });
 });

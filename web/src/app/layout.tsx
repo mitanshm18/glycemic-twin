@@ -10,6 +10,7 @@ import "@/styles/shell.css";
 import "@/styles/pages.css";
 import "@/styles/twin.css";
 import "@/styles/auth.css";
+import "@/styles/interaction.css";
 import "@/styles/motion.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });

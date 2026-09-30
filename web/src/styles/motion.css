@@ -401,6 +401,44 @@ html.theme-vt::view-transition-new(root) {
   .login__caret {
     display: none;
   }
+  /* M6.5 twin: the same information, without movement */
+  .gctx,
+  .changes,
+  .hero__crossing,
+  .tl__line--fade,
+  .tl__mealcard,
+  .tl__evidence,
+  .tl__meal svg,
+  .dial__tick--crossed {
+    animation: none !important;
+  }
+  .dial__ghost,
+  .driver__pulse,
+  .tl__line--ghost {
+    display: none;
+  }
+  .tl .tl__cross,
+  .tl .tl__dot,
+  .tl .tl__tip,
+  .tl__line--base,
+  .tl__meal,
+  .tl__meal svg,
+  .rail__knob,
+  .rail__past,
+  .rail__meal,
+  .dial-card,
+  .driver__fill,
+  .gctx__read,
+  button.hero__trend svg,
+  .hero__glucose-row {
+    transition: none !important;
+  }
+  button.hero__trend svg,
+  .tl__meal:hover svg,
+  .tl__meal:focus-visible svg,
+  .tl__meal.is-focused svg {
+    transform: none !important;
+  }
   .spinner {
     animation-duration: 1600ms;
   }

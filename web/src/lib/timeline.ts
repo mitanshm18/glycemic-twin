@@ -136,3 +136,28 @@ export const VERDICT_TEXT: Record<Verdict, { title: string; body: string; tone: 
     tone: "risk",
   },
 };
+
+/** Change since the previous native reading, when that reading is recent enough to compare. */
+export function deltaFromPrevious(points: Pt[], i: number, maxGap = 15 * 60_000): { dv: number; dtMin: number } | null {
+  const cur = points[i];
+  const prev = points[i - 1];
+  if (!cur || !prev || cur.t - prev.t > maxGap) return null;
+  return { dv: cur.v - prev.v, dtMin: Math.round((cur.t - prev.t) / 60_000) };
+}
+
+/** Readings the twin could see: at or before its moment. Never anything later. */
+export function seenBy(points: Pt[], asOf: Millis): Pt[] {
+  return points.filter((p) => p.t <= asOf);
+}
+
+/** Lowest and highest reading, or null for an empty list. */
+export function extent(points: Pt[]): { min: Pt; max: Pt } | null {
+  if (points.length === 0) return null;
+  let min = points[0] as Pt;
+  let max = min;
+  for (const p of points) {
+    if (p.v < min.v) min = p;
+    if (p.v > max.v) max = p;
+  }
+  return { min, max };
+}
