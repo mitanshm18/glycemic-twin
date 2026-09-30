@@ -24,3 +24,6 @@ __pycache__/
 /.m6-transfer/
 *.tar.gz
 *.tgz
+
+# Local Claude Code tooling
+.claude/

@@ -92,10 +92,11 @@
 }
 
 .login__intro {
+  --intro-pad: clamp(var(--s-6), 5vw, var(--s-16));
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
-  gap: var(--s-8);
-  padding: var(--s-10) clamp(var(--s-6), 5vw, var(--s-16));
+  grid-template-rows: auto 1fr auto auto auto;
+  gap: var(--s-6);
+  padding: var(--s-10) var(--intro-pad);
   border-right: 1px solid var(--border);
   position: relative;
   isolation: isolate;
@@ -128,11 +129,24 @@
   color: var(--accent);
 }
 .login__pitch {
-  align-self: center;
+  align-self: end;
   display: grid;
   gap: var(--s-4);
   max-width: 34rem;
-  padding: var(--s-6) 0;
+  padding: var(--s-6) 0 0;
+}
+.login__word {
+  display: inline-block;
+}
+.login__caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  margin-left: 1px;
+  vertical-align: -0.1em;
+  border-radius: 1px;
+  background: var(--accent);
+  opacity: 0;
 }
 .login__headline {
   font-size: clamp(1.75rem, 2.6vw, 2.25rem);
@@ -361,6 +375,275 @@
     position: static;
     place-items: start center;
     padding: var(--s-8) var(--s-5) var(--s-12);
+  }
+}
+
+/* ---------------------------------------------------------------- the signal (sign-in motif) */
+
+.signal {
+  position: relative;
+  min-width: 0;
+  height: 188px;
+  margin-inline: calc(var(--intro-pad) * -1);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+/* the drawing is sized by its box, never the other way round (no overflow on narrow screens) */
+.signal svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+  color: var(--accent);
+}
+@media (max-width: 1023px) {
+  .signal {
+    height: 76px;
+    margin-inline: calc(var(--s-5) * -1);
+  }
+}
+.signal__band {
+  fill: var(--chart-band);
+}
+.signal__th {
+  stroke: var(--risk-line);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  stroke-opacity: 0.4;
+  transition: stroke-opacity var(--dur-standard) var(--ease-standard);
+}
+.signal__th.is-on {
+  stroke-opacity: 1;
+}
+.signal__window {
+  fill: var(--chart-window);
+  opacity: 0;
+  transition: opacity var(--dur-emphasis) var(--ease-standard);
+}
+.signal__bracket path {
+  fill: none;
+  stroke: var(--model);
+  stroke-width: 1.25;
+  opacity: 0;
+  transition: opacity var(--dur-standard) var(--ease-standard);
+}
+.signal__drop {
+  stroke: var(--text-muted);
+  stroke-dasharray: 2 3;
+  opacity: 0;
+  transition: opacity var(--dur-standard) var(--ease-standard);
+}
+.signal__window.is-on,
+.signal__bracket.is-on path,
+.signal__drop.is-on {
+  opacity: 1;
+}
+.signal__trace {
+  fill: none;
+  stroke: var(--observed);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.signal__glint {
+  fill: none;
+  stroke-width: 2.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.signal__meal {
+  fill: var(--text-muted);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: fill var(--dur-micro) var(--ease-standard);
+}
+.signal__meal.is-on {
+  fill: var(--model);
+}
+.signal__cursor line {
+  stroke: var(--chart-crosshair);
+  stroke-dasharray: 2 3;
+}
+.signal__cursor circle {
+  fill: var(--surface);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.signal__pulse {
+  fill: var(--accent);
+  pointer-events: none;
+}
+.signal__anchor {
+  cursor: pointer;
+  animation: signal-in var(--dur-emphasis) var(--ease-standard) both;
+}
+.signal__hit {
+  fill: transparent;
+}
+.signal__ring {
+  fill: var(--surface);
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform var(--dur-standard) var(--ease-standard),
+    fill var(--dur-micro) var(--ease-standard),
+    stroke var(--dur-micro) var(--ease-standard);
+}
+.signal__anchor:hover .signal__ring {
+  stroke: var(--accent);
+  transform: scale(1.3);
+}
+.signal__anchor.is-on .signal__ring {
+  fill: var(--model);
+  stroke: var(--model);
+  transform: scale(1.15);
+}
+.signal__anchor--above.is-on .signal__ring {
+  fill: var(--risk-line);
+  stroke: var(--risk-line);
+}
+.signal__chip {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+  width: max-content;
+  max-width: 14.5rem;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  animation: chip-in var(--dur-standard) var(--ease-standard) both;
+}
+.signal__chip--right {
+  transform: translate(0, -50%);
+  animation-name: chip-in-side;
+}
+.signal__chip--left {
+  transform: translate(-100%, -50%);
+  animation-name: chip-in-side;
+}
+.signal__chip-title {
+  color: var(--model);
+  font-weight: var(--weight-semibold);
+}
+.signal__chip--above .signal__chip--right {
+  transform: translate(0, -50%);
+  animation-name: chip-in-side;
+}
+.signal__chip--left {
+  transform: translate(-100%, -50%);
+  animation-name: chip-in-side;
+}
+.signal__chip-title {
+  color: var(--risk-fg);
+}
+.signal__chip-body {
+  color: var(--text-secondary);
+}
+.signal__hint {
+  position: absolute;
+  top: 0;
+  right: var(--intro-pad);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  animation: signal-in var(--dur-emphasis) var(--ease-standard) 400ms both;
+  transition: opacity var(--dur-standard) var(--ease-standard);
+}
+.signal__hint.is-gone {
+  opacity: 0;
+}
+@keyframes signal-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes chip-in-side {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes chip-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% + 4px));
+  }
+}
+
+/* ---------------------------------------------------------------- opening sequence (~1.2 s, once) */
+/* grid -> headline word by word -> lede and facts -> the signal draws -> source; the form is usable
+   from the first frame. Only when motion is welcome: otherwise everything is simply there. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .login__intro::before {
+    animation: signal-in 400ms var(--ease-standard) both;
+  }
+  .login__brand {
+    animation: signal-in var(--dur-emphasis) var(--ease-standard) both;
+  }
+  .login__word {
+    animation: word-in 380ms var(--ease-standard) calc(80ms + var(--i) * 45ms) both;
+  }
+  .login__caret {
+    animation: caret 1000ms var(--ease-standard) 300ms both;
+  }
+  .login__lede {
+    animation: rise-in 420ms var(--ease-standard) 380ms both;
+  }
+  .login__facts li {
+    animation: rise-in 360ms var(--ease-standard) calc(620ms + var(--i) * 60ms) both;
+  }
+  .login__source {
+    animation: signal-in 400ms var(--ease-standard) 860ms both;
+  }
+  .login__card {
+    animation-delay: 120ms;
+  }
+  .signal--enter .signal__band,
+  .signal--enter .signal__th {
+    animation: signal-in 500ms var(--ease-standard) 250ms both;
+  }
+  .signal--enter .signal__trace {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    animation: draw-line 800ms var(--ease-standard) 450ms forwards;
+  }
+  .signal--enter .signal__meal {
+    animation: mark-in var(--dur-standard) var(--ease-standard) both;
+  }
+}
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.28em);
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes caret {
+  0% {
+    opacity: 0;
+  }
+  12%,
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

@@ -376,6 +376,9 @@ html.theme-vt::view-transition-new(root) {
   .wi-result,
   .login__card,
   .login__msg,
+  .signal__anchor,
+  .signal__chip,
+  .signal__hint,
   .field__error {
     animation: none !important;
   }
@@ -387,8 +390,16 @@ html.theme-vt::view-transition-new(root) {
   .nav__link::before,
   .ptabs__tab::after,
   .plist__go svg,
-  .toast {
+  .toast,
+  .signal__ring,
+  .signal__window,
+  .signal__th,
+  .signal__bracket path,
+  .signal__drop {
     transition: none !important;
+  }
+  .login__caret {
+    display: none;
   }
   .spinner {
     animation-duration: 1600ms;

@@ -6,3 +6,4 @@ playwright-report/
 test-results/
 *.tsbuildinfo
 .env*.local
+playwright.local-*.config.ts
