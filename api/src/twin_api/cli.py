@@ -230,13 +230,22 @@ def cmd_unlink_google(args: argparse.Namespace) -> int:
 def cmd_serve(args: argparse.Namespace) -> int:
     import uvicorn
 
+    from twin_api.logs import configure_logging
+
     s = _settings()  # validates the configuration (production rules) before binding a port
     if args.reload and s.production:
         print("--reload is for development only; refusing in production", file=sys.stderr)
         return 2
+    configure_logging(s.log_level, s.log_style)
 
     uvicorn.run(
-        "twin_api.app:create_app", factory=True, host=args.host, port=args.port, reload=args.reload
+        "twin_api.app:create_app",
+        factory=True,
+        host=args.host,
+        port=args.port,
+        reload=args.reload,
+        log_config=None,  # keep the format installed above (uvicorn lines become JSON too)
+        access_log=False,  # RequestLog writes one line per request, without query strings
     )
     return 0
 

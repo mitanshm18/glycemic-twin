@@ -107,7 +107,13 @@ def install(app: FastAPI) -> None:
 
     @app.exception_handler(Exception)
     async def _unhandled(request: Request, exc: Exception) -> JSONResponse:
-        # the client gets the generic envelope; the traceback goes to the server log only, with
-        # the method and path but never the body, cookies or headers
-        log.error("unhandled error on %s %s", request.method, request.url.path, exc_info=exc)
+        # Normally unreachable: logs.RequestLog (the outermost middleware) logs unexpected errors
+        # and answers them with the same envelope. Kept so the envelope holds without it.
+        log.error(
+            "unhandled %s on %s %s",
+            type(exc).__name__,
+            request.method,
+            request.url.path,
+            exc_info=exc,
+        )
         return JSONResponse(_body("INTERNAL_ERROR", "unexpected server error"), status_code=500)
