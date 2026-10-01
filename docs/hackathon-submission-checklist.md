@@ -23,7 +23,7 @@ The repository links below point at `main`. They resolve after the `submission` 
 | 10 | Open-source license details | [`LICENSE`](../LICENSE) (MIT, code), [`NOTICE.md`](../NOTICE.md) (CGMacros CC BY-NC-SA 4.0 attribution), [README §15–16](../README.md#15-dataset-attribution-and-license), [`IdeaForge_IIIT_ALLAHABAD/LICENSE_AND_DATA.md`](../IdeaForge_IIIT_ALLAHABAD/LICENSE_AND_DATA.md) | 🔁 |
 | 11 | Architecture diagram (PDF/PPT) | [`IdeaForge_IIIT_ALLAHABAD/Architecture_Diagram.pdf`](../IdeaForge_IIIT_ALLAHABAD/Architecture_Diagram.pdf) and `.pptx` | 🔁 |
 | 12 | Presentation (PDF/PPT) | [`IdeaForge_IIIT_ALLAHABAD/Presentation.pdf`](../IdeaForge_IIIT_ALLAHABAD/Presentation.pdf) (22 slides) and `.pptx` | 🔁 |
-| 13 | Folder name `IdeaForge_IIIT_ALLAHABAD` | [`IdeaForge_IIIT_ALLAHABAD/`](../IdeaForge_IIIT_ALLAHABAD/) at the repository root (about 8 MB: no data, models or secrets) | 🔁 |
+| 13 | Folder name `IdeaForge_IIIT_ALLAHABAD` | [`IdeaForge_IIIT_ALLAHABAD/`](../IdeaForge_IIIT_ALLAHABAD/) at the repository root (about 10 MB: no data, models or secrets) | 🔁 |
 | 14 | Public accessibility of files and links | The repository is public; every file is in it. **Check the video link opens in a private window without signing in.** | 🔁 / ⏳ (video) |
 | 15 | Submission platform fields | team leader name: **Mitansh Mathur**; phone: **(Mitansh enters)**; email: **(Mitansh enters)**; public repository: **https://github.com/mitanshm18/glycemic-twin** | ⏳ |
 
