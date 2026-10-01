@@ -33,7 +33,9 @@ CC BY-NC-SA 4.0 (changes: computed by this project's pipeline from the original 
 - `data/manifests/cgmacros-1.0.0.lock.json` (file checksums of the source release)
 - aggregate reports: `data/reports/*`, `audit_report.md`, `audit_results.json`,
   `data/reference/phase0a_audit_results.json`, and the generated block of `docs/data-card.md`
-- application screenshots showing de-identified participant data: `docs/submission-src/img/*` and
+- application screenshots showing de-identified participant data: `docs/submission-src/img/*`,
+  one participant's native CGM trace used in the slides (`docs/submission-src/data/cgm-example.js`),
+  and
   the slides in `IdeaForge_IIIT_ALLAHABAD/Presentation.*`
 
 Processed patient-level tables and trained model bundles are not published in this repository.

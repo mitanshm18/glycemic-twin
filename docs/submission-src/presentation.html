@@ -3,483 +3,633 @@
 <head>
 <meta charset="utf-8">
 <title>Glycemic Twin Presentation</title>
+<!--
+  Source of IdeaForge_IIIT_ALLAHABAD/Presentation.pdf and .pptx (see docs/submission-src/render.mjs and
+  make_pptx.py). Every number is taken from data/reports/ (M1, M2, M3), the test runs, or the real
+  local stack (screenshots, data/cgm-example.js, the Twin states and the what-if example).
+-->
 <style>
   @page { size: 1920px 1080px; margin: 0; }
   :root {
-    --ink: #1b2430; --ink2: #475262; --muted: #6b7684; --line: #dde2e8; --canvas: #f6f8fa;
-    --accent: #2f5fb3; --accent-soft: #e9effa; --model: #6b4fc4; --model-soft: #f0ecfb;
-    --ok: #2f7d55; --ok-soft: #e7f3ec; --warn: #9a6a12; --warn-soft: #fbf3e2; --risk: #b8442f; --risk-soft: #fbece8;
+    --ink: #17202b; --ink2: #46505e; --muted: #707a87; --faint: #a3acb7; --line: #e3e7ec; --canvas: #f6f8fa;
+    --accent: #2f5fb3; --accent-soft: #eaf0fa; --model: #6b4fc4; --model-soft: #f1edfb;
+    --ok: #2f7d55; --ok-soft: #e8f4ed; --warn: #9a6a12; --warn-soft: #fbf4e4; --risk: #c0452f; --risk-soft: #fcedea;
+    --teal: #1689a3; --band: #edf6f0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: #fff;
+  body { font-family: -apple-system, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: #fff;
          -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; padding: 84px 110px 96px; display: flex; flex-direction: column; break-after: page; background: #fff; }
-  .kicker { font-size: 20px; font-weight: 700; letter-spacing: 2.4px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
-  h1 { font-size: 64px; line-height: 1.08; letter-spacing: -1.4px; font-weight: 700; }
-  h2 { font-size: 52px; line-height: 1.1; letter-spacing: -1px; font-weight: 700; max-width: 1500px; }
-  .lead { font-size: 28px; line-height: 1.45; color: var(--ink2); margin-top: 22px; max-width: 1450px; }
-  .body { flex: 1; min-height: 0; margin-top: 44px; display: flex; gap: 56px; }
-  .foot { position: absolute; left: 110px; right: 110px; bottom: 36px; display: flex; justify-content: space-between; font-size: 16px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
-  .foot b { color: var(--ink2); font-weight: 600; }
-  ul.pts { list-style: none; display: flex; flex-direction: column; gap: 22px; }
-  ul.pts li { font-size: 28px; line-height: 1.4; color: var(--ink2); padding-left: 34px; position: relative; }
-  ul.pts li::before { content: ""; position: absolute; left: 4px; top: 15px; width: 11px; height: 11px; border-radius: 3px; background: var(--accent); }
-  ul.pts li b { color: var(--ink); }
-  .cards { display: grid; gap: 26px; }
-  .card { border: 2px solid var(--line); border-radius: 18px; padding: 28px 30px; background: #fff; }
-  .card h3 { font-size: 28px; margin-bottom: 10px; letter-spacing: -.3px; }
-  .card p { font-size: 22px; line-height: 1.45; color: var(--ink2); }
-  .num { font-size: 76px; font-weight: 700; letter-spacing: -2px; line-height: 1; }
-  .num small { font-size: 30px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
-  .cap { font-size: 21px; color: var(--ink2); margin-top: 10px; line-height: 1.4; }
-  .shot { border-radius: 14px; border: 2px solid var(--line); box-shadow: 0 18px 50px rgba(20,30,45,.10); overflow: hidden; background: #fff; }
-  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
-  .tag { display: inline-block; font-size: 18px; font-weight: 700; border-radius: 999px; padding: 6px 14px; border: 2px solid; }
-  .t-model { color: var(--model); border-color: #d8cff2; background: var(--model-soft); }
-  .t-ok { color: var(--ok); border-color: #b5dbc4; background: var(--ok-soft); }
-  .t-warn { color: var(--warn); border-color: #ecd29b; background: var(--warn-soft); }
-  .t-risk { color: var(--risk); border-color: #efc2b8; background: var(--risk-soft); }
-  .t-gray { color: #5d6875; border-color: #cfd5dd; background: #f3f5f7; }
-  .note { font-size: 20px; color: var(--muted); line-height: 1.45; }
-  table.t { border-collapse: collapse; width: 100%; font-size: 23px; }
-  table.t th { text-align: left; font-size: 17px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); font-weight: 700; padding: 0 16px 14px 0; border-bottom: 2px solid var(--line); }
-  table.t td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); color: var(--ink2); vertical-align: top; }
-  table.t td b { color: var(--ink); }
-  table.t tr.hl td { background: var(--accent-soft); }
-  table.t tr.hl td:first-child { box-shadow: inset 5px 0 0 var(--accent); padding-left: 16px; }
   .mono { font-family: "SF Mono", Menlo, monospace; }
-  .flow { display: flex; align-items: stretch; gap: 0; }
-  .flow .st { flex: 1; border: 2px solid var(--line); border-radius: 16px; padding: 22px 22px; background: #fff; }
-  .flow .st h4 { font-size: 15px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-  .flow .st b { font-size: 25px; display: block; margin-bottom: 8px; letter-spacing: -.2px; }
-  .flow .st p { font-size: 19px; line-height: 1.42; color: var(--ink2); }
-  .flow .ar { width: 46px; display: grid; place-items: center; color: #8d99a8; font-size: 30px; line-height: 1; }
-  /* title slide */
-  .title { background: linear-gradient(160deg, #f7f9fc 0%, #fff 55%); }
-  .title .wave { position: absolute; left: 0; right: 0; bottom: 210px; height: 260px; }
-  .bar { display: grid; grid-template-columns: 330px 1fr 120px; align-items: center; gap: 22px; margin: 14px 0; }
-  .bar .l { font-size: 23px; color: var(--ink2); }
-  .bar .l b { color: var(--ink); }
-  .bar .track { position: relative; height: 40px; background: #f1f3f6; border-radius: 8px; }
-  .bar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px; }
-  .bar .ci { position: absolute; top: 50%; height: 3px; background: rgba(27,36,48,.65); transform: translateY(-50%); }
-  .bar .ci::before, .bar .ci::after { content: ""; position: absolute; top: -9px; width: 3px; height: 21px; background: rgba(27,36,48,.65); }
-  .bar .ci::before { left: 0; } .bar .ci::after { right: 0; }
-  .bar .v { font-size: 26px; font-weight: 700; text-align: right; }
-  .prev { position: absolute; top: -10px; bottom: -10px; width: 0; border-left: 3px dashed var(--risk); }
-  .life { display: flex; align-items: center; gap: 16px; }
-  .life i { font-style: normal; color: var(--muted); font-size: 28px; }
+  .slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; padding: 92px 120px 100px; display: flex; flex-direction: column; break-after: page; background: #fff; }
+  .kicker { font-size: 19px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; display: flex; align-items: center; gap: 14px; }
+  .kicker::before { content: ""; width: 34px; height: 3px; background: var(--accent); border-radius: 2px; }
+  h1 { font-size: 160px; line-height: .95; letter-spacing: -6px; font-weight: 700; }
+  h2 { font-size: 58px; line-height: 1.06; letter-spacing: -1.6px; font-weight: 700; max-width: 1560px; }
+  h2 em { font-style: normal; color: var(--accent); }
+  .sub { font-size: 27px; line-height: 1.45; color: var(--ink2); margin-top: 18px; max-width: 1400px; }
+  .body { flex: 1; min-height: 0; margin-top: 46px; display: flex; gap: 60px; }
+  .foot { position: absolute; left: 120px; right: 120px; bottom: 38px; display: flex; justify-content: space-between; align-items: center; font-size: 15px; color: var(--faint); letter-spacing: .2px; }
+  .foot b { color: var(--muted); font-weight: 600; }
+  .foot .n { font-variant-numeric: tabular-nums; color: var(--muted); }
+  .label { font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .note { font-size: 19px; color: var(--muted); line-height: 1.45; }
+  .tag { display: inline-flex; align-items: center; font-size: 18px; font-weight: 700; border-radius: 999px; padding: 7px 16px; border: 2px solid; white-space: nowrap; }
+  .t-model { color: var(--model); border-color: #d9d0f3; background: var(--model-soft); }
+  .t-ok { color: var(--ok); border-color: #b6dbc5; background: var(--ok-soft); }
+  .t-warn { color: var(--warn); border-color: #ecd29b; background: var(--warn-soft); }
+  .t-risk { color: var(--risk); border-color: #f0c4ba; background: var(--risk-soft); }
+  .t-gray { color: #5d6875; border-color: #d3d9e0; background: #f3f5f7; }
+  .t-accent { color: var(--accent); border-color: #c8d6ef; background: var(--accent-soft); }
+  .shot { border-radius: 16px; border: 1.5px solid var(--line); box-shadow: 0 30px 70px -20px rgba(23,32,43,.22), 0 6px 18px rgba(23,32,43,.06); overflow: hidden; background: #fff; position: relative; }
+  .shot img { display: block; width: 100%; }
+  .arrow { color: var(--faint); font-size: 40px; font-weight: 300; display: grid; place-items: center; }
+  .rule { height: 1px; background: var(--line); }
+  .big { font-weight: 700; letter-spacing: -3px; line-height: .9; font-variant-numeric: tabular-nums; }
+  .stat .big { font-size: 128px; }
+  .stat .lbl { font-size: 22px; color: var(--ink2); margin-top: 14px; line-height: 1.35; }
+  .stat .lbl b { color: var(--ink); }
+  .callout { position: absolute; width: 50px; height: 50px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 24px; display: grid; place-items: center; box-shadow: 0 0 0 7px rgba(47,95,179,.18), 0 6px 16px rgba(23,32,43,.25); transform: translate(-50%, -50%); }
+  .legend-row { display: flex; gap: 18px; align-items: baseline; }
+  .legend-row .callout { position: static; transform: none; width: 40px; height: 40px; font-size: 19px; flex: none; box-shadow: none; }
+  .legend-row b { font-size: 25px; display: block; }
+  .legend-row span { font-size: 19px; color: var(--muted); line-height: 1.4; }
+  svg text { font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; }
+  .stage { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 64px; padding: 34px 0 10px; }
+  .stage > * { margin-top: 0 !important; }
+  .stage > .body { flex: none; }
 </style>
 </head>
 <body>
 
-<!-- 1 Title -->
-<section class="slide title">
-  <svg class="wave" viewBox="0 0 1920 260" preserveAspectRatio="none" aria-hidden="true">
-    <rect x="0" y="70" width="1920" height="150" fill="#e7f3ec" opacity=".7"/>
-    <line x1="0" y1="70" x2="1920" y2="70" stroke="#b8442f" stroke-width="2" stroke-dasharray="8 8" opacity=".6"/>
-    <path d="M0,190 C120,188 180,182 240,178 C300,174 330,140 380,128 C430,118 470,122 520,140 C580,160 640,170 700,176 C760,182 800,184 860,180 C900,177 930,120 970,60 C1000,24 1040,18 1080,40 C1120,60 1160,96 1220,130 C1290,160 1360,172 1440,176 C1520,180 1600,170 1660,150 C1720,132 1760,140 1820,160 C1860,172 1890,176 1920,178" fill="none" stroke="#1b2430" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="970" cy="60" r="9" fill="#fff" stroke="#6b4fc4" stroke-width="4"/>
-    <circle cx="700" cy="176" r="9" fill="#fff" stroke="#2f5fb3" stroke-width="4"/>
-  </svg>
-  <div class="kicker">Hackathon submission · Team IdeaForge · IIIT Allahabad</div>
-  <h1 style="font-size:96px;letter-spacing:-2.5px;margin-top:20px">Glycemic Twin</h1>
-  <div class="lead" style="font-size:36px;max-width:1300px;color:var(--ink)">A clinician-facing Digital Twin that estimates, at each meal, the risk that glucose will exceed 180&nbsp;mg/dL within two hours, for prediabetes and type 2 diabetes.</div>
-  <div class="lead" style="font-size:24px;margin-top:18px">Built on real CGMacros v1.0.0 data (PhysioNet) · Team leader: <b style="color:var(--ink)">Mitansh Mathur</b></div>
-  <div class="foot"><span><b>Research prototype</b> · not a medical device · not medical advice</span><span>1</span></div>
+<!-- 1 · Title -->
+<section class="slide" data-free style="padding-top:110px">
+  <svg id="title-cgm" style="position:absolute;left:0;right:0;bottom:96px;width:1920px;height:330px" aria-hidden="true"></svg>
+  <div class="kicker">Team IdeaForge · IIIT Allahabad</div>
+  <h1>Glycemic<br>Twin</h1>
+  <div style="font-size:42px;line-height:1.25;letter-spacing:-.6px;margin-top:40px;max-width:1180px;font-weight:500">A Digital Twin of <span style="color:var(--accent)">one person's</span> glucose response to meals, <span style="color:var(--muted)">not just a prediction model.</span></div>
+  <div style="font-size:22px;color:var(--ink2);margin-top:22px">State · prediction · explanation · what-if · history, built on real CGMacros v1.0.0 data</div>
+  <div style="position:absolute;right:120px;top:118px;text-align:right;font-size:19px;line-height:1.6;color:var(--ink2)"><b style="color:var(--ink)">Mitansh Mathur</b><br>Team leader</div>
+  <div class="foot"><span><b>Research prototype</b> · not a medical device · not medical advice</span><span>Trace: real native Dexcom readings around one logged breakfast (participant CGMacros-003)</span></div>
 </section>
 
-<!-- 2 Team -->
+<!-- 2 · Team -->
 <section class="slide">
   <div class="kicker">Team</div>
-  <h2>IdeaForge</h2>
-  <div class="body" style="align-items:flex-start">
-    <div class="cards" style="grid-template-columns:repeat(3,1fr);width:100%">
-      <div class="card"><div class="note">Team name</div><div style="font-size:44px;font-weight:700;margin-top:8px">IdeaForge</div></div>
-      <div class="card"><div class="note">Team leader</div><div style="font-size:44px;font-weight:700;margin-top:8px">Mitansh Mathur</div></div>
-      <div class="card"><div class="note">College</div><div style="font-size:44px;font-weight:700;margin-top:8px">IIIT Allahabad</div></div>
-      <div class="card" style="grid-column:1 / -1;background:var(--canvas)">
-        <h3>What we built, end to end</h3>
-        <p>Data audit → leakage-controlled feature engineering → evaluated ML models → a deterministic Digital Twin engine → a secure FastAPI + PostgreSQL backend → an interaction-first Next.js clinician interface → Docker, Caddy and CI. All on real, open data.</p>
-      </div>
+  <div style="display:flex;align-items:flex-end;gap:80px;margin-top:40px">
+    <div><div style="font-size:150px;font-weight:700;letter-spacing:-4px;line-height:1;margin-top:14px">IdeaForge</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:70px;border-top:2px solid var(--ink)">
+    <div style="padding:30px 40px 30px 0;border-right:1px solid var(--line)"><div class="label">Team leader</div><div style="font-size:56px;font-weight:700;letter-spacing:-1.2px;margin-top:12px">Mitansh Mathur</div></div>
+    <div style="padding:30px 0 30px 40px"><div class="label">College</div><div style="font-size:56px;font-weight:700;letter-spacing:-1.2px;margin-top:12px">IIIT Allahabad</div></div>
+  </div>
+  <div class="rule"></div>
+  <div style="margin-top:56px">
+    <div class="label" style="margin-bottom:20px">Built end to end</div>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:29px;font-weight:600;color:var(--ink);line-height:1.6">
+      <span>Data audit</span><span class="arrow" style="font-size:26px">→</span><span>Leakage-controlled features</span><span class="arrow" style="font-size:26px">→</span><span>Evaluated ML</span><span class="arrow" style="font-size:26px">→</span><span style="color:var(--model)">Digital Twin engine</span><span class="arrow" style="font-size:26px">→</span><span>Secure API + database</span><span class="arrow" style="font-size:26px">→</span><span>Clinician interface</span><span class="arrow" style="font-size:26px">→</span><span>Docker · CI</span>
     </div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>2</span></div>
+  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span class="n">2</span></div>
 </section>
 
-<!-- 3 Problem -->
+<!-- 3 · Problem -->
 <section class="slide">
   <div class="kicker">The problem</div>
-  <h2>Post-meal glucose spikes are personal, and today's tools only show them afterwards</h2>
-  <div class="body">
-    <ul class="pts" style="flex:1.1">
-      <li>In prediabetes and type 2 diabetes, glucose often rises <b>above 180 mg/dL</b> after meals, the upper end of the usual 70–180 target range.</li>
-      <li>The response depends on the <b>person</b>, not only the meal: pre-meal glucose and trend, activity, metabolic baseline, past responses.</li>
-      <li>CGMs record <b>what already happened</b>. A reviewing clinician cannot see which meals were likely to spike, or why, before the outcome.</li>
-    </ul>
-    <div class="card" style="flex:.9;background:var(--canvas);align-self:flex-start">
-      <h3>The question a clinician asks</h3>
-      <p style="font-size:27px;line-height:1.5;color:var(--ink);margin-top:10px">“Given everything known about this person <b>up to now</b>, how likely is this meal to take them above 180 within two hours, <b>why</b>, and how would a <b>different meal</b> look to the model?”</p>
+  <h2>A CGM shows what <em>already happened</em>.</h2>
+  <div class="sub">In prediabetes and type 2 diabetes, glucose often rises above 180 mg/dL after meals. The response depends on the person, not only the meal.</div>
+  <div class="body" style="gap:56px;margin-top:34px">
+    <div style="flex:1.5;position:relative">
+      <svg id="problem-cgm" style="width:100%;height:560px" aria-label="Real glucose response to one meal"></svg>
+    </div>
+    <div style="flex:.85;display:flex;flex-direction:column;justify-content:center;gap:14px">
+      <div class="label" style="color:var(--risk)">Before the outcome, a clinician still cannot ask</div>
+      <div style="font-size:34px;line-height:1.25;font-weight:600;letter-spacing:-.5px;padding:20px 0;border-bottom:1px solid var(--line)">“What was <span style="color:var(--accent)">likely</span> to happen?”</div>
+      <div style="font-size:34px;line-height:1.25;font-weight:600;letter-spacing:-.5px;padding:20px 0;border-bottom:1px solid var(--line)">“<span style="color:var(--accent)">Why</span>?”</div>
+      <div style="font-size:34px;line-height:1.25;font-weight:600;letter-spacing:-.5px;padding:20px 0">“What if the meal <span style="color:var(--accent)">changed</span>?”</div>
     </div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>3</span></div>
+  <div class="foot"><span>Real native Dexcom readings, participant CGMacros-003, 13 Mar 2020 (de-identified dates)</span><span class="n">3</span></div>
 </section>
 
-<!-- 4 Use case -->
+<!-- 4 · Use case -->
 <section class="slide">
   <div class="kicker">Healthcare use case</div>
   <h2>Decision support for reviewing a patient's meals and glucose</h2>
-  <div class="body">
-    <div class="cards" style="grid-template-columns:repeat(3,1fr);width:100%;align-self:flex-start">
-      <div class="card"><h3>Who</h3><p>Clinicians: diabetes educators, endocrinologists and primary care, reviewing CGM, meal and wearable data before or during follow-up.</p></div>
-      <div class="card"><h3>For whom</h3><p>People with <b>prediabetes</b> or <b>type 2 diabetes</b> (groups derived from baseline HbA1c). Healthy participants are evaluated separately.</p></div>
-      <div class="card"><h3>What it gives</h3><p>Per-meal risk with uncertainty, its drivers, the person's learned response, prediction vs. reality, bounded what-if, and replay of how the Twin evolved.</p></div>
-      <div class="card" style="grid-column:1 / -1;border-color:#efc2b8;background:var(--risk-soft)">
-        <h3 style="color:var(--risk)">Deliberately out of scope</h3>
-        <p>No medication, insulin, diagnosis or treatment functionality. No automated actions. Not a medical device, not clinically validated, and not live monitoring.</p>
-      </div>
+  <div class="body" style="flex-direction:column;gap:0;margin-top:56px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink)">
+      <div style="padding:34px 40px 34px 0"><div class="label">Who</div><div style="font-size:34px;font-weight:700;margin:12px 0 12px;letter-spacing:-.5px">Clinicians</div><div style="font-size:22px;color:var(--ink2);line-height:1.45">Diabetes educators, endocrinologists, primary care, reviewing CGM, meal and wearable data before or during follow-up.</div></div>
+      <div style="padding:34px 40px;border-left:1px solid var(--line)"><div class="label">For whom</div><div style="font-size:34px;font-weight:700;margin:12px 0 12px;letter-spacing:-.5px">Prediabetes · Type 2</div><div style="font-size:22px;color:var(--ink2);line-height:1.45">Groups derived from baseline HbA1c. Healthy participants are evaluated separately.</div></div>
+      <div style="padding:34px 0 34px 40px;border-left:1px solid var(--line)"><div class="label">What it gives</div><div style="font-size:34px;font-weight:700;margin:12px 0 12px;letter-spacing:-.5px">A per-patient Twin</div><div style="font-size:22px;color:var(--ink2);line-height:1.45">Per-meal risk with uncertainty, its drivers, the learned personal response, prediction vs. reality, bounded what-if, and replay.</div></div>
+    </div>
+    <div style="margin-top:40px;padding:30px 36px;border-radius:16px;background:var(--risk-soft);display:flex;gap:30px;align-items:center">
+      <div class="label" style="color:var(--risk);flex:none">Deliberately out of scope</div>
+      <div style="font-size:23px;color:var(--ink2);line-height:1.45">No medication, insulin, diagnosis or treatment functionality. No automated actions. Not a medical device, not clinically validated, not live monitoring.</div>
     </div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>4</span></div>
+  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span class="n">4</span></div>
 </section>
 
-<!-- 5 Why current approaches are insufficient -->
+<!-- 5 · Gap -->
 <section class="slide">
   <div class="kicker">The gap</div>
-  <h2>Why current approaches are insufficient</h2>
-  <div class="body">
-    <table class="t" style="align-self:flex-start">
-      <tr><th style="width:24%">Approach</th><th style="width:38%">What it does</th><th>What is missing</th></tr>
-      <tr><td><b>CGM report</b></td><td>Shows curves and time in range afterwards</td><td>No estimate before the outcome, no reasons, no scenarios</td></tr>
-      <tr><td><b>Population rules</b></td><td>“Fewer carbs”, fixed carb limits</td><td>Ignores how this person responds</td></tr>
-      <tr><td><b>A single ML score</b></td><td>One number per meal</td><td>No history, personalization, uncertainty or traceability; often evaluated with leakage</td></tr>
-      <tr class="hl"><td><b>Glycemic Twin</b></td><td>A per-person state at any moment, which predicts and explains</td><td style="color:var(--ink)">Personal, time-honest, explainable, traceable, queryable with bounded what-if</td></tr>
-    </table>
+  <h2>Each existing view answers part of the question</h2>
+  <div class="body" style="gap:28px;align-items:stretch;height:600px">
+    <div style="flex:1;padding:36px 34px;border-radius:18px;background:var(--canvas);display:flex;flex-direction:column"><div class="label">CGM report</div><div style="font-size:36px;font-weight:700;letter-spacing:-.6px;margin:20px 0 16px;line-height:1.15">Shows what happened</div><div style="font-size:21px;color:var(--ink2);line-height:1.45">Curves and time in range, after the fact. No estimate before the outcome, no reasons, no scenarios.</div><div class="ans">Answers: “What happened?”</div></div>
+    <div style="flex:1;padding:36px 34px;border-radius:18px;background:var(--canvas);display:flex;flex-direction:column"><div class="label">Population rules</div><div style="font-size:36px;font-weight:700;letter-spacing:-.6px;margin:20px 0 16px;line-height:1.15">Ignores the individual</div><div style="font-size:21px;color:var(--ink2);line-height:1.45">“Fewer carbs”, fixed limits. The same advice for every response pattern.</div><div class="ans">Answers: “What works on average?”</div></div>
+    <div style="flex:1;padding:36px 34px;border-radius:18px;background:var(--canvas);display:flex;flex-direction:column"><div class="label">A single ML score</div><div style="font-size:36px;font-weight:700;letter-spacing:-.6px;margin:20px 0 16px;line-height:1.15">One number</div><div style="font-size:21px;color:var(--ink2);line-height:1.45">No history, personalization, uncertainty or traceability, and often evaluated with leakage.</div><div class="ans">Answers: “How likely?”</div></div>
+    <div style="flex:1.3;display:flex;flex-direction:column;padding:36px 34px;border-radius:18px;border:2px solid var(--model);background:linear-gradient(180deg,var(--model-soft),#fff 70%)"><div class="label" style="color:var(--model)">Glycemic Twin</div><div style="font-size:36px;font-weight:700;letter-spacing:-.6px;margin:20px 0 22px;line-height:1.15">A per-person state over time</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span class="tag t-model" style="align-self:flex-start">State at any moment (as_of)</span>
+        <span class="tag t-accent" style="align-self:flex-start">Calibrated prediction</span>
+        <span class="tag t-accent" style="align-self:flex-start">Explanation + provenance</span>
+        <span class="tag t-accent" style="align-self:flex-start">Bounded what-if</span>
+        <span class="tag t-accent" style="align-self:flex-start">History: time rail, replay</span>
+      </div><div class="ans" style="color:var(--model)">Answers: “How likely, why, what if, and how did it change?”</div></div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>5</span></div>
+  <div class="foot"><span>Different questions answered, not a ranking</span><span class="n">5</span></div>
 </section>
 
-<!-- 6 Concept -->
+<!-- 6 · Concept -->
 <section class="slide">
   <div class="kicker">The concept</div>
-  <h2>A Digital Twin is a living per-person state, not a single score</h2>
-  <div class="body" style="flex-direction:column;gap:34px">
-    <div class="card" style="border-color:#d8cff2;background:var(--model-soft)">
-      <div class="mono" style="font-size:40px;color:var(--ink)">build_state(patient, as_of) → TwinState</div>
-      <p style="margin-top:12px;font-size:25px">Built only from what was observable <b>up to <span class="mono">as_of</span></b>. Nothing later is visible, and a meal's outcome counts only once its 2-hour window has closed.</p>
-    </div>
-    <div class="cards" style="grid-template-columns:repeat(4,1fr)">
-      <div class="card"><h3>Mirrors</h3><p>clinical baseline, recent glucose and heart rate, meals, personal response</p></div>
-      <div class="card"><h3>Updates</h3><p>rebuilt at any moment; evidence accumulates as time moves forward</p></div>
-      <div class="card"><h3>Predicts &amp; explains</h3><p>calibrated risk, drivers, uncertainty, full provenance</p></div>
-      <div class="card"><h3>Can be queried</h3><p>bounded what-if; <span class="mono">diff_states</span> explains change</p></div>
-    </div>
-    <div class="life"><span class="tag t-gray">COLD_START</span><i>→</i><span class="tag t-warn">WARMING</span><i>→</i><span class="tag t-ok">PERSONALIZED</span><span class="note" style="margin-left:18px">PERSONALIZED: own-evidence weight ≥ 0.5 and ≥ 3 closed meals. Not a 3D avatar: it mirrors glycemic state and behaviour.</span></div>
-  </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>6</span></div>
-</section>
-
-<!-- 7 Dataset -->
-<section class="slide">
-  <div class="kicker">Real dataset</div>
-  <h2>CGMacros v1.0.0: real free-living data, about 10 days per participant</h2>
-  <div class="body">
-    <div style="flex:1.1;display:flex;flex-direction:column;gap:26px">
-      <div class="cards" style="grid-template-columns:repeat(3,1fr)">
-        <div class="card"><div class="num">44</div><div class="cap">participants with time series (14 healthy, 16 prediabetes, 14 T2D)</div></div>
-        <div class="card"><div class="num">1,663</div><div class="cap">logged meals with macronutrients</div></div>
-        <div class="card"><div class="num">123k</div><div class="cap">native Dexcom readings (5-min)</div></div>
+  <h2>A Twin is a living per-person <em>state</em>, not a single score</h2>
+  <div class="body" style="flex-direction:column;gap:46px;margin-top:50px">
+    <div style="display:flex;align-items:center;gap:26px">
+      <div style="flex:.8;padding:30px;border-radius:18px;background:var(--canvas)"><div class="label">Observations</div><div style="font-size:22px;line-height:1.55;color:var(--ink2);margin-top:12px">CGM · meals · heart rate · activity · baseline labs · past closed meal outcomes</div></div>
+      <div class="arrow">→</div>
+      <div style="flex:2.1;padding:40px 36px;border-radius:20px;border:2.5px solid var(--model);background:var(--model-soft);text-align:center">
+        <div class="mono" style="font-size:38px;letter-spacing:-.5px;white-space:nowrap"><span style="color:var(--model)">build_state</span>(patient, <b style="color:var(--accent)">as_of</b>)</div>
+        <div style="font-size:26px;margin-top:14px;color:var(--ink2)">→ <b style="color:var(--ink)">TwinState</b> · built only from what was observable up to <b style="color:var(--ink)">as_of</b></div>
       </div>
-      <ul class="pts">
-        <li><b>Dexcom G6 CGM</b>, <b>Fitbit</b> heart rate and activity, <b>meal macros</b>, <b>baseline labs</b> (HbA1c, fasting glucose, lipids…).</li>
-        <li>Groups are <b>derived from HbA1c</b>; the dataset has no diagnosis or medication fields, and none are invented.</li>
-      </ul>
+      <div class="arrow">→</div>
+      <div style="flex:1.3;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="padding:18px 20px;border-radius:14px;border:1.5px solid var(--line)"><b style="font-size:27px">Predict</b><div class="note" style="font-size:18px">calibrated risk</div></div>
+        <div style="padding:18px 20px;border-radius:14px;border:1.5px solid var(--line)"><b style="font-size:27px">Explain</b><div class="note" style="font-size:18px">drivers, provenance</div></div>
+        <div style="padding:18px 20px;border-radius:14px;border:1.5px solid var(--line)"><b style="font-size:27px">What-if</b><div class="note" style="font-size:18px">bounded scenarios</div></div>
+        <div style="padding:18px 20px;border-radius:14px;border:1.5px solid var(--line)"><b style="font-size:27px">Evolve</b><div class="note" style="font-size:18px">rebuilt at any moment</div></div>
+      </div>
     </div>
-    <div class="card" style="flex:.9;align-self:flex-start;background:var(--canvas)">
-      <h3>Attribution</h3>
-      <p>Gutierrez-Osuna, R., Kerr, D., Mortazavi, B., &amp; Das, A. (2025). <i>CGMacros: a scientific dataset for personalized nutrition and diet monitoring</i> (v1.0.0). PhysioNet. doi:10.13026/3z8q-x658</p>
-      <p style="margin-top:14px"><b>License: CC BY-NC-SA 4.0.</b> Not owned, redistributed or re-licensed by us. Raw data is not in our repository.</p>
+    <div>
+      <div class="label" style="margin-bottom:18px">Lifecycle · evidence only accumulates as time moves forward</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;height:132px;border-radius:16px;overflow:hidden">
+        <div style="background:#eef1f4;padding:26px 30px"><b style="font-size:30px;color:#5d6875">COLD_START</b><div class="note" style="font-size:21px;margin-top:6px">no closed meals: population prior</div></div>
+        <div style="background:var(--warn-soft);padding:26px 30px"><b style="font-size:30px;color:var(--warn)">WARMING</b><div class="note" style="font-size:21px;margin-top:6px">own evidence, still outweighed by the prior</div></div>
+        <div style="background:var(--ok-soft);padding:26px 30px"><b style="font-size:30px;color:var(--ok)">PERSONALIZED</b><div class="note" style="font-size:21px;margin-top:6px">own-evidence weight ≥ 0.5 and ≥ 3 closed meals</div></div>
+      </div>
     </div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>7</span></div>
+  <div class="foot"><span>Not a 3D avatar: it mirrors glycemic state and response behaviour</span><span class="n">6</span></div>
 </section>
 
-<!-- 8 Pipeline -->
+<!-- 7 · Dataset -->
+<section class="slide">
+  <div class="kicker">Real dataset · CGMacros v1.0.0 (PhysioNet)</div>
+  <h2>Real free-living data, about ten days per participant</h2>
+  <div style="display:grid;grid-template-columns:1fr 1.15fr 1.25fr;gap:60px;margin-top:62px">
+    <div class="stat"><div class="big">44</div><div class="lbl"><b>participants</b> with time series</div></div>
+    <div class="stat"><div class="big">1,663</div><div class="lbl"><b>logged meals</b> with macronutrients</div></div>
+    <div class="stat"><div class="big">123,161</div><div class="lbl"><b>native Dexcom readings</b> (every 5 min)</div></div>
+  </div>
+  <div style="margin-top:56px">
+    <div style="display:flex;height:76px;border-radius:14px;overflow:hidden;font-size:23px;font-weight:700">
+      <div style="flex:14;background:#e9edf1;color:#5d6875;display:flex;align-items:center;padding:0 22px">14 healthy · evaluated separately</div>
+      <div style="flex:16;background:#dfe7f7;color:var(--accent);display:flex;align-items:center;padding:0 22px">16 prediabetes</div>
+      <div style="flex:14;background:#cfdcf3;color:var(--accent);display:flex;align-items:center;padding:0 22px">14 type 2 diabetes</div>
+    </div>
+    <div style="display:flex;margin-top:10px;font-size:18px;color:var(--muted)"><div style="flex:14"></div><div style="flex:30;border-top:2px solid var(--accent);padding-top:8px;color:var(--accent);font-weight:600">target group: 30 participants (groups derived from baseline HbA1c; no diagnosis field exists)</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:60px">
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="tag t-gray">Dexcom G6 CGM</span><span class="tag t-gray">Fitbit heart rate + activity</span><span class="tag t-gray">Meal macros</span><span class="tag t-gray">Baseline labs (HbA1c, fasting glucose, lipids)</span></div>
+  </div>
+  <div class="foot"><span>Gutierrez-Osuna, Kerr, Mortazavi &amp; Das (2025), PhysioNet, doi:10.13026/3z8q-x658 · <b>CC BY-NC-SA 4.0</b> · not owned, redistributed or re-licensed</span><span class="n">7</span></div>
+</section>
+
+<!-- 8 · Pipeline -->
 <section class="slide">
   <div class="kicker">Data pipeline</div>
-  <h2>Every stage leaves an auditable, versioned report</h2>
-  <div class="body" style="flex-direction:column;gap:36px">
-    <div class="flow">
-      <div class="st"><h4>Source</h4><b>CGMacros v1.0.0</b><p>checksummed, pinned manifest; never modified</p></div><div class="ar">→</div>
-      <div class="st"><h4>M1</h4><b>Audit &amp; cleaning</b><p>cleaning rules v1; native CGM detected (minute values are interpolated)</p></div><div class="ar">→</div>
-      <div class="st"><h4>M1</h4><b>Frozen labels</b><p>&gt; 180 mg/dL within 120 min of meal start; ≥ 80% coverage, no overlapping meal</p></div><div class="ar">→</div>
-      <div class="st"><h4>M2</h4><b>Features</b><p>45-input contract, all known at meal start</p></div><div class="ar">→</div>
-      <div class="st"><h4>M3</h4><b>Models</b><p>nested participant CV, calibration, SHAP, checksummed bundles</p></div>
-    </div>
-    <div class="cards" style="grid-template-columns:1fr 1fr">
-      <div class="card"><h3>Target group: frozen usable cohort</h3><p><span class="num" style="font-size:56px">923</span> meals · <b>481</b> positive (52.1%) · 30 participants, 29 with ≥ 1 positive</p></div>
-      <div class="card"><h3>Training and evaluation set</h3><p><span class="num" style="font-size:56px">785</span> meals · <b>377</b> positive (48.0%). Excluded: already above 180 before the meal, no pre-meal native reading, unusable macros.</p></div>
-    </div>
+  <h2>From raw files to a model, with a report at every step</h2>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);position:relative">
+    <div style="position:absolute;left:4%;right:4%;top:31px;height:3px;background:linear-gradient(90deg,var(--faint),var(--accent))"></div>
+    <div class="pl"><div class="dot">1</div><b>Real data</b><p>checksummed source, pinned manifest, never modified</p></div>
+    <div class="pl"><div class="dot">2</div><b>Audit</b><p>cleaning rules v1; native CGM detected (minute values are interpolated)</p></div>
+    <div class="pl"><div class="dot">3</div><b>Label</b><p>&gt; 180 mg/dL within 120 min of meal start; frozen before training</p></div>
+    <div class="pl"><div class="dot">4</div><b>Features</b><p>45 inputs, all known at meal start</p></div>
+    <div class="pl"><div class="dot">5</div><b>Leakage checks</b><p>L1–L6 automated; all passed</p></div>
+    <div class="pl"><div class="dot" style="background:var(--model)">6</div><b>Model</b><p>nested participant CV, calibration, SHAP, checksummed bundles</p></div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>8</span></div>
+  <style>
+    .ans { margin-top: auto; padding-top: 22px; border-top: 1px solid var(--line); font-size: 21px; font-weight: 600; color: var(--ink); line-height: 1.35; }
+    .pl { text-align: center; padding: 0 16px; position: relative; }
+    .pl .dot { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 26px; display: grid; place-items: center; margin: 0 auto 22px; box-shadow: 0 0 0 9px #fff; }
+    .pl b { font-size: 31px; display: block; letter-spacing: -.3px; }
+    .pl p { font-size: 21.5px; color: var(--ink2); line-height: 1.42; margin-top: 10px; }
+  </style>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:2px solid var(--ink)">
+    <div style="padding:26px 30px 0 0"><div class="label">Logged meals</div><div style="font-size:64px;font-weight:700;letter-spacing:-2px;margin-top:8px">1,663</div><div class="note">all participants</div></div>
+    <div style="padding:26px 30px 0;border-left:1px solid var(--line)"><div class="label">Frozen usable · target group</div><div style="font-size:64px;font-weight:700;letter-spacing:-2px;margin-top:8px">923 <span style="font-size:28px;color:var(--muted);letter-spacing:0">· 481 positive</span></div><div class="note">52.1% · 29 of 30 participants have ≥ 1 positive</div></div>
+    <div style="padding:26px 0 0 30px;border-left:1px solid var(--line)"><div class="label" style="color:var(--accent)">Training and evaluation set</div><div style="font-size:64px;font-weight:700;letter-spacing:-2px;margin-top:8px;color:var(--accent)">785 <span style="font-size:28px;color:var(--muted);letter-spacing:0">· 377 positive</span></div><div class="note">48.0%; excluded: already above 180 before the meal, unusable macros</div></div>
+  </div>
+  <div class="foot"><span>Sources: data/reports/m1_audit.md, m2_dataset.md</span><span class="n">8</span></div>
 </section>
 
-<!-- 9 ML methodology -->
+<!-- 9 · ML methodology -->
 <section class="slide">
   <div class="kicker">ML methodology</div>
-  <h2>45 inputs, nested participant-level cross-validation</h2>
-  <div class="body">
-    <table class="t" style="flex:1.15;align-self:flex-start">
-      <tr><th>Group</th><th>#</th><th>Inputs (all known at meal start)</th></tr>
-      <tr><td><b>Pre-meal glucose</b></td><td>11</td><td>last native reading, slopes, variability, 3-h mean/min/max, time in range, overnight baseline</td></tr>
-      <tr><td><b>Meal</b></td><td>11</td><td>carbs, protein, fat, fiber, calories, meal type, time of day</td></tr>
-      <tr><td><b>Context</b></td><td>3</td><td>recent carbs, minutes since the last meal</td></tr>
-      <tr><td><b>Wearable</b></td><td>8</td><td>heart rate vs resting, METs, active minutes</td></tr>
-      <tr><td><b>Clinical</b></td><td>9</td><td>HbA1c, fasting glucose and insulin, HOMA-IR, BMI, lipids</td></tr>
-      <tr class="hl"><td><b>Personal</b></td><td>3</td><td>shrinkage estimates from the person's earlier <b>closed</b> meals</td></tr>
-    </table>
-    <ul class="pts" style="flex:.85">
-      <li><b>XGBoost</b> and <b>logistic regression</b>, both calibrated; threshold chosen on inner folds.</li>
-      <li><b>5 pinned, participant-disjoint folds</b>; tuning, calibration, threshold and personal prior never see the test participant.</li>
-      <li>4 baselines and modality ablations; participant-bootstrap 95% CIs and paired comparisons.</li>
-    </ul>
+  <h2>A frozen 45-input contract, evaluated on <em>people the model never saw</em></h2>
+  <div style="margin-top:58px">
+    <div class="label" style="margin-bottom:16px">Feature contract model_features.v1 · 45 inputs, all known at meal start</div>
+    <div style="display:flex;height:84px;border-radius:12px;overflow:hidden;font-weight:700;color:#fff">
+      <div style="flex:11;background:#2f5fb3" class="seg">Pre-meal glucose · 11</div>
+      <div style="flex:11;background:#4b78c4" class="seg">Meal · 11</div>
+      <div style="flex:3;background:#7a9bd3" class="seg">Ctx 3</div>
+      <div style="flex:8;background:#93acd9" class="seg">Wearable · 8</div>
+      <div style="flex:9;background:#adc0e3;color:#24406f" class="seg">Clinical · 9</div>
+      <div style="flex:3;background:var(--model)" class="seg">Pers. 3</div>
+    </div>
+    <style>.seg { display:flex; align-items:center; padding: 0 18px; font-size: 20px; white-space: nowrap; overflow: hidden; border-right: 3px solid #fff; }</style>
+    <div style="display:flex;font-size:17px;color:var(--muted);margin-top:12px;line-height:1.4">
+      <div style="flex:11;padding-right:14px">last native reading, slopes, variability, 3-h range, overnight baseline</div>
+      <div style="flex:11;padding-right:14px">carbs, protein, fat, fiber, calories, meal type, time of day</div>
+      <div style="flex:3"></div>
+      <div style="flex:8;padding-right:14px">heart rate vs resting, METs, active minutes</div>
+      <div style="flex:9;padding-right:14px">HbA1c, fasting glucose and insulin, HOMA-IR, BMI, lipids</div>
+      <div style="flex:3;color:var(--model)">from earlier closed meals</div>
+    </div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>9</span></div>
+  <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:70px;align-items:end">
+    <div>
+      <div class="label" style="margin-bottom:16px">Nested participant-level cross-validation · 5 pinned folds</div>
+      <div id="folds" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px;font-size:22px;color:var(--ink2);line-height:1.45">
+      <div><b style="color:var(--ink)">XGBoost and logistic regression</b>, both calibrated; threshold chosen on inner folds.</div>
+      <div>Tuning, calibration, threshold and personal prior <b style="color:var(--ink)">never see the test participant</b>.</div>
+      <div>4 baselines, modality ablations, participant-bootstrap 95% CIs.</div>
+    </div>
+  </div>
+  <div class="foot"><span>Sources: data/configs/model_features.v1.yaml, data/reports/m3_evaluation.md</span><span class="n">9</span></div>
 </section>
 
-<!-- 10 Leakage -->
+<!-- 10 · Leakage -->
 <section class="slide">
   <div class="kicker">Leakage prevention</div>
-  <h2>The model never sees the answer, and automated checks prove it</h2>
-  <div class="body">
-    <div class="cards" style="grid-template-columns:repeat(3,1fr);width:100%;align-self:flex-start">
-      <div class="card"><h3>L2 · no future data</h3><p><b>0 meals</b> read data after their start time.</p></div>
-      <div class="card"><h3>L3 · recomputation</h3><p>Features rebuilt from history cut at meal start are <b>identical</b>.</p></div>
-      <div class="card"><h3>L4 · disjoint folds</h3><p>No participant appears in both training and test.</p></div>
-      <div class="card"><h3>L5 · clean windows</h3><p>No meal inside another usable meal's 2-hour window.</p></div>
-      <div class="card"><h3>L6 · sanity</h3><p>No single feature is suspiciously predictive.</p></div>
-      <div class="card"><h3>Personal prior</h3><p>Fitted per fold, on training participants only.</p></div>
-      <div class="card" style="grid-column:1 / -1;background:var(--canvas)"><p style="font-size:24px"><b>“Amount Consumed”</b> is logged after the meal, so it is <b>never</b> a feature. Labels and features are kept on separate bases (ADR-013). In the Twin, tests append different future data and check that the state hash <b>does not change</b>.</p></div>
-    </div>
+  <h2>The model never sees the answer</h2>
+  <div style="position:relative;height:350px">
+    <div style="position:absolute;left:0;width:50%;top:40px;height:236px;background:var(--ok-soft);border-radius:16px 0 0 16px"></div>
+    <div style="position:absolute;left:50%;right:0;top:40px;height:236px;background:repeating-linear-gradient(135deg,#fdf1ee 0 18px,#fbe6e1 18px 36px);border-radius:0 16px 16px 0"></div>
+    <div style="position:absolute;left:50%;top:0;bottom:46px;width:4px;background:var(--ink);transform:translateX(-2px)"></div>
+    <div style="position:absolute;left:50%;top:-2px;transform:translateX(-50%);background:var(--ink);color:#fff;font-weight:700;font-size:20px;padding:8px 18px;border-radius:999px;white-space:nowrap">meal start · prediction made</div>
+    <div style="position:absolute;left:44px;top:76px;width:44%"><div style="font-size:30px;font-weight:700;color:var(--ok)">✓ Allowed: everything before</div><div style="font-size:24px;color:var(--ink2);line-height:1.5;margin-top:14px">pre-meal glucose (native readings) · this meal's logged macros · recent heart rate and activity · baseline labs · outcomes of <b>earlier, closed</b> meals</div></div>
+    <div style="position:absolute;left:calc(50% + 44px);top:76px;width:44%"><div style="font-size:30px;font-weight:700;color:var(--risk)">✕ Forbidden: the future</div><div style="font-size:24px;color:var(--ink2);line-height:1.5;margin-top:14px">glucose after meal start · this meal's outcome · “Amount Consumed” (logged after eating) · any other participant in the test fold</div></div>
+    <div style="position:absolute;left:0;right:0;bottom:6px;height:3px;background:var(--faint)"></div>
+    <div style="position:absolute;right:-4px;bottom:-4px;border-left:16px solid var(--faint);border-top:11px solid transparent;border-bottom:11px solid transparent"></div>
+    <div style="position:absolute;right:0;bottom:16px;font-size:17px;font-weight:700;letter-spacing:2px;color:var(--muted)">TIME</div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>10</span></div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px">
+    <div class="chk"><b>L2</b><span>0 meals read data after their start</span></div>
+    <div class="chk"><b>L3</b><span>features rebuilt from history cut at meal start are identical</span></div>
+    <div class="chk"><b>L4</b><span>folds are participant-disjoint</span></div>
+    <div class="chk"><b>L5</b><span>no meal inside another usable meal's window</span></div>
+    <div class="chk"><b>L6</b><span>no single feature suspiciously predictive</span></div>
+  </div>
+  <style>.chk { border-top: 3px solid var(--ok); padding-top: 16px; } .chk b { font-size: 34px; color: var(--ok); display: block; } .chk span { font-size: 21px; color: var(--ink2); line-height: 1.4; display: block; margin-top: 6px; }</style>
+  <div class="foot"><span>All passed in M2 · personal prior fitted per fold on training participants only · in the Twin, appending future data never changes the state hash</span><span class="n">10</span></div>
 </section>
 
-<!-- 11 Results -->
+<!-- 11 · Results (hero) -->
 <section class="slide">
-  <div class="kicker">Model results · out-of-fold, unseen participants</div>
-  <h2>Clear gain over baselines; XGBoost and logistic regression are equivalent</h2>
-  <div class="body">
-    <div style="flex:1.2">
-      <div class="note" style="margin-bottom:10px">PR-AUC with 95% CI · target group, 785 meals · dashed line = prevalence 0.480 (random model)</div>
-      <div class="bar"><div class="l"><b>XGBoost · full + personal</b> (active)</div><div class="track"><div class="fill" style="width:80.8%;background:var(--model)"></div><div class="ci" style="left:73.6%;width:13.4%"></div><div class="prev" style="left:48%"></div></div><div class="v">0.808</div></div>
-      <div class="bar"><div class="l"><b>Logistic · full + personal</b></div><div class="track"><div class="fill" style="width:80.7%;background:#9a87dc"></div><div class="ci" style="left:74.4%;width:11.6%"></div><div class="prev" style="left:48%"></div></div><div class="v">0.807</div></div>
-      <div class="bar"><div class="l">XGBoost · glucose only</div><div class="track"><div class="fill" style="width:74.7%;background:#b9c3cf"></div><div class="ci" style="left:65.4%;width:16.7%"></div><div class="prev" style="left:48%"></div></div><div class="v">0.747</div></div>
-      <div class="bar"><div class="l">Best baseline · glucose + carbs rule</div><div class="track"><div class="fill" style="width:70.1%;background:#cfd6de"></div><div class="ci" style="left:61.6%;width:16.5%"></div><div class="prev" style="left:48%"></div></div><div class="v">0.701</div></div>
-      <div class="bar"><div class="l">HbA1c only</div><div class="track"><div class="fill" style="width:61.6%;background:#dde2e8"></div><div class="ci" style="left:52.8%;width:16.7%"></div><div class="prev" style="left:48%"></div></div><div class="v">0.616</div></div>
-      <div class="note" style="margin-top:22px">Active model: AUROC 0.804 [0.759, 0.845] · Brier 0.179 · calibration slope 1.00 · at the inner-fold threshold: sensitivity 0.806, specificity 0.630</div>
+  <div class="kicker">Model results · out-of-fold, unseen participants · 785 meals</div>
+  <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:80px;flex:1;margin-top:30px">
+    <div style="display:flex;flex-direction:column;justify-content:center">
+      <div class="label">PR-AUC · active model (XGBoost, full + personal)</div>
+      <div class="big" style="font-size:300px;letter-spacing:-14px;margin-top:6px;color:var(--ink)">0.808</div>
+      <div style="font-size:24px;color:var(--muted);margin-top:6px">95% CI 0.736–0.870 · prevalence 0.480 (random model)</div>
+      <div style="display:flex;gap:60px;margin-top:54px;border-top:2px solid var(--ink);padding-top:28px">
+        <div><div class="label">AUROC</div><div style="font-size:64px;font-weight:700;letter-spacing:-2px;margin-top:6px">0.804</div><div class="note">0.759–0.845</div></div>
+        <div><div class="label">Calibration slope</div><div style="font-size:64px;font-weight:700;letter-spacing:-2px;margin-top:6px">1.00</div><div class="note">Brier 0.179</div></div>
+        <div><div class="label">At inner-fold threshold</div><div style="font-size:34px;font-weight:700;margin-top:14px;line-height:1.3">sens 0.806<br>spec 0.630</div></div>
+      </div>
     </div>
-    <div class="cards" style="flex:.8;align-self:flex-start">
-      <div class="card"><h3>vs best baseline</h3><p><b style="color:var(--ok);font-size:30px">+0.107</b> PR-AUC [0.059, 0.158] · +0.064 AUROC (paired bootstrap)</p></div>
-      <div class="card"><h3>XGBoost vs logistic</h3><p><b style="font-size:30px">+0.001</b> [−0.034, 0.038]: <b>no meaningful difference</b>. Not claimed superior.</p></div>
-      <div class="card"><h3>Fusion · personalization</h3><p>Multimodal vs glucose-only <b>+0.048</b> [0.010, 0.091]. Personal prior +0.013 [−0.017, 0.041]: not proven.</p></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:28px">
+      <div style="padding:34px 38px;border-radius:20px;background:var(--canvas)">
+        <div class="label">vs best simple baseline · glucose + carbs rule</div>
+        <div style="display:flex;align-items:baseline;gap:28px;margin-top:14px"><span style="font-size:76px;font-weight:700;letter-spacing:-2px;color:var(--faint)">0.701</span><span style="font-size:76px;font-weight:700;letter-spacing:-2px;color:var(--ok)">+0.107</span></div>
+        <div class="note" style="font-size:20px">PR-AUC gain, paired participant bootstrap 95% CI 0.059–0.158 · AUROC +0.064</div>
+      </div>
+      <div style="padding:34px 38px;border-radius:20px;border:2px solid var(--line)">
+        <div class="label">XGBoost ≈ logistic regression</div>
+        <div style="display:flex;align-items:baseline;gap:22px;margin-top:14px"><span style="font-size:60px;font-weight:700;letter-spacing:-1.5px">0.808</span><span style="font-size:40px;color:var(--faint)">≈</span><span style="font-size:60px;font-weight:700;letter-spacing:-1.5px">0.807</span></div>
+        <div class="note" style="font-size:20px">difference +0.001 (CI −0.034 to 0.038). <b style="color:var(--ink)">Not claimed superior</b>; XGBoost is served, logistic is registered.</div>
+      </div>
+      <div class="note" style="font-size:19px;padding:0 6px">Combining data types helps: multimodal vs glucose-only +0.048 (0.010–0.091). Personal prior +0.013 (−0.017–0.041): not proven.</div>
     </div>
   </div>
-  <div class="foot"><span>Source: <b>data/reports/m3_evaluation.md</b> (generated, not typed)</span><span>11</span></div>
+  <div class="foot"><span>Source: data/reports/m3_evaluation.md (generated by make m3, not typed)</span><span class="n">11</span></div>
 </section>
 
-<!-- 12 Twin architecture -->
+<!-- 12 · Twin architecture -->
 <section class="slide">
   <div class="kicker">Digital Twin architecture</div>
-  <h2>One pure-Python core shared by training and serving</h2>
-  <div class="body">
-    <div class="flow" style="flex-direction:column;flex:1;gap:0">
-      <div class="st"><h4>1 · Time boundary</h4><b>Cut every observation at as_of</b><p>and close only meal windows that finished before it</p></div>
-      <div class="ar" style="width:auto;height:30px">↓</div>
-      <div class="st"><h4>2 · Same code as training</h4><b>42 base + 3 personal inputs</b><p>prior and calibrator come from the model bundle; contract and config hashes checked (no train/serve skew)</p></div>
-      <div class="ar" style="width:auto;height:30px">↓</div>
-      <div class="st"><h4>3 · Predict</h4><b>Calibrated risk + threshold + uncertainty</b><p>model bundle SHA-256 verified on load</p></div>
-      <div class="ar" style="width:auto;height:30px">↓</div>
-      <div class="st" style="border-color:#d8cff2;background:var(--model-soft)"><h4 style="color:var(--model)">4 · TwinState</h4><b>Immutable, content-hashed, versioned</b><p>lifecycle, drivers, personal response, freshness, provenance (input hashes, configs, model identity)</p></div>
-    </div>
-    <div class="cards" style="flex:.8;align-self:flex-start">
-      <div class="card"><h3 class="mono" style="font-size:26px">simulate()</h3><p>bounded, non-causal what-if on the current meal</p></div>
-      <div class="card"><h3 class="mono" style="font-size:26px">diff_states()</h3><p>what changed between two moments, and why</p></div>
-      <div class="card"><h3>Deterministic</h3><p>same data + same moment → same state and hash. A test rebuilds all 45 inputs through the Twin and matches the training data exactly.</p></div>
-    </div>
+  <h2>One pure-Python Twin core, shared by <em>training and serving</em></h2>
+  <div style="display:flex;align-items:center;gap:18px">
+    <div class="arch"><div class="label">Data</div><b>M1–M3</b><p>audited data, features, model bundle (SHA-256)</p></div>
+    <div class="arrow">→</div>
+    <div class="arch core"><div class="label" style="color:var(--model)">twin_core</div><b class="mono" style="font-size:27px">build_state()</b><p>cut at as_of · same feature code as training · calibrated bundle</p></div>
+    <div class="arrow">→</div>
+    <div class="arch"><div class="label">TwinState</div><b>Immutable</b><p>content-hashed, versioned, with provenance</p></div>
+    <div class="arrow">→</div>
+    <div class="arch"><div class="label">API</div><b>FastAPI</b><p>PostgreSQL · auth · audit</p></div>
+    <div class="arrow">→</div>
+    <div class="arch"><div class="label">UI</div><b>Next.js</b><p>clinician Patient Twin</p></div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>12</span></div>
+  <style>
+    .arch { flex: 1; padding: 34px 30px; border-radius: 18px; background: var(--canvas); min-height: 260px; }
+    .arch b { font-size: 36px; display: block; margin: 12px 0 10px; letter-spacing: -.4px; }
+    .arch p { font-size: 21px; color: var(--ink2); line-height: 1.42; }
+    .arch.core { flex: 1.35; background: var(--model-soft); border: 2.5px solid var(--model); min-height: 300px; }
+  </style>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+    <div class="sup"><b>Provenance</b><span>input and config hashes, model identity, engine version on every state</span></div>
+    <div class="sup"><b class="mono">simulate()</b><span>bounded, non-causal what-if on the current meal</span></div>
+    <div class="sup"><b class="mono">diff_states()</b><span>what changed between two moments, and why</span></div>
+    <div class="sup"><b>Model hash</b><span>bundle SHA-256 checked on every load; contract hash checked</span></div>
+  </div>
+  <style>.sup { border-top: 3px solid var(--model); padding-top: 16px; } .sup b { font-size: 28px; display: block; } .sup span { font-size: 21px; color: var(--ink2); line-height: 1.4; display: block; margin-top: 6px; }</style>
+  <div class="foot"><span>No train/serve skew: a test rebuilds all 45 inputs through the Twin and matches the training data exactly</span><span class="n">12</span></div>
 </section>
 
-<!-- 13 Interface -->
+<!-- 13 · Patient Twin product -->
+<section class="slide" data-free style="padding-top:72px">
+  <div class="kicker">The product · Patient Twin</div>
+  <div style="display:flex;gap:56px;flex:1;margin-top:8px">
+    <div class="shot" style="flex:none;width:1180px;align-self:flex-start">
+      <img src="img/hero.jpg" alt="Patient Twin screen at a breakfast with 75% estimated risk">
+      <div class="callout" style="left:3.2%;top:58%">1</div>
+      <div class="callout" style="left:52.6%;top:52%">2</div>
+      <div class="callout" style="left:58%;top:30.5%">3</div>
+      <div class="callout" style="left:25.5%;top:44.5%">4</div>
+      <div class="callout" style="left:40.5%;top:18.2%">5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:30px;justify-content:center">
+      <h2 style="font-size:46px;letter-spacing:-1.2px">See the Twin at a moment</h2>
+      <div class="legend-row"><div class="callout">1</div><div><b>Risk</b><span>75% vs the 37% alert threshold, with uncertainty</span></div></div>
+      <div class="legend-row"><div class="callout">2</div><div><b>Evidence</b><span>measured glucose, lifecycle, freshness, model</span></div></div>
+      <div class="legend-row"><div class="callout">3</div><div><b>Timeline</b><span>learned from · window open · not yet seen</span></div></div>
+      <div class="legend-row"><div class="callout">4</div><div><b>What-if</b><span>bounded scenarios on this meal</span></div></div>
+      <div class="legend-row"><div class="callout">5</div><div><b>Replay</b><span>step the Twin through recorded days</span></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Real screen · participant CGMacros-003, breakfast 13 Mar 2020 08:27 (de-identified dates) · local stack</span><span class="n">13</span></div>
+</section>
+
+<!-- 14 · Explainability -->
 <section class="slide">
-  <div class="kicker">Patient Twin interface · real data</div>
-  <h2>Calm at rest, alive on interaction</h2>
-  <div class="body" style="gap:40px">
-    <div class="shot" style="flex:1.55;height:700px"><img src="img/03-twin.jpg" alt="Patient Twin screen"></div>
-    <ul class="pts" style="flex:.75;gap:18px">
-      <li><b>Risk dial</b> counts to the calibrated estimate against the alert threshold.</li>
-      <li><b>Measured glucose</b>: the chevron opens the 90-minute CGM context in place.</li>
-      <li><b>Twin timeline</b>: learned from / window open / not yet seen.</li>
-      <li>Lifecycle, uncertainty, data freshness, model and moment are always visible.</li>
-    </ul>
+  <div class="kicker">Explainability · prediction → reality</div>
+  <h2>Traceable, and checked against <em>what happened</em></h2>
+  <div style="display:flex;align-items:stretch;gap:16px;margin-top:44px">
+    <div class="ex"><div class="label">Risk</div><b>75%</b><span>above the 37% threshold</span></div>
+    <div class="arrow" style="font-size:34px">→</div>
+    <div class="ex"><div class="label">Top driver</div><b style="font-size:30px;line-height:1.15;margin-top:10px">Personal rise offset</b><span>27.8 mg/dL · raises, +0.55 log-odds</span></div>
+    <div class="arrow" style="font-size:34px">→</div>
+    <div class="ex"><div class="label">Patient evidence</div><b style="font-size:30px;line-height:1.15;margin-top:10px">5 closed meals</b><span>learned from this person's earlier meal windows</span></div>
+    <div class="arrow" style="font-size:34px">→</div>
+    <div class="ex" style="background:var(--risk-soft)"><div class="label" style="color:var(--risk)">Timeline · revealed</div><b>204</b><span>mg/dL peak at 09:19 · outcome above 180</span></div>
   </div>
-  <div class="foot"><span>Screenshot: participant CGMacros-003 (de-identified CGMacros data), local stack</span><span>13</span></div>
+  <style>.ex { flex: 1; padding: 22px 26px; border-radius: 16px; background: var(--canvas); } .ex b { font-size: 56px; font-weight: 700; letter-spacing: -1.5px; display: block; margin-top: 4px; } .ex span { font-size: 18px; color: var(--ink2); line-height: 1.35; display: block; margin-top: 6px; }</style>
+  <div style="display:flex;gap:36px">
+    <div class="shot" style="flex:1;height:470px"><img src="img/drivers.jpg" alt="Why this risk: drivers" style="width:100%"></div>
+    <div class="shot" style="flex:1;height:470px"><img src="img/reveal.jpg" alt="Prediction versus reality" style="width:100%"></div>
+  </div>
+  <div class="foot"><span>Exact TreeSHAP on the served model: association, not cause · one example meal; aggregate performance is on slide 11</span><span class="n">14</span></div>
 </section>
 
-<!-- 14 Explainability -->
-<section class="slide">
-  <div class="kicker">Explainability and prediction → reality</div>
-  <h2>Every estimate shows what it rests on, and can be checked against what happened</h2>
-  <div class="body" style="gap:34px">
-    <div class="shot" style="flex:1;height:690px"><img src="img/06-drivers.jpg" alt="Why this risk: drivers" style="object-position:0 0"></div>
-    <div style="flex:1;display:flex;flex-direction:column;gap:24px">
-      <div class="shot" style="height:400px"><img src="img/05-timeline.jpg" alt="Glucose and meals chart" style="object-fit:contain;background:#f7f8fa"></div>
-      <ul class="pts" style="gap:12px">
-        <li style="font-size:23px"><b>Exact TreeSHAP</b> on the served model: raised / lowered, association not cause.</li>
-        <li style="font-size:23px">The chart shows only what the Twin saw; <b>“Reveal what happened”</b> compares prediction with the recorded outcome.</li>
-        <li style="font-size:23px"><b>Provenance</b>: model version, contract, data and config hashes.</li>
-      </ul>
-    </div>
-  </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>14</span></div>
-</section>
-
-<!-- 15 What-if -->
+<!-- 15 · What-if -->
 <section class="slide">
   <div class="kicker">What-if</div>
-  <h2>Change the meal, and see the model's estimate move from its baseline</h2>
-  <div class="body" style="gap:40px">
-    <div class="shot" style="flex:1.45;height:700px"><img src="img/07-whatif.jpg" alt="What-if comparison"></div>
-    <div style="flex:.8;display:flex;flex-direction:column;gap:22px">
-      <ul class="pts" style="gap:16px">
-        <li style="font-size:24px">Levers: <b>carbs, fiber, protein, fat</b> of the current meal, and <b>active minutes before it</b>.</li>
-        <li style="font-size:24px">Baseline stays visible → estimate transitions → <b>delta</b>, threshold crossing, uncertainty.</li>
-        <li style="font-size:24px"><b>Bounded</b>: inside the training 1st–99th percentile, or “out of support” with no number.</li>
-      </ul>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><span class="tag t-model">Model-estimated</span><span class="tag t-gray">Non-causal</span><span class="tag t-risk">No medication / insulin levers</span></div>
-    </div>
+  <h2>Change the meal. See the <em>estimate</em> move.</h2>
+  <div style="display:flex;align-items:center;gap:30px">
+    <div class="wi"><div class="label">Baseline · as logged</div><div class="v">75%</div><div class="m">66 g carbs</div></div>
+    <div class="arrow" style="font-size:48px">→</div>
+    <div class="wi" style="background:var(--model-soft)"><div class="label" style="color:var(--model)">Scenario · −20 g carbs</div><div class="v" style="color:var(--model)">57%</div><div class="m">46 g carbs</div></div>
+    <div class="arrow" style="font-size:48px">→</div>
+    <div class="wi" style="background:var(--ok-soft)"><div class="label" style="color:var(--ok)">Change</div><div class="v" style="color:var(--ok)">−17.9 <span style="font-size:48px">pp</span></div><div class="m">probability only, no trajectory</div></div>
   </div>
-  <div class="foot"><span>Screenshot: real model output for CGMacros-003 (−20 g carbs: 12% → 11%)</span><span>15</span></div>
+  <style>.wi { flex: 1; padding: 30px 36px; border-radius: 20px; background: var(--canvas); } .wi .v { font-size: 104px; font-weight: 700; letter-spacing: -4px; line-height: 1; margin-top: 14px; font-variant-numeric: tabular-nums; } .wi .m { font-size: 22px; color: var(--ink2); margin-top: 12px; }</style>
+  <div style="display:flex;gap:56px;align-items:center"><div style="flex:1;display:flex;flex-direction:column;gap:26px">
+    <div class="chk2"><b>Threshold</b><span>stays above the 37% alert threshold, closer to it (20.0 pp above, was 37.9)</span></div>
+    <div class="chk2"><b>Uncertainty</b><span>low · within training support (each input inside its 1st–99th percentile)</span></div>
+    <div class="chk2"><b>Bounded</b><span>carbs, fiber, protein, fat, pre-meal activity only; outside support: “no estimate”</span></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="tag t-model">Model-estimated</span><span class="tag t-gray">Non-causal</span><span class="tag t-gray">Not medical advice</span><span class="tag t-risk">No medication or insulin levers</span></div>
+  </div><div class="shot" style="flex:none;width:520px"><img src="img/whatif-panel.jpg" alt="What-if comparison in the product"></div></div>
+  <style>.chk2 { border-top: 3px solid var(--model); padding-top: 14px; } .chk2 b { font-size: 25px; display: block; } .chk2 span { font-size: 19px; color: var(--ink2); line-height: 1.42; display: block; margin-top: 6px; }</style>
+    <div class="foot"><span>Real what-if output · CGMacros-003, breakfast 13 Mar 2020 08:27 · every other input held fixed</span><span class="n">15</span></div>
 </section>
 
-<!-- 16 Replay -->
+<!-- 16 · Historical replay -->
 <section class="slide">
   <div class="kicker">Historical replay</div>
-  <h2>Watch the Twin evolve through a patient's recorded days</h2>
-  <div class="body" style="gap:40px">
-    <div class="shot" style="flex:1.5;height:700px"><img src="img/09-replay.jpg" alt="Historical replay dock" style="object-position:0 100%"></div>
-    <ul class="pts" style="flex:.75;gap:18px">
-      <li><b>Play, pause, step</b>; at each step the server rebuilds the Twin at the new <span class="mono">as_of</span>.</li>
-      <li>Only information up to that moment is used; closed meals become personal evidence.</li>
-      <li>The <b>time rail</b> moves the Twin through history the same way.</li>
-      <li style="color:var(--risk)"><b style="color:var(--risk)">Historical replay, not live monitoring. Not a held-out evaluation</b> (the serving model was refit on all participants).</li>
-    </ul>
+  <h2>As <span class="mono" style="font-size:52px;color:var(--accent)">as_of</span> moves, the Twin evolves</h2>
+  <div style="position:relative">
+    <div style="position:absolute;left:0;right:0;top:27px;height:3px;background:linear-gradient(90deg,#c4ccd6,var(--warn),var(--ok))"></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:30px;position:relative">
+      <div class="tp"><div class="dot" style="background:#8792a0">t0</div><div class="when">Wed 11 Mar · 12:09 lunch</div><span class="tag t-gray">COLD_START</span><div class="kv"><span>closed meals learned</span><b>0</b></div><div class="kv"><span>personal positive rate</span><b>0.43 <small>(= population)</small></b></div><div class="kv"><span>estimate for this meal</span><b>19%</b></div></div>
+      <div class="tp"><div class="dot" style="background:var(--warn)">t1</div><div class="when">Wed 11 Mar · 19:38 dinner</div><span class="tag t-warn">WARMING</span><div class="kv"><span>closed meals learned</span><b>1</b></div><div class="kv"><span>personal positive rate</span><b>0.63</b></div><div class="kv"><span>estimate for this meal</span><b>61%</b></div></div>
+      <div class="tp"><div class="dot" style="background:var(--warn)">t2</div><div class="when">Thu 12 Mar · 14:25 lunch</div><span class="tag t-warn">WARMING</span><div class="kv"><span>closed meals learned</span><b>3</b></div><div class="kv"><span>personal positive rate</span><b>0.78</b></div><div class="kv"><span>estimate for this meal</span><b>46%</b></div></div>
+      <div class="tp"><div class="dot" style="background:var(--ok)">t3</div><div class="when">Thu 12 Mar · 20:04 dinner</div><span class="tag t-ok">PERSONALIZED</span><div class="kv"><span>closed meals learned</span><b>4</b></div><div class="kv"><span>personal positive rate</span><b>0.65</b></div><div class="kv"><span>estimate for this meal</span><b>42%</b></div></div>
+    </div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>16</span></div>
+  <style>
+    .tp .dot { width: 58px; height: 58px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 21px; display: grid; place-items: center; box-shadow: 0 0 0 8px #fff; margin-bottom: 20px; }
+    .tp .when { font-size: 22px; font-weight: 600; margin-bottom: 14px; }
+    .tp .kv { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--line); padding: 12px 0; font-size: 18px; color: var(--muted); }
+    .tp .kv b { font-size: 28px; color: var(--ink); font-variant-numeric: tabular-nums; } .tp .kv b small { font-size: 15px; color: var(--muted); font-weight: 500; }
+    .tp .tag { margin-bottom: 6px; }
+  </style>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:22px;max-width:1080px"><div class="shot" style="border-radius:12px"><img src="img/replay-dock.jpg" alt="Historical replay controls in the product"></div><div style="font-size:21px;color:var(--ink2);line-height:1.45">Play, pause or step: at each step the server rebuilds the Twin at the new moment, using only what was observable then. Each estimate is for the meal at that moment.</div></div>
+    <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end"><span class="tag t-warn" style="font-size:22px">HISTORICAL REPLAY</span><span class="tag t-risk" style="font-size:22px">NOT LIVE MONITORING</span></div>
+  </div>
+  <div class="foot"><span>Real Twin states, CGMacros-003 · not a held-out evaluation (the serving model was refit on all participants)</span><span class="n">16</span></div>
 </section>
 
-<!-- 17 Security -->
+<!-- 17 · Security -->
 <section class="slide">
   <div class="kicker">Security and privacy</div>
   <h2>Clinical-grade habits in a research prototype</h2>
-  <div class="body">
-    <div class="cards" style="grid-template-columns:repeat(3,1fr);width:100%;align-self:flex-start">
-      <div class="card"><h3>Authentication</h3><p>Argon2id passwords, lockout after 5 failures, no user enumeration. Google sign-in only for accounts an admin provisioned.</p></div>
-      <div class="card"><h3>Sessions</h3><p>Server-side, hashed 256-bit tokens; HttpOnly, SameSite, Secure cookies; CSRF token on every change.</p></div>
-      <div class="card"><h3>Roles and audit</h3><p>Clinician / admin; sign-ins, denials, model activation and user creation are audited, never with secrets.</p></div>
-      <div class="card"><h3>Production guards</h3><p>Refuses to start without secure cookies and trusted hosts; documentation endpoints off; generic errors.</p></div>
-      <div class="card"><h3>Logs</h3><p>JSON with request IDs and secret redaction; no bodies, cookies or query strings.</p></div>
-      <div class="card"><h3>Data</h3><p>De-identified research data only. No raw data, patient-level tables, model bundles or secrets in git.</p></div>
-    </div>
+  <div style="display:flex;align-items:flex-start;gap:20px">
+    <div class="sec"><div class="node">Browser</div><div class="cl"><span>HTTPS only</span><span>HSTS</span></div></div>
+    <div class="arrow" style="margin-top:22px">→</div>
+    <div class="sec"><div class="node">Caddy</div><div class="cl"><span>one origin</span><span>only public ports 80/443</span><span>fresh request IDs</span></div></div>
+    <div class="arrow" style="margin-top:22px">→</div>
+    <div class="sec" style="flex:1.5"><div class="node" style="background:var(--accent);color:#fff;border-color:var(--accent)">FastAPI</div><div class="cl"><span>Argon2id passwords</span><span>lockout after 5 failures</span><span>server-side sessions</span><span>CSRF tokens</span><span>clinician / admin roles</span><span>audit log</span><span>log redaction</span><span>production config guards</span></div></div>
+    <div class="arrow" style="margin-top:22px">→</div>
+    <div class="sec"><div class="node">PostgreSQL</div><div class="cl"><span>internal network only</span><span>no host port</span></div></div>
   </div>
-  <div class="foot"><span>Details: <b>docs/security.md</b></span><span>17</span></div>
+  <style>
+    .sec { flex: 1; }
+    .sec .node { font-size: 30px; font-weight: 700; padding: 22px 26px; border: 2px solid var(--line); border-radius: 16px; text-align: center; }
+    .sec .cl { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; justify-content: center; }
+    .sec .cl span { font-size: 18px; font-weight: 600; color: var(--ink2); background: var(--canvas); border-radius: 8px; padding: 8px 13px; }
+  </style>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:2px solid var(--ink);padding-top:26px">
+    <div><b style="font-size:24px">Non-root containers</b><div class="note" style="margin-top:6px">API and web images run as unprivileged users</div></div>
+    <div><b style="font-size:24px">Google sign-in, provisioned only</b><div class="note" style="margin-top:6px">no account is ever created from Google</div></div>
+    <div><b style="font-size:24px">No secrets or patient data in git</b><div class="note" style="margin-top:6px">no raw data, processed tables or model bundles</div></div>
+  </div>
+  <div class="foot"><span>Details: docs/security.md · de-identified research data only</span><span class="n">17</span></div>
 </section>
 
-<!-- 18 Tech architecture -->
+<!-- 18 · Technical stack -->
 <section class="slide">
-  <div class="kicker">Technical architecture</div>
-  <h2>A small, defensible stack</h2>
-  <div class="body">
-    <table class="t" style="flex:1.1;align-self:flex-start">
-      <tr><th style="width:26%">Layer</th><th>Technology</th></tr>
-      <tr><td><b>Data and ML</b></td><td>Python 3.11, pandas, PyArrow, scikit-learn, XGBoost, SHAP; uv lock file</td></tr>
-      <tr><td><b>Twin core</b></td><td><span class="mono">twin_core</span>: pure Python, no web or database code</td></tr>
-      <tr><td><b>Backend</b></td><td>FastAPI, Pydantic v2, SQLAlchemy 2, Alembic, PostgreSQL 16</td></tr>
-      <tr><td><b>Frontend</b></td><td>Next.js 15, React 19, TypeScript, TanStack Query, custom SVG charts</td></tr>
-      <tr><td><b>Delivery</b></td><td>Docker (non-root), Compose, Caddy (HTTPS, one origin), GitHub Actions</td></tr>
-    </table>
-    <div class="cards" style="flex:.8;align-self:flex-start">
-      <div class="card"><h3>Verified quality</h3><p><b>370</b> backend tests (incl. PostgreSQL migrations) · <b>105</b> frontend unit tests · <b>51</b> Playwright E2E with axe accessibility, reduced motion and mobile</p></div>
-      <div class="card"><h3>CI on every pull request</h3><p>lint, types, tests (fails if any test is skipped), production images built for linux/amd64</p></div>
-      <div class="card"><h3>No LLMs</h3><p>No chatbot and no external AI APIs.</p></div>
-    </div>
+  <div class="kicker">Technical stack</div>
+  <h2>A small, defensible stack, grouped by layer</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-top:2px solid var(--ink)">
+    <div class="ly"><div class="label">Data / ML</div><b>Python 3.11 · pandas · PyArrow · scikit-learn · XGBoost · SHAP</b></div>
+    <div class="ly"><div class="label" style="color:var(--model)">Twin core</div><b>twin_core: pure Python, no web or database code</b></div>
+    <div class="ly"><div class="label">Backend</div><b>FastAPI · Pydantic v2 · SQLAlchemy 2 · Alembic</b></div>
+    <div class="ly"><div class="label">Database</div><b>PostgreSQL 16</b></div>
+    <div class="ly"><div class="label">Frontend</div><b>Next.js 15 · React 19 · TypeScript · TanStack Query · hand-written SVG charts</b></div>
+    <div class="ly"><div class="label">Delivery</div><b>Docker (non-root) · Compose · Caddy · GitHub Actions · uv lock file</b></div>
   </div>
-  <div class="foot"><span>Architecture diagram: <b>Architecture_Diagram.pdf</b></span><span>18</span></div>
+  <style>.ly { padding: 28px 36px 28px 0; border-bottom: 1px solid var(--line); } .ly b { font-size: 26px; line-height: 1.38; display: block; margin-top: 10px; letter-spacing: -.2px; font-weight: 600; } .ly:nth-child(3n+2), .ly:nth-child(3n) { padding-left: 36px; border-left: 1px solid var(--line); }</style>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr) 1.2fr;gap:40px;align-items:start">
+    <div class="stat"><div class="big" style="font-size:96px">370</div><div class="lbl" style="font-size:19px">backend tests, incl. PostgreSQL migrations</div></div>
+    <div class="stat"><div class="big" style="font-size:96px">105</div><div class="lbl" style="font-size:19px">frontend unit tests</div></div>
+    <div class="stat"><div class="big" style="font-size:96px">51</div><div class="lbl" style="font-size:19px">Playwright E2E: axe accessibility, reduced motion, mobile</div></div>
+    <div class="note" style="font-size:19px">CI on every pull request: lint, types, tests (fails if any test is skipped), production images built for linux/amd64. No LLMs, no external AI APIs.</div>
+  </div>
+  <div class="foot"><span>Architecture diagram: Architecture_Diagram.pdf</span><span class="n">18</span></div>
 </section>
 
-<!-- 19 Outcome -->
+<!-- 19 · Outcome -->
 <section class="slide">
   <div class="kicker">Outcome</div>
-  <h2>A complete, reproducible prototype from open data to a clinician interface</h2>
-  <div class="body" style="gap:40px">
-    <ul class="pts" style="flex:1">
-      <li>Real data, audited and cleaned with versioned rules; <b>leakage checks all passed</b>.</li>
-      <li>A model that beats simple baselines on <b>unseen participants</b> (PR-AUC 0.808 vs 0.701), well calibrated.</li>
-      <li>A Digital Twin with an honest <b>time boundary</b>, lifecycle, provenance, what-if and replay.</li>
-      <li>A secure backend and an accessible, responsive, interaction-first interface.</li>
-      <li>One-command Docker stack and green CI; MIT-licensed code.</li>
-    </ul>
-    <div class="shot" style="flex:.38;height:720px;align-self:center"><img src="img/11-mobile.jpg" alt="Patient Twin on a phone"></div>
+  <h2>A complete, reproducible prototype, from open data to a clinician's screen</h2>
+  <div style="display:flex;gap:60px">
+    <div style="flex:1;display:flex;flex-direction:column">
+      <div class="oc"><b>Real data</b><span>CGMacros v1.0.0, audited and cleaned with versioned rules</span></div>
+      <div class="oc"><b>Leakage-safe ML</b><span>all leakage checks passed · PR-AUC 0.808 vs 0.701 baseline on unseen participants, calibration slope 1.00</span></div>
+      <div class="oc"><b style="color:var(--model)">Digital Twin</b><span>time boundary, lifecycle, provenance, what-if, historical replay</span></div>
+      <div class="oc"><b>Interactive clinician tool</b><span>accessible, responsive, secure</span></div>
+      <div class="oc" style="border-bottom:none"><b>Reproducible engineering</b><span>one-command Docker stack · green CI · MIT-licensed code</span></div>
+    </div>
+    <div class="shot" style="flex:none;width:300px;align-self:center;border-radius:28px"><img src="img/mobile.jpg" alt="Patient Twin on a phone"></div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>19</span></div>
+  <style>.oc { display: flex; align-items: baseline; gap: 30px; padding: 20px 0; border-bottom: 1px solid var(--line); } .oc b { font-size: 34px; letter-spacing: -.6px; width: 470px; flex: none; } .oc span { font-size: 22px; color: var(--ink2); line-height: 1.4; }</style>
+  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span class="n">19</span></div>
 </section>
 
-<!-- 20 Limitations -->
+<!-- 20 · Limitations -->
 <section class="slide">
   <div class="kicker">Limitations</div>
-  <h2>What this prototype cannot claim</h2>
-  <div class="body">
-    <div class="cards" style="grid-template-columns:repeat(2,1fr);width:100%;align-self:flex-start">
-      <div class="card"><h3>Small cohort</h3><p>About 30 target-group participants over ~10 days: wide confidence intervals.</p></div>
-      <div class="card"><h3>One evaluation regime</h3><p>New participants only; temporal validation is future work.</p></div>
-      <div class="card"><h3>Association, not causation</h3><p>What-if and SHAP show what the model relies on, not what would happen to a person.</p></div>
-      <div class="card"><h3>Label basis</h3><p>Labels use the frozen 1-minute series; the effect of interpolation is unmeasured (SA-1).</p></div>
-      <div class="card"><h3>Narrow levers</h3><p>Current-meal macros and pre-meal activity only; no post-meal activity, medication or insulin.</p></div>
-      <div class="card" style="border-color:#efc2b8;background:var(--risk-soft)"><h3 style="color:var(--risk)">Not clinical</h3><p>Not a medical device, not clinically validated, not deployed publicly, not live monitoring.</p></div>
-    </div>
+  <h2>What this prototype does <em>not</em> claim</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 80px;margin-top:56px">
+    <div class="lim"><b>Small cohort</b><span>about 30 target-group participants over ~10 days: wide confidence intervals</span></div>
+    <div class="lim"><b>One evaluation regime</b><span>new participants only; temporal validation is future work</span></div>
+    <div class="lim"><b>Association ≠ causation</b><span>what-if and SHAP show what the model relies on, not what would happen</span></div>
+    <div class="lim"><b>Label basis</b><span>frozen 1-minute series; interpolation effect unmeasured (SA-1)</span></div>
+    <div class="lim"><b>Limited what-if levers</b><span>current-meal macros and pre-meal activity only; no post-meal activity, medication or insulin</span></div>
+    <div class="lim" style="color:var(--risk)"><b style="color:var(--risk)">Not clinical</b><span>not a medical device, not clinically validated, not publicly deployed, not live monitoring</span></div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>20</span></div>
+  <style>.lim { padding: 26px 0; border-top: 1px solid var(--line); } .lim b { font-size: 34px; letter-spacing: -.5px; display: block; } .lim span { font-size: 23px; color: var(--ink2); line-height: 1.42; display: block; margin-top: 8px; }</style>
+  <div class="foot"><span>Honesty about limits is part of the product's credibility</span><span class="n">20</span></div>
 </section>
 
-<!-- 21 Future -->
+<!-- 21 · Future scope -->
 <section class="slide">
   <div class="kicker">Future scope</div>
-  <h2>Next steps, in order of evidence first</h2>
-  <div class="body">
-    <div class="flow" style="width:100%;align-self:flex-start">
-      <div class="st"><h4>Validate</h4><b>Temporal and external validation</b><p>later days of the same people; other CGM datasets</p></div><div class="ar">→</div>
-      <div class="st"><h4>Measure</h4><b>Label sensitivity (SA-1)</b><p>native-only labels vs frozen labels</p></div><div class="ar">→</div>
-      <div class="st"><h4>Study</h4><b>Clinician usability</b><p>does the Twin help review, and is it understood?</p></div><div class="ar">→</div>
-      <div class="st"><h4>Deploy</h4><b>Hosted pilot</b><p>the Compose + Caddy stack is ready; governance first</p></div><div class="ar">→</div>
-      <div class="st"><h4>Extend</h4><b>Patient-facing view</b><p>carefully scoped, post-hackathon</p></div>
-    </div>
+  <h2>Next steps, evidence first</h2>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);position:relative">
+    <div style="position:absolute;left:3%;right:3%;top:31px;height:3px;background:var(--line)"></div>
+    <div class="pl"><div class="dot">1</div><b>Validate</b><p>temporal and external validation: later days, other CGM datasets</p></div>
+    <div class="pl"><div class="dot">2</div><b>Measure</b><p>label sensitivity SA-1: native-only vs frozen labels</p></div>
+    <div class="pl"><div class="dot">3</div><b>Study</b><p>clinician usability: does the Twin help review, and is it understood?</p></div>
+    <div class="pl"><div class="dot">4</div><b>Deploy</b><p>hosted pilot; the Compose + Caddy stack is ready, governance first</p></div>
+    <div class="pl"><div class="dot">5</div><b>Extend</b><p>a carefully scoped patient-facing view, post-hackathon</p></div>
   </div>
-  <div class="foot"><span><b>Glycemic Twin</b> · Team IdeaForge · IIIT Allahabad</span><span>21</span></div>
+  <div class="foot"><span>All future work; none of it is claimed as done</span><span class="n">21</span></div>
 </section>
 
-<!-- 22 Close -->
-<section class="slide title">
-  <div class="kicker">Demo</div>
-  <h1 style="font-size:84px;margin-top:20px">Let's see the Twin.</h1>
-  <div class="lead" style="font-size:32px;max-width:1400px">Sign in → patient list → Patient Twin → glucose and meals → prediction vs reality → what-if → time rail and historical replay → provenance.</div>
-  <div class="cards" style="grid-template-columns:repeat(3,1fr);margin-top:70px">
-    <div class="card"><div class="note">Code</div><div style="font-size:27px;font-weight:600;margin-top:6px">github.com/mitanshm18/glycemic-twin</div></div>
-    <div class="card"><div class="note">License</div><div style="font-size:27px;font-weight:600;margin-top:6px">Code MIT · Data CC BY-NC-SA 4.0</div></div>
-    <div class="card"><div class="note">Team</div><div style="font-size:27px;font-weight:600;margin-top:6px">IdeaForge · IIIT Allahabad</div></div>
+<!-- 22 · Demo -->
+<section class="slide" data-free style="background:#fbfcfd">
+  <div class="kicker">Live demo</div>
+  <div style="font-size:112px;font-weight:700;letter-spacing:-4px;line-height:1;margin-top:40px">Now let me show<br>you the <span style="color:var(--accent)">Twin</span>.</div>
+  <div style="display:flex;align-items:center;gap:16px;margin-top:80px;flex-wrap:wrap">
+    <span class="step">Sign in</span><span class="arrow" style="font-size:30px">→</span>
+    <span class="step">Patient</span><span class="arrow" style="font-size:30px">→</span>
+    <span class="step">Risk</span><span class="arrow" style="font-size:30px">→</span>
+    <span class="step">Evidence</span><span class="arrow" style="font-size:30px">→</span>
+    <span class="step">Timeline</span><span class="arrow" style="font-size:30px">→</span>
+    <span class="step" style="background:var(--model-soft);color:var(--model)">What-if</span><span class="arrow" style="font-size:30px">→</span>
+    <span class="step" style="background:var(--warn-soft);color:var(--warn)">Replay</span>
   </div>
-  <div class="foot"><span><b>Research prototype</b> · not a medical device · not medical advice · historical replay is not live monitoring</span><span>22</span></div>
+  <svg id="end-cgm" style="position:absolute;left:0;right:0;top:600px;width:1920px;height:240px" aria-hidden="true"></svg>
+  <style>.step { font-size: 30px; font-weight: 700; padding: 16px 28px; border-radius: 14px; background: var(--canvas); }</style>
+  <div style="display:flex;gap:70px;margin-top:auto;font-size:21px;color:var(--ink2)">
+    <div><div class="label">Code</div><div style="margin-top:6px;font-weight:600;color:var(--ink)">github.com/mitanshm18/glycemic-twin</div></div>
+    <div><div class="label">License</div><div style="margin-top:6px;font-weight:600;color:var(--ink)">Code MIT · Data CC BY-NC-SA 4.0</div></div>
+    <div><div class="label">Team</div><div style="margin-top:6px;font-weight:600;color:var(--ink)">IdeaForge · IIIT Allahabad</div></div>
+  </div>
+  <div class="foot"><span><b>Research prototype</b> · not a medical device · not medical advice · historical replay is not live monitoring</span><span class="n">22</span></div>
 </section>
 
+<script>
+  // Balance each slide: everything after the header (kicker, title, subtitle) is centred vertically.
+  for (const sl of document.querySelectorAll(".slide:not([data-free])")) {
+    const stage = document.createElement("div"); stage.className = "stage";
+    const kids = [...sl.children].filter((c) => !c.matches(".kicker, h2, .sub, .foot, style, svg[aria-hidden]"));
+    if (!kids.length) continue;
+    kids[0].before(stage); for (const k of kids) stage.appendChild(k);
+  }
+</script>
+<script src="data/cgm-example.js"></script>
+<script>
+(function () {
+  const data = window.CGM_EXAMPLE.map(([t, v]) => [t.slice(0, 2) * 60 + +t.slice(3), v]);
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+  const MEAL = 8 * 60 + 27;
+  function chart(svg, o) {
+    const W = svg.clientWidth, H = svg.clientHeight;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const t0 = 4 * 60 + 30, t1 = 11 * 60 + 30, y0 = o.ymin, y1 = o.ymax;
+    const X = (t) => o.left + (t - t0) / (t1 - t0) * (W - o.left - o.right);
+    const Y = (v) => o.top + (1 - (v - y0) / (y1 - y0)) * (H - o.top - o.bottom);
+    el("rect", { x: X(t0), y: Y(180), width: X(t1) - X(t0), height: Y(70) - Y(180), fill: "#edf6f0", opacity: o.faint ? .8 : 1 }, svg);
+    el("line", { x1: X(t0), x2: X(t1), y1: Y(180), y2: Y(180), stroke: "#c0452f", "stroke-width": 2, "stroke-dasharray": "8 8", opacity: o.faint ? .5 : .8 }, svg);
+    if (o.window) el("rect", { x: X(MEAL), y: o.top - 10, width: X(MEAL + 120) - X(MEAL), height: Y(y0) - o.top + 10, fill: "#6b4fc4", opacity: .07 }, svg);
+    const path = (pts) => pts.map(([t, v], i) => `${i ? "L" : "M"}${X(t).toFixed(1)},${Y(v).toFixed(1)}`).join("");
+    const before = data.filter(([t]) => t <= MEAL + 1), after = data.filter(([t]) => t >= MEAL - 4);
+    el("path", { d: path(before), fill: "none", stroke: "#17202b", "stroke-width": o.stroke, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: o.faint ? .85 : 1 }, svg);
+    el("path", { d: path(after), fill: "none", stroke: o.split ? "#1689a3" : "#17202b", "stroke-width": o.stroke, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: o.faint ? .85 : 1 }, svg);
+    const peak = data.reduce((a, b) => (b[1] > a[1] ? b : a));
+    if (o.labels) {
+      const fs = 19;
+      el("text", { x: X(t1), y: Y(180) - 12, "text-anchor": "end", "font-size": fs, fill: "#c0452f", "font-weight": 600 }, svg).textContent = "180 mg/dL";
+      el("text", { x: X(t0), y: Y(70) - 12, "font-size": fs, fill: "#2f7d55", "font-weight": 600 }, svg).textContent = "70–180 target range";
+      el("line", { x1: X(MEAL), x2: X(MEAL), y1: o.top - 10, y2: Y(y0), stroke: "#17202b", "stroke-width": 2 }, svg);
+      el("text", { x: X(MEAL) - 14, y: o.top + 8, "text-anchor": "end", "font-size": 20, "font-weight": 700, fill: "#17202b" }, svg).textContent = "Breakfast 08:27 · 66 g carbs";
+      el("text", { x: X(MEAL) - 14, y: o.top + 34, "text-anchor": "end", "font-size": 17, fill: "#707a87" }, svg).textContent = "the moment a prediction is needed";
+      el("circle", { cx: X(peak[0]), cy: Y(peak[1]), r: 9, fill: "#fff", stroke: "#1689a3", "stroke-width": 4 }, svg);
+      el("text", { x: X(peak[0]) + 18, y: Y(peak[1]) - 10, "font-size": 22, "font-weight": 700, fill: "#1689a3" }, svg).textContent = `peak ${peak[1]} mg/dL`;
+      el("text", { x: X(MEAL + 60), y: Y(y0) + 40, "text-anchor": "middle", "font-size": 18, fill: "#6b4fc4", "font-weight": 600 }, svg).textContent = "120-minute window";
+      for (const h of [5, 6, 7, 8, 9, 10, 11]) el("text", { x: X(h * 60), y: H - 6, "text-anchor": "middle", "font-size": 16, fill: "#a3acb7" }, svg).textContent = `${String(h).padStart(2, "0")}:00`;
+      el("text", { x: X(t0), y: o.top + 8, "font-size": 18, "font-weight": 700, fill: "#707a87", "letter-spacing": 2 }, svg).textContent = "NATIVE DEXCOM · MG/DL";
+    }
+    if (o.dots) { el("circle", { cx: X(MEAL), cy: Y(data.find(([t]) => t >= MEAL)[1]), r: 10, fill: "#fff", stroke: "#2f5fb3", "stroke-width": 4 }, svg); el("circle", { cx: X(peak[0]), cy: Y(peak[1]), r: 10, fill: "#fff", stroke: "#6b4fc4", "stroke-width": 4 }, svg); }
+  }
+  chart(document.getElementById("title-cgm"), { left: 0, right: 0, top: 30, bottom: 16, ymin: 60, ymax: 215, stroke: 4, faint: true, dots: true });
+  chart(document.getElementById("problem-cgm"), { left: 10, right: 20, top: 60, bottom: 80, ymin: 60, ymax: 215, stroke: 4.5, labels: true, window: true, split: true });
+  chart(document.getElementById("end-cgm"), { left: 0, right: 0, top: 20, bottom: 10, ymin: 60, ymax: 215, stroke: 3.5, faint: true, dots: true });
+  const folds = document.getElementById("folds");
+  for (let f = 0; f < 5; f++) {
+    const row = document.createElement("div"); row.style.cssText = "display:flex;gap:6px;align-items:center";
+    const lab = document.createElement("div"); lab.textContent = `Fold ${f + 1}`; lab.style.cssText = "width:90px;font-size:16px;color:#707a87;font-weight:600"; row.appendChild(lab);
+    for (let k = 0; k < 5; k++) { const c = document.createElement("div"); c.style.cssText = `flex:1;height:30px;border-radius:6px;background:${k === f ? "#c0452f" : "#dfe7f7"}`; row.appendChild(c); }
+    folds.appendChild(row);
+  }
+  const key = document.createElement("div"); key.style.cssText = "font-size:16px;color:#707a87;margin-top:8px;padding-left:96px"; key.innerHTML = '<span style="color:#c0452f;font-weight:700">■</span> held-out participants &nbsp;&nbsp; <span style="color:#9fb4e0;font-weight:700">■</span> training participants (inner CV for tuning, calibration, threshold)'; folds.appendChild(key);
+})();
+</script>
 </body>
 </html>

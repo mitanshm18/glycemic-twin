@@ -65,7 +65,11 @@ def slide_xml(cx: int, cy: int) -> str:
         '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>'
     )
     tree = EMPTY_TREE.replace("</p:spTree>", pic + "</p:spTree>")
-    return DECL + f"<p:sld {NS}>{tree}<p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>"
+    # a quiet fade between slides; nothing animates inside a slide
+    fade = '<p:transition spd="med"><p:fade/></p:transition>'
+    return (
+        DECL + f"<p:sld {NS}>{tree}<p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>{fade}</p:sld>"
+    )
 
 
 def build(out: Path, width_px: int, height_px: int, images: list[Path]) -> None:
