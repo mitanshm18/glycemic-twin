@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Glycemic Twin Architecture</title>
+<style>
+  @page { size: 1600px 1000px; margin: 0; }
+  :root {
+    --ink: #1d2733; --ink2: #4a5563; --muted: #6b7684; --line: #d9dee5; --canvas: #f6f8fa;
+    --accent: #2f5fb3; --accent-soft: #e8eefa; --model: #6b4fc4; --model-soft: #efebfa;
+    --ok: #2f7d55; --ok-soft: #e6f3ec; --warn: #9a6a12; --warn-soft: #fbf3e2; --risk: #b8442f;
+    --sec: #33475b; --sec-soft: #e9edf2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1600px; height: 1000px; }
+  body { font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; color: var(--ink);
+         background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 1600px; height: 1000px; padding: 36px 44px 28px; display: flex; flex-direction: column; gap: 18px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; }
+  h1 { font-size: 30px; letter-spacing: -0.5px; font-weight: 700; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--ink2); font-size: 15px; margin-top: 4px; }
+  .team { text-align: right; font-size: 13px; color: var(--ink2); line-height: 1.5; }
+  .team b { color: var(--ink); }
+  .grid { display: grid; grid-template-columns: 380px 78px 440px 78px 1fr; flex: 1; min-height: 0; }
+  .col { display: flex; flex-direction: column; gap: 0; }
+  .lane { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .card { border: 1.5px solid var(--line); border-radius: 12px; background: #fff; padding: 12px 14px; }
+  .card h3 { font-size: 15px; font-weight: 700; display: flex; gap: 8px; align-items: baseline; }
+  .card h3 .tag { font-size: 10.5px; font-weight: 700; color: #fff; background: var(--ink2); border-radius: 4px; padding: 1px 6px; letter-spacing: .4px; }
+  .card p, .card li { font-size: 13px; color: var(--ink2); line-height: 1.42; }
+  .card ul { list-style: none; margin-top: 5px; }
+  .card li { padding-left: 12px; position: relative; }
+  .card li::before { content: ""; position: absolute; left: 1px; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .5; }
+  .data { background: var(--canvas); }
+  .ml { border-color: #c9d6ee; }
+  .ml h3 .tag { background: var(--accent); }
+  .down { height: 22px; display: flex; justify-content: center; }
+  .down::before { content: ""; width: 2px; height: 100%; background: #9aa6b4; }
+  .down::after { content: ""; position: absolute; }
+  .arrow-v { position: relative; height: 22px; flex: 1 1 22px; min-height: 22px; max-height: 60px; }
+  .arrow-v::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 6px; width: 2px; background: #8d99a8; transform: translateX(-1px); }
+  .arrow-v::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-6px); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #8d99a8; }
+  .arrow-v .lbl { position: absolute; left: calc(50% + 10px); top: 3px; font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+  .arrow-h { position: relative; align-self: center; width: 100%; height: 20px; }
+  .arrow-h::before { content: ""; position: absolute; top: 50%; left: 6px; right: 8px; height: 2px; background: #8d99a8; transform: translateY(-1px); }
+  .arrow-h::after { content: ""; position: absolute; right: 0; top: 50%; transform: translateY(-6px); border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 8px solid #8d99a8; }
+  .arrow-h .lbl { position: absolute; top: -32px; left: 0; right: 0; text-align: center; font-size: 10.5px; color: var(--muted); line-height: 1.15; }
+  .twin { border: 2px solid var(--model); background: linear-gradient(180deg, var(--model-soft), #fff 46%); padding: 20px 22px; border-radius: 16px; }
+  .twin h2 { font-size: 20px; color: var(--model); letter-spacing: -.2px; }
+  .twin .fn { font-family: "SF Mono", Menlo, monospace; font-size: 13px; color: var(--ink); background: #fff; border: 1px solid #dcd3f3; border-radius: 6px; padding: 6px 9px; margin-top: 10px; }
+  .steps { margin-top: 10px; counter-reset: s; }
+  .steps div { font-size: 13px; color: var(--ink2); padding: 3px 0 3px 24px; position: relative; line-height: 1.38; }
+  .steps div::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 3px; width: 17px; height: 17px; border-radius: 50%; background: var(--model); color: #fff; font-size: 10.5px; font-weight: 700; display: grid; place-items: center; }
+  .life { display: flex; align-items: center; gap: 6px; margin-top: 12px; flex-wrap: nowrap; }
+  .chip { font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 999px; border: 1.5px solid; white-space: nowrap; }
+  .c1 { color: #5d6875; border-color: #c4ccd6; background: #f3f5f7; }
+  .c2 { color: var(--warn); border-color: #ecd29b; background: var(--warn-soft); }
+  .c3 { color: var(--ok); border-color: #a9d3bc; background: var(--ok-soft); }
+  .life i { color: var(--muted); font-style: normal; font-size: 13px; }
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .cap { border-radius: 10px; padding: 8px 10px; border: 1.5px solid; }
+  .cap b { font-size: 12.5px; display: block; }
+  .cap span { font-size: 11.3px; color: var(--ink2); line-height: 1.35; display: block; margin-top: 2px; }
+  .cap.p { border-color: #c9d6ee; background: var(--accent-soft); } .cap.p b { color: var(--accent); }
+  .cap.w { border-color: #dcd3f3; background: var(--model-soft); } .cap.w b { color: var(--model); }
+  .cap.r { border-color: #a9d3bc; background: var(--ok-soft); } .cap.r b { color: var(--ok); }
+  .cap.x { border-color: #ecd29b; background: var(--warn-soft); } .cap.x b { color: var(--warn); }
+  .guard { margin-top: 12px; font-size: 11.3px; color: var(--ink2); border-top: 1px dashed #d7cff0; padding-top: 9px; line-height: 1.45; }
+  .serve { display: flex; flex-direction: column; flex: 1; } .serve .twoway { flex: 1 1 22px; max-height: 60px; } .serve > .card { flex: none; }
+  .api { border-color: #c9d6ee; }
+  .api h3 .tag { background: var(--accent); }
+  .db h3 .tag { background: #336791; }
+  .web h3 .tag { background: var(--ink); }
+  .sec { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .sec span { font-size: 10.8px; font-weight: 600; color: var(--sec); background: var(--sec-soft); border-radius: 5px; padding: 2px 7px; }
+  .twoway { position: relative; height: 22px; min-height: 22px; }
+  .twoway::before { content: ""; position: absolute; left: 50%; top: 6px; bottom: 6px; width: 2px; background: #8d99a8; transform: translateX(-1px); }
+  .twoway::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-6px); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid #8d99a8; }
+  .twoway i { position: absolute; left: 50%; top: 0; transform: translateX(-6px); border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 7px solid #8d99a8; }
+  .twoway .lbl { position: absolute; left: calc(50% + 10px); top: 3px; font-size: 10.5px; color: var(--muted); }
+  .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; margin-top: 6px; }
+  .screens div { font-size: 13px; color: var(--ink2); }
+  .screens div b { color: var(--ink); font-weight: 600; }
+  .deploy { border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; background: var(--canvas); }
+  .deploy .t { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); width: 150px; line-height: 1.4; }
+  .node { background: #fff; border: 1.5px solid var(--line); border-radius: 9px; padding: 6px 11px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+  .node small { display: block; font-weight: 400; font-size: 10.8px; color: var(--muted); }
+  .node.caddy { border-color: #9fc1a9; }
+  .flow { color: #8d99a8; font-size: 18px; }
+  .stack { display: flex; flex-direction: column; gap: 5px; }
+  .notes { margin-left: auto; font-size: 11.3px; color: var(--ink2); line-height: 1.5; max-width: 360px; }
+  footer { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+  footer b { color: var(--risk); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <h1>Glycemic Twin <span>· System architecture</span></h1>
+      <div class="sub">A per-patient Digital Twin for post-meal glycemic risk (glucose &gt; 180 mg/dL within 120 min), built on real CGMacros v1.0.0 data</div>
+    </div>
+    <div class="team"><b>Team IdeaForge</b> · IIIT Allahabad<br>Team leader: Mitansh Mathur</div>
+  </header>
+
+  <div class="grid">
+    <!-- offline -->
+    <div class="col" style="padding-bottom:4px">
+      <div class="lane">Offline · data → model</div>
+      <div class="card data">
+        <h3><span class="tag">DATA</span>Real CGMacros v1.0.0</h3>
+        <p>PhysioNet, CC BY-NC-SA 4.0 · 44 participants with time series, 1,663 meals · Dexcom CGM, Fitbit, meal macros, baseline labs. Not stored in git.</p>
+      </div>
+      <div class="arrow-v"></div>
+      <div class="card ml">
+        <h3><span class="tag">M1</span>Data audit &amp; preprocessing</h3>
+        <ul><li>Checksummed source, cleaning rules v1</li><li>Native CGM grid (no interpolated features)</li><li>Frozen labels: 923 usable target meals</li></ul>
+      </div>
+      <div class="arrow-v"></div>
+      <div class="card ml">
+        <h3><span class="tag">M2</span>Features + leakage controls</h3>
+        <ul><li>45-input contract, all known at meal start</li><li>Checks L1–L6 passed (0 meals read the future)</li><li>Participant-disjoint folds (5, pinned)</li></ul>
+      </div>
+      <div class="arrow-v"></div>
+      <div class="card ml">
+        <h3><span class="tag">M3</span>ML models</h3>
+        <ul><li>XGBoost (active) + logistic, nested participant CV</li><li>Calibrated · PR-AUC 0.808 / AUROC 0.804 (OOF, 785 meals)</li><li>SHAP drivers · bundles with SHA-256</li></ul>
+      </div>
+    </div>
+
+    <div class="arrow-h" style="align-self:center"><span class="lbl">model bundle<br>(SHA-256)</span></div>
+
+    <!-- twin -->
+    <div class="col" style="justify-content:center">
+      <div class="lane">Core · pure Python, shared by training and serving</div>
+      <div class="twin">
+        <h2>Digital Twin Core <span style="font-size:13px;color:var(--muted);font-weight:500">twin_core</span></h2>
+        <div class="fn">build_state(patient, as_of) → TwinState</div>
+        <div class="steps">
+          <div>Cut every observation at <b>as_of</b>: nothing later is visible</div>
+          <div>Close meal outcomes (only windows finished before as_of)</div>
+          <div>Same feature + personalization code as training</div>
+          <div>Calibrated risk, threshold, uncertainty flags</div>
+          <div>Immutable state, content-hashed, versioned</div>
+        </div>
+        <div class="life"><span class="chip c1">COLD_START</span><i>→</i><span class="chip c2">WARMING</span><i>→</i><span class="chip c3">PERSONALIZED</span></div>
+        <div class="caps">
+          <div class="cap p"><b>Explainability &amp; provenance</b><span>drivers, input/config hashes, model identity</span></div>
+          <div class="cap w"><b>What-if · simulate()</b><span>bounded, non-causal, refused outside training support</span></div>
+          <div class="cap r"><b>Historical replay</b><span>step as_of through recorded days</span></div>
+          <div class="cap x"><b>diff_states()</b><span>what changed between two moments, and why</span></div>
+        </div>
+        <div class="guard">The current meal's outcome never enters its own state. No medication, insulin, diagnosis or treatment levers.</div>
+      </div>
+    </div>
+
+    <div class="arrow-h" style="align-self:center"><span class="lbl">states,<br>scenarios</span></div>
+
+    <!-- serving -->
+    <div class="col">
+      <div class="lane">Serving · clinician-facing</div>
+      <div class="serve">
+        <div class="card api">
+          <h3><span class="tag">API</span>FastAPI · /api/v1</h3>
+          <p>patients · twin · predictions · what-if · replay · model registry · admin</p>
+          <div class="sec"><span>Argon2id passwords</span><span>server-side sessions</span><span>CSRF</span><span>lockout</span><span>roles</span><span>audit log</span><span>Google OIDC (provisioned only)</span><span>JSON logs + redaction</span></div>
+        </div>
+        <div class="twoway"><i></i><span class="lbl">SQLAlchemy · Alembic</span></div>
+        <div class="card db">
+          <h3><span class="tag">DB</span>PostgreSQL 16</h3>
+          <p>ingested observations · model registry (SHA-256) · Twin states · replays · sessions · audit</p>
+        </div>
+        <div class="arrow-v"><span class="lbl">JSON over HTTPS (same origin)</span></div>
+        <div class="card web">
+          <h3><span class="tag">UI</span>Next.js clinician interface</h3>
+          <div class="screens">
+            <div><b>Patient list</b> · phase, coverage</div>
+            <div><b>Risk dial</b> · threshold, why</div>
+            <div><b>Glucose chart</b> · meals, crosshair</div>
+            <div><b>Prediction → reality</b></div>
+            <div><b>Twin time rail</b> · as_of</div>
+            <div><b>What-if</b> · baseline → scenario</div>
+            <div><b>Historical replay</b> · play/step</div>
+            <div><b>Provenance</b> · model, hashes</div>
+          </div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="card" style="background:var(--canvas)">
+          <h3><span class="tag" style="background:var(--ok)">QA</span>Verified quality</h3>
+          <p>pytest 370 (incl. PostgreSQL, migrations) · Vitest 105 · Playwright E2E 51 with axe accessibility, reduced motion and mobile · GitHub Actions CI on every PR</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="deploy">
+    <div class="t">Deployment<br>(Docker Compose)</div>
+    <div class="node">Browser<small>clinician</small></div><span class="flow">→</span>
+    <div class="node caddy">Caddy<small>HTTPS · one origin · HSTS</small></div><span class="flow">→</span>
+    <div class="stack"><div class="node">Next.js<small>non-root container</small></div><div class="node">FastAPI<small>/api/v1/* · non-root</small></div></div><span class="flow">→</span>
+    <div class="node">PostgreSQL<small>internal network only</small></div>
+    <div class="node" style="margin-left:6px">Data bundle<small>12 MB, read-only, SHA256SUMS</small></div>
+    <div class="notes">Only Caddy publishes ports (80/443). Init job: checksums → migrate → ingest → register model. CI: lint, types, 370 + 105 tests, amd64 image builds.</div>
+  </div>
+
+  <footer>
+    <span><b>Research prototype</b> — not a medical device, not medical advice, not clinical deployment. Historical replay is not live monitoring.</span>
+    <span>Code: MIT · Data: CGMacros v1.0.0 (Gutierrez-Osuna et al., PhysioNet 2025), CC BY-NC-SA 4.0</span>
+  </footer>
+</div>
+</body>
+</html>
