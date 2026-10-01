@@ -259,7 +259,7 @@ Take it slowly. This is the main screen.
 Reduce carbohydrates by about 30 g:
 
 > "Watch what happens. The baseline stays visible. The lever shows it's calculating while the model
-> answers. Then the risk moves to the new value, the trajectory morphs, and we see the **delta** and
+> answers. Then the risk moves to the new value, the probability morphs, and we see the **delta** and
 > whether it crosses the threshold, with its uncertainty."
 
 Then try a change that is too large, or outside training support:
