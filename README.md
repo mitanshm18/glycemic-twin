@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 [![Data: CC BY-NC-SA 4.0](https://img.shields.io/badge/data-CC%20BY--NC--SA%204.0-lightgrey.svg)](NOTICE.md)
 
+**Demo video (24 min):** [https://youtu.be/_unnxz729rE?si=vKqVbNuJ6RjpIdTO](https://youtu.be/_unnxz729rE?si=vKqVbNuJ6RjpIdTO) · details in [§17](#17-demo-video)
+
 > **Research prototype.** Not a medical device, not medical advice, not an autonomous diagnostic
 > system, and not clinically deployed. It runs on open, de-identified research data. "Historical
 > replay" replays past recorded data; it is not live patient monitoring.
@@ -336,8 +338,14 @@ not re-license it.
 
 ## 17. Demo video
 
-**Video link:** _to be added by the team after recording_ (minimum 20 minutes).
-Script: [`docs/demo-script.md`](docs/demo-script.md).
+**Video:** [https://youtu.be/_unnxz729rE?si=vKqVbNuJ6RjpIdTO](https://youtu.be/_unnxz729rE?si=vKqVbNuJ6RjpIdTO) (YouTube, unlisted: anyone with the link can watch; 24 min 1 s).
+
+It was recorded from [`docs/demo-script.md`](docs/demo-script.md) and covers the problem and why a Digital
+Twin, the real CGMacros dataset and the leakage-safe pipeline, the model results with their limits,
+the architecture, then the running clinician app (sign-in and patient list, the Patient Twin with its
+risk estimate and explanation, a what-if scenario, the Twin time rail and historical replay),
+security and engineering, and the limitations. It shows risk estimates for research participants,
+not diagnoses or treatment advice.
 
 ## 18. Architecture diagram
 
